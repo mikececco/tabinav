@@ -1,3 +1,9 @@
 <h1>Hello world</h1>
 <%= @route.total_price %>
 <%= @route.destination %>
+
+<h1>New Bookmark</h1>
+<%= simple_form_for [@route, @bookmark] do |f| %>
+  <%= f.input :description %>
+  <%= f.submit "Save Bookmark", class: "btn btn-primary" %>
+<% end %>

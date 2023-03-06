@@ -7,9 +7,11 @@ class RoutesController < ApplicationController
 
   def show
     @route = Route.find(params[:id])
+    @bookmark = Bookmark.new
   end
 
   def new
     @route = Route.new
+
   end
 end
