@@ -1,0 +1,6 @@
+<h1> Routes </h1>
+<ul>
+  <% @routes.each do |route| %>
+    <li><%= link_to route.destination, route_path(route) %></li>
+  <% end %>
+</ul>
