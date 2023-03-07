@@ -5,4 +5,8 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
   has_many :routes
   has_many :bookmarks, through: :routes
+  has_many :bookings, through: :bookmarks
+
+  # validates :first_name, presence: true
+  # validates :last_name, presence: true
 end

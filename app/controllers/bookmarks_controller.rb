@@ -3,14 +3,16 @@ class BookmarksController < ApplicationController
 
   def index
     @bookmarks = current_user.bookmarks
+    @booking = Booking.new
   end
 
   def create
     @bookmark = Bookmark.new(bookmark_params)
     @route = Route.find(params[:route_id])
     @bookmark.route = @route
-    @bookmark.save
-    redirect_to route_path(@route)
+    if @bookmark.save
+      redirect_to bookmarks_path
+    end
   end
 
   private

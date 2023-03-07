@@ -2,6 +2,7 @@
 
 <ul>
   <% @bookmarks.each do |bookmark| %>
-    <li><%= link_to bookmark.route.destination, route_path(bookmark.route) %></li>
+    <%= render "bookmark_info", bookmark: bookmark, booking: @booking %>
+    <br>
   <% end %>
 </ul>
