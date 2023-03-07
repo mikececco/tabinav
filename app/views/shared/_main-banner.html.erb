@@ -1,5 +1,5 @@
-<section id="main-banner">
-  <div class="h-screen" background-image: url(<%= asset_path 'balloons-brackground.jpg' %>)>  <%# not displaying %>
+<section id="main-banner" style="overflow: hidden;">
+  <div class="h-screen" style="background-image: url(<%= asset_path 'balloons-brackground.jpg' %>); background-size: cover; transform: translateY(-10%)">  <%# not displaying %>
       <%# <img src="/images/background-1.jpg"/> to be put as background of DIV %>
       <%= simple_form_for @route, html: { class: "absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center" }, data: { controller: 'flatpickr'}  do |f| %>
         <div class="relative">
@@ -8,7 +8,7 @@
           </div>
           <%= f.input :budget, as: :string, input_html: {class:"bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-full focus:ring-darkerYellow focus:border-darkerYellow focus:placeholder-darkerYellow block w-full pl-10 p-2.5"}, label: false, placeholder: "Budget"%>
         </div>
-        <div date-rangepicker class="flex items-center" data-controller="date">
+        <div date-rangepicker class="flex items-center">
         <div class="relative">
           <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
               <svg aria-hidden="true" class="w-5 h-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path></svg>
@@ -26,13 +26,9 @@
           <%# <input name="end" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-full focus:ring-darkerYellow focus:border-darkerYellow focus:placeholder-darkerYellow block w-full pl-10 p-2.5" placeholder="To" required data-date-target="dateEnd" data-action="click->date#changeToCal"> %>
         </div>
       </div>
-      <%# <%= f.button :submit, class: "p-2.5 ml-2 text-sm font-medium text-white bg-mainYellow hover:bg-darkerYellow rounded-full border focus:ring-4 focus:outline-none focus:ring-blue-300" do  %>
-        <%# <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg> %>
-      <%# <% end %>
-      <button type="submit" class="p-2.5 ml-2 text-sm font-medium text-white bg-mainYellow hover:bg-darkerYellow rounded-full border focus:ring-4 focus:outline-none focus:ring-blue-300">
+      <%= f.button :button, class: "p-2.5 ml-2 text-sm font-medium text-white bg-mainYellow hover:bg-darkerYellow rounded-full border focus:ring-4 focus:outline-none focus:ring-blue-300" do %>
         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-        <%# <span class="sr-only">Search</span> %>
-      </button>
+      <% end %>
     <% end %>
   </div>
 </section>
