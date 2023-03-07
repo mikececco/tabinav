@@ -1,0 +1,7 @@
+<%= link_to bookmark.route.destination, route_path(bookmark.route) %>
+<br>
+<div class="">
+  <%= simple_form_for [bookmark, booking] do |f| %>
+    <%= f.submit "Book this trip" %>
+  <% end %>
+</div>

@@ -6,7 +6,12 @@ Rails.application.routes.draw do
     resources :days, only: [:create]
   end
 
-  resources :bookmarks, only: %i[index edit update destroy]
+  resources :bookmarks, only: %i[index edit update destroy] do
+    resources :bookings, only: [:create]
+  end
+
+  resources :bookings, only: %i[index edit update destroy]
+  resources :days, only: %i[index edit update destroy]
 
   # resources :bookmarks
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

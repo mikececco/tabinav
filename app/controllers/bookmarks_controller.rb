@@ -3,6 +3,7 @@ class BookmarksController < ApplicationController
 
   def index
     @bookmarks = current_user.bookmarks
+    @booking = Booking.new
   end
 
   def create
