@@ -4,8 +4,8 @@
 
 import { application } from "./application"
 
-import DateController from "./date_controller"
-application.register("date", DateController)
+import FlatpickrController from "./flatpickr_controller"
+application.register("flatpickr", FlatpickrController)
 
 import HelloController from "./hello_controller"
 application.register("hello", HelloController)
