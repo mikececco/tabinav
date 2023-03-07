@@ -3,6 +3,12 @@
 <h4>Price: <%= @route.total_price %></h4>
 <h4>From <%= @route.start_date %> to <%= @route.end_date %></h4>
 
+<% @days.each_with_index do |day, i| %>
+  <h4>Day <%= i + 1 %>: <%= day.name %></h4>
+  <p><%= day.description %></p>
+<% end %>
+
+
 <div class="">
   <%= simple_form_for [@route, @bookmark] do |f| %>
     <%= f.input :description, placeholder: "Add your description (Optional)", label: false %>
