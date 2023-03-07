@@ -29,3 +29,4 @@ destinations.each do |destination|
 end
 
 puts "5 routes created, each with one bookmark."
+
