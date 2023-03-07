@@ -1,9 +1,11 @@
-<h1>Hello world</h1>
-<%= @route.total_price %>
-<%= @route.destination %>
+<h1><%= @route.destination %></h1>
+<h4>Budget: <%= @route.budget %></h4>
+<h4>Price: <%= @route.total_price %></h4>
+<h4>From <%= @route.start_date %> to <%= @route.end_date %></h4>
 
-<h1>New Bookmark</h1>
-<%= simple_form_for [@route, @bookmark] do |f| %>
-  <%= f.input :description %>
-  <%= f.submit "Save Bookmark", class: "btn btn-primary" %>
-<% end %>
+<div class="p-5">
+  <%= simple_form_for [@route, @bookmark] do |f| %>
+    <%= f.input :description, placeholder: "Add your description (Optional)", label: false %>
+    <%= f.submit "Bookmark" %>
+  <% end %>
+</div>

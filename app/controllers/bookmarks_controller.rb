@@ -1,7 +1,8 @@
 class BookmarksController < ApplicationController
   skip_before_action :authenticate_user!, only: [:create]
+
   def index
-    @bookmarks = Bookmark.where(user: current_user)
+    @bookmarks = current_user.bookmarks
   end
 
   def create

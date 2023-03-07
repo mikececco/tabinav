@@ -1,0 +1,7 @@
+<h1>My Bookmarks</h1>
+
+<ul>
+  <% @bookmarks.each do |bookmark| %>
+    <li><%= link_to bookmark.route.destination, route_path(bookmark.route) %></li>
+  <% end %>
+</ul>
