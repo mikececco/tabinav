@@ -1,5 +1,5 @@
 <section id="main-banner">
-  <div class="h-screen" background-image: url(<%= asset_path 'balloons-brackground.jpg' %>)>  <%# not displaying %>
+  <div class="h-screen" style="background-image: url(<%= asset_path 'balloons-brackground.jpg' %>); background-size: cover;">  <%# not displaying %>
       <%# <img src="/images/background-1.jpg"/> to be put as background of DIV %>
       <%= simple_form_for @route, html: { class: "absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center" }, data: { controller: 'flatpickr'}  do |f| %>
         <div class="relative">
@@ -26,13 +26,9 @@
           <%# <input name="end" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-full focus:ring-darkerYellow focus:border-darkerYellow focus:placeholder-darkerYellow block w-full pl-10 p-2.5" placeholder="To" required data-date-target="dateEnd" data-action="click->date#changeToCal"> %>
         </div>
       </div>
-      <%# <%= f.button :submit, class: "p-2.5 ml-2 text-sm font-medium text-white bg-mainYellow hover:bg-darkerYellow rounded-full border focus:ring-4 focus:outline-none focus:ring-blue-300" do  %>
-        <%# <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg> %>
-      <%# <% end %>
-      <button type="submit" class="p-2.5 ml-2 text-sm font-medium text-white bg-mainYellow hover:bg-darkerYellow rounded-full border focus:ring-4 focus:outline-none focus:ring-blue-300">
+      <%= f.button :button, class: "p-2.5 ml-2 text-sm font-medium text-white bg-mainYellow hover:bg-darkerYellow rounded-full border focus:ring-4 focus:outline-none focus:ring-blue-300" do %>
         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-        <%# <span class="sr-only">Search</span> %>
-      </button>
+      <% end %>
     <% end %>
   </div>
 </section>
