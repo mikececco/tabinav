@@ -1,5 +1,5 @@
-<section id="main-banner">
-  <div class="h-screen" style="background-image: url(<%= asset_path 'balloons-brackground.jpg' %>); background-size: cover;">  <%# not displaying %>
+<section id="main-banner" style="overflow: hidden;">
+  <div class="h-screen" style="background-image: url(<%= asset_path 'balloons-brackground.jpg' %>); background-size: cover; transform: translateY(-10%)">  <%# not displaying %>
       <%# <img src="/images/background-1.jpg"/> to be put as background of DIV %>
       <%= simple_form_for @route, html: { class: "absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center" }, data: { controller: 'flatpickr'}  do |f| %>
         <div class="relative">
