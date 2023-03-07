@@ -11,6 +11,6 @@ class DaysController < ApplicationController
   private
 
   def day_params
-    params.require(:day).permit(:title, :description, :coordinates)
+    params.require(:day).permit(:title, :description, :longitude, :latitute)
   end
 end
