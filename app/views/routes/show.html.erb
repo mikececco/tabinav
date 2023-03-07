@@ -3,7 +3,7 @@
 <h4>Price: <%= @route.total_price %></h4>
 <h4>From <%= @route.start_date %> to <%= @route.end_date %></h4>
 
-<div class="p-5">
+<div class="">
   <%= simple_form_for [@route, @bookmark] do |f| %>
     <%= f.input :description, placeholder: "Add your description (Optional)", label: false %>
     <%= f.submit "Bookmark" %>

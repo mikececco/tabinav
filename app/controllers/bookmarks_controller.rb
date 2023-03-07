@@ -9,8 +9,9 @@ class BookmarksController < ApplicationController
     @bookmark = Bookmark.new(bookmark_params)
     @route = Route.find(params[:route_id])
     @bookmark.route = @route
-    @bookmark.save
-    redirect_to route_path(@route)
+    if @bookmark.save
+      redirect_to bookmarks_path
+    end
   end
 
   private
