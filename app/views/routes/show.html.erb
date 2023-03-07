@@ -8,6 +8,11 @@
   <p><%= day.description %></p>
 <% end %>
 
+<h1><%= @response %></h1>
+<br>
+<h1><%= @name %></h1>
+<h1><%= @description%></h1>
+<br>
 
 <div class="">
   <%= simple_form_for [@route, @bookmark] do |f| %>

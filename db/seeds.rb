@@ -9,6 +9,7 @@
 puts "Clearing database..."
 
 Day.destroy_all
+Booking.destroy_all
 Bookmark.destroy_all
 Route.destroy_all
 User.destroy_all
@@ -28,9 +29,9 @@ destinations.each do |destination|
   route = Route.create!(destination: destination, user: admin, budget: 10000, total_price: 9000, start_date: start_date, end_date: end_date)
   # Bookmark.create!(description: "testing", route: route)
   puts "Creating days"
-    rand(2..5).times do
-      Day.create!(name: Faker::Sports::Mountaineering.mountaineer, description: Faker::Lorem.paragraph, route: route)
-    end
+  rand(2..5).times do
+    Day.create!(name: Faker::Sports::Mountaineering.mountaineer, description: Faker::Lorem.paragraph, route: route)
+  end
   puts "Creating days finished"
 end
 puts "5 routes created."
