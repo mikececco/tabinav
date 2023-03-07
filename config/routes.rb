@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   root to: "pages#home"
   resources :routes, only: %i[index show create] do
     resources :bookmarks, only: [:create]
+    resources :days, only: [:create]
   end
 
   resources :bookmarks, only: %i[index edit update destroy]

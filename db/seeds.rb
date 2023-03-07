@@ -8,6 +8,7 @@
 
 puts "Clearing database..."
 
+Day.destroy_all
 Bookmark.destroy_all
 Route.destroy_all
 User.destroy_all
