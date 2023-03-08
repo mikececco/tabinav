@@ -7,6 +7,7 @@
     "@popperjs/core": "^2.11.6",
     "flatpickr": "^4.6.13",
     "flowbite": "^1.6.3",
+    "tailwind-scrollbar-hide": "^1.1.7",
     "webpack": "^5.75.0",
     "webpack-cli": "^5.0.1"
   },

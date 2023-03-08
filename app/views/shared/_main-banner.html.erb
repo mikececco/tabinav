@@ -1,6 +1,6 @@
 <section id="main-banner" style="overflow: hidden;">
   <div class="h-screen" style="background-image: url(<%= asset_path 'balloons-brackground.jpg' %>); background-size: cover;">
-      <%= simple_form_for @route, html: { class: "absolute left-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center bg-gray-50 p-4 rounded-full shadow" }, data: { controller: 'flatpickr'}  do |f| %>
+      <%= simple_form_for @route, html: { class: "absolute left-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center bg-gray-50 p-4 rounded-full hover:shadow-2xl" }, data: { controller: 'flatpickr'}  do |f| %>
         <div class="relative px-2">
           <%= f.input :budget, as: :string, input_html: {class:"bg-gray-50 border border-gray-50 text-gray-900 font-semibold text-sm rounded-full focus:border-gray-50 focus:placeholder-black focus:ring-gray-50 block w-full pl-10 p-2.5"}, label: false, placeholder: "Budget"%>
         </div>
