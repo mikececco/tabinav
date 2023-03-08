@@ -83,5 +83,4 @@ end
 gem "tailwindcss-rails", "~> 2.0"
 
 gem "geocoder"
-gem 'mapbox-gl-rails'
-
+# gem 'mapbox-gl-rails'
