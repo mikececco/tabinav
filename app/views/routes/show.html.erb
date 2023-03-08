@@ -1,17 +1,16 @@
 <h1><%= @route.destination %></h1>
-<h4>Budget: <%= @route.budget %></h4>
-<h4>Price: <%= @route.total_price %></h4>
-<h4>From <%= @route.start_date %> to <%= @route.end_date %></h4>
+<h4>Budget: €<%= @route.budget %></h4>
+<h4>Price: €<%= @route.total_price %> (<%= (@route.total_price / @route.budget * 100).round(1) %>% of budget)</h4>
+<h4>From <%= @route.start_date %> to <%= @route.end_date %> (<%= (@route.end_date - @route.start_date + 1).to_i %> days)</h4>
+<br>
 
 <% @days.each_with_index do |day, i| %>
-  <h4>Day <%= i + 1 %>: <%= day.name %></h4>
+  <h4>Day <%= i + 1 %>: <%= day.name %> @<%= day.city %></h4>
   <p><%= day.description %></p>
+  <p>Price: €<%= day.price %></p>
+  <br>
 <% end %>
 
-<h1><%= @response %></h1>
-<br>
-<h1><%= @name %></h1>
-<h1><%= @description%></h1>
 <br>
 
 <div class="">
