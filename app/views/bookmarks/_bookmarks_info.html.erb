@@ -1,0 +1,13 @@
+<% @bookmarks.each do |bookmark| %>
+  <div
+    class="transition ease-in-out delay-150 flex-none w-2/4 md:w-1/5 pb-4 bg-white rounded-lg overflow-hidden mr-16 bg-opacity-90 hover:bg-opacity-100 hover:shadow-xl hover:scale-125"
+  >
+    <%= render "shared/simple_card", route: bookmark.route %>
+
+    <div class="w-2/4 md:w-1/5 pb-4 text-center">
+      <%= simple_form_for [bookmark, @booking] do |f| %>
+        <%= f.submit "Book this trip" %>
+      <% end %>
+    </div>
+  </div>
+<% end %>

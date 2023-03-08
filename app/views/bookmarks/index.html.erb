@@ -1,8 +1,15 @@
-<h1>My Bookmarks</h1>
+<section id="main-banner" style="overflow: hidden;">
+  <div class="h-screen" style="background-image: url(<%= asset_path 'balloons-brackground.jpg' %>); background-size: cover;">
+    <div class="absolute left-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center bg-mainYellow p-4 rounded-full hover:shadow-2xl">
+      <h1>My Bookmarks</h1>
+    </div>
 
-<ul>
-  <% @bookmarks.each do |bookmark| %>
-    <%= render "bookmark_info", bookmark: bookmark, booking: @booking %>
-    <br>
-  <% end %>
-</ul>
+    <div
+      id="scrollContainer"
+      class="flex flex-no-wrap overflow-x-scroll scrolling-touch items-start p-40 scrollbar-hide md:scrollbar-default"
+    >
+      <%= render "bookmarks_info" %>
+    </div>
+  </div>
+
+</section>
