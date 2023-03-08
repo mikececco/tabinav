@@ -21,47 +21,47 @@ class RoutesController < ApplicationController
     if @route.save
       # maybe redirect to other pages first while waiting for api?
       destination = @route.destination == "" ? Route.all.sample : @route.destination
-
       no_of_days = (@route.end_date - @route.start_date + 1).to_i
+
       @response = ChatgptService.call("
-      I want to go on a trip around #{destination}.
-      I will be departing the #{@route.start_date} and leaving on the #{@route.end_date}.
-      The itinerary will be #{no_of_days} days long. Distance with the previous day should be less than 100km.
-      Give itinerary for each day.
-      Suggest places to visit within €#{@route.budget}, convert all prices to euro.
-      Include coordinates of the places recommended.
-      Specify the city and country.
-      Use only english language.
-      Keep the description of the place within 200-300 characters.
-      Be creative and inspire me.
-      Respond with just the entire response in JSON.
-      Example response for 2 stops:
-      [{
-        'day1': {
-          'name': 'Van Gogh Museum',
-          'price': 0,
-          'city': 'Amsterdam',
-          'country':'Netherlands',
-          'description': 'The Van Gogh Museum is an art museum dedicated to the works of Vincent van Gogh and his contemporaries in Amsterdam in the Netherlands.',
-          'coordinates': {
-          'latitude': 52.358468,
-          'longitude': 4.881119
+        I want to go on a trip around #{destination}.
+        I will be departing the #{@route.start_date} and leaving on the #{@route.end_date}.
+        The itinerary will be #{no_of_days} days long. Distance with the previous day should be less than 100km.
+        Give itinerary for each day.
+        Suggest places to visit within €#{@route.budget}, convert all prices to euro.
+        Include coordinates of the places recommended.
+        Specify the city and country.
+        Use only english language.
+        Keep the description of the place within 200-300 characters.
+        Be creative and inspire me.
+        Respond with just the entire response in JSON.
+        Example response for 2 stops:
+        [{
+          'day1': {
+            'name': 'Van Gogh Museum',
+            'price': 0,
+            'city': 'Amsterdam',
+            'country':'Netherlands',
+            'description': 'The Van Gogh Museum is an art museum dedicated to the works of Vincent van Gogh and his contemporaries in Amsterdam in the Netherlands.',
+            'coordinates': {
+            'latitude': 52.358468,
+            'longitude': 4.881119
+            }
           }
-        }
-      }, {
-        'day2': {
-          'name': 'Anne Frank House',
-          'price': 20,
-          'city': 'Netherlands',
-          'country':'NL',
-          'description': 'The Van Gogh Museum is an art museum dedicated to the works of Vincent van Gogh and his contemporaries in Amsterdam in the Netherlands.',
-          'coordinates': {
-          'latitude': 52.358468,
-          'longitude': 4.881119
+        }, {
+          'day2': {
+            'name': 'Anne Frank House',
+            'price': 20,
+            'city': 'Netherlands',
+            'country':'NL',
+            'description': 'The Van Gogh Museum is an art museum dedicated to the works of Vincent van Gogh and his contemporaries in Amsterdam in the Netherlands.',
+            'coordinates': {
+            'latitude': 52.358468,
+            'longitude': 4.881119
+            }
           }
-        }
-      }]
-      Respond just with the JSON.
+        }]
+        Respond just with the JSON.
       ")
       @response = JSON.parse(@response)
 
@@ -99,10 +99,9 @@ class RoutesController < ApplicationController
       @route.destination = country_array.join(" | ")
       if @route.save
         redirect_to route_path(@route)
-      else
-        raise
       end
     end
+    @route.destroy if @route.days == []
   end
 
   private
