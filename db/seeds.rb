@@ -30,7 +30,7 @@ destinations.each do |destination|
   # Bookmark.create!(description: "testing", route: route)
   puts "Creating days"
   rand(2..5).times do
-    Day.create!(name: Faker::Sports::Mountaineering.mountaineer, description: Faker::Lorem.paragraph, route: route)
+    Day.create!(name: Faker::Sports::Mountaineering.mountaineer, description: Faker::Lorem.paragraph, latitude: Faker::Address.latitude, longitude: Faker::Address.longitude, route: route)
   end
   puts "Creating days finished"
 end
