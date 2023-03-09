@@ -73,14 +73,18 @@
       </h1>
       <%= simple_form_for @route, html: { class: "mt-16 flex items-center bg-white p-2 rounded-full hover:shadow-2xl" }, data: { controller: 'flatpickr'}  do |f| %>
         <div class="relative px-2">
-            <%= f.input :budget, as: :string, input_html: {class:"border border-gray-50 text-gray-900 font-semibold rounded-full focus:border-gray-50 focus:placeholder-black focus:ring-gray-50 block w-full pl-10 p-2.5", autocomplete:"off"}, label: false, placeholder: "Budget (€)"%>
+            <%= f.input :budget, as: :float, required: true, input_html: {class:"border border-gray-50 text-gray-900 font-semibold rounded-full focus:border-gray-50 focus:placeholder-black focus:ring-gray-50 block w-full pl-10 p-2.5", autocomplete:"off", id:"budgetInput"}, label: false, placeholder: "Budget (€)"%>
           </div>
           <div date-rangepicker class="flex items-center">
           <div class="relative px-2">
-            <%= f.input :start_date, as: :string, input_html: { data: { flatpickr_target: "startDate" }, class: "border border-gray-50 text-gray-900 font-semibold rounded-full focus:border-gray-50 focus:placeholder-black focus:ring-gray-50 block w-full pl-10 p-2.5", id:'start_date'}, label: false, placeholder:"From" %>
+            <%= f.input :start_date, as: :string, required: true, input_html: { data: { flatpickr_target: "startDate" }, class: "border border-gray-50 text-gray-900 font-semibold rounded-full focus:border-gray-50 focus:placeholder-black focus:ring-gray-50 block w-full pl-10 p-2.5", id:'start_date'}, label: false, placeholder:"From" %>
           </div>
           <div class="relative px-2">
-            <%= f.input :end_date, as: :string, input_html: { data: { flatpickr_target: "endDate" }, class: "border border-gray-50 text-gray-900 font-semibold rounded-full focus:border-gray-50 focus:placeholder-black focus:ring-gray-50 block w-full pl-10 p-2.5", id:'end_date'}, label: false, placeholder:"To" %>
+            <%= f.input :end_date, as: :string, required: true, input_html: { data: { flatpickr_target: "endDate" }, class: "border border-gray-50 text-gray-900 font-semibold rounded-full focus:border-gray-50 focus:placeholder-black focus:ring-gray-50 block w-full pl-10 p-2.5", id:'end_date'}, label: false, placeholder:"To" %>
+          </div>
+          <br>
+          <div class="relative px-2">
+            <%= f.input :budget, required: true, :collection => %w[Anywhere Nick Jason Tim], class: "border border-gray-50 text-gray-900 font-semibold rounded-full focus:border-gray-50 focus:placeholder-black focus:ring-gray-50 block w-full pl-10 p-2.5", id:'end_date', label: false, placeholder:"To" %>
           </div>
         </div>
         <%= f.button :button, class: "p-2.5 ml-2 text-sm font-medium text-mainYellow hover:text-white bg-white hover:bg-darkerYellow rounded-full border" do %>
@@ -88,6 +92,12 @@
         <% end %>
       <% end %>
       <%# <%= render "shared/hero" %>
+      <div id="powered_by" class="transition duration-1000 ease-in-out opacity-0 inline-flex items-center pt-8">
+        <p class="px-2">Powered by</p>
+        <%= image_tag("openAI_logo.svg", display: 'block', width: '100', height: '32', class:"mr-4")%>
+        <p class="mr-4">&</p>
+        <%= image_tag("tabinav-darkgray.svg", display: 'block', width: '100', height: '32')%>
+      </div>
     </div>
   </div>
 </section>
