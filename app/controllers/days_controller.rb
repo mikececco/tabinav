@@ -10,6 +10,13 @@ class DaysController < ApplicationController
         info_window_html: render_to_string(partial: "info_window", locals: {day: day})
       }
     end
+
+    @rmarkersfirst = @days.where(id: @days.minimum(:id)).map do |day|
+      {
+        lat: day.latitude,
+        lng: day.longitude
+      }
+    end
   end
 
   def create
