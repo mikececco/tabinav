@@ -12,6 +12,14 @@ class BookingsController < ApplicationController
     @booking = Booking.new(bookmark: @bookmark)
     if @booking.save
       redirect_to bookings_path
+    else
+      raise
     end
+  end
+
+  def destroy
+    @booking = Booking.find(params[:id])
+    @booking.destroy
+    redirect_back(fallback_location: root_path)#, status: :see_other
   end
 end
