@@ -14,14 +14,15 @@ export default class extends Controller {
 
     this.map = new mapboxgl.Map({
       container: this.element,
-      style: 'mapbox://styles/mapbox/streets-v10',
-      zoom: 14,
+      style: 'mapbox://styles/mapbox/navigation-night-v1',
+      // zoom: 9, // starting zoom
       projection: 'globe'
     });
     this.map.setProjection('globe');
 
     this.#addMarkersToMap()
     this.#fitMapToMarkers()
+
     // this.#addRmarkersfirstToMap()
 
     let markers_array = []
@@ -29,6 +30,14 @@ export default class extends Controller {
 
     this.map.on('load', () => {
       // console.log("pleaseee")
+      this.map.setFog({
+        range: [2, 8],
+        'horizon-blend': 0.02, // Atmosphere thickness (default 0.2 at low zooms)
+        color: 'rgb(186, 210, 235)', // Lower atmosphere
+        'high-color': 'rgb(36, 92, 223)', // Upper atmosphere
+        'space-color': 'rgb(11, 11, 25)', // Background color
+        'star-intensity': 0.15,
+      });
         this.map.addSource('route', {
             'type': 'geojson',
             'data': {
@@ -69,7 +78,7 @@ export default class extends Controller {
   #fitMapToMarkers() {
     const bounds = new mapboxgl.LngLatBounds()
     this.markersValue.forEach(marker => bounds.extend([ marker.lng, marker.lat ]))
-    this.map.fitBounds(bounds, { padding: 70, maxZoom: 15, duration: 0 })
+    this.map.fitBounds(bounds, { padding: 70, maxZoom: 25, duration: 0 })
   }
 }
   // #addRmarkersfirstToMap() {
