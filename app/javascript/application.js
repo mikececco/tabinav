@@ -2,6 +2,7 @@
 import "@hotwired/turbo-rails"
 import "./controllers"
 import "flowbite"
+import "flowbite/dist/flowbite.turbo.js";
 //
 // *= require mapbox-gl
 // = require_tree .
