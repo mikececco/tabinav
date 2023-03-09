@@ -31,6 +31,7 @@ class DaysController < ApplicationController
 
   def update
     @day = Day.find(params[:id])
+    old_price = @day.price_hotel
     @response = ChatgptService.call("
       I want to find another hotel in #{@day.city} with price about #{@day.price_hotel * 1.5}.
       Convert all prices to euro.
@@ -53,19 +54,18 @@ class DaysController < ApplicationController
       }]
       Respond just with the JSON.
     ")
-    @response = JSON.parse(@response)
+    hash = JSON.parse(@response).first
 
-    @response.each do |hash|
-      @day.name_hotel = hash["hotel"]["name"]
-      @day.description_hotel = hash["hotel"]["description"]
-      @day.price_hotel = hash["hotel"]["price"]
-      @day.latitude_hotel = hash["hotel"]["coordinates"]["latitude"]
-      @day.longitude_hotel = hash["hotel"]["coordinates"]["longitude"]
-      if @day.save
-        redirect_to route_path(@day.route), status: :see_other
-      else
-        raise
-      end
+    @day.name_hotel = hash["hotel"]["name"]
+    @day.description_hotel = hash["hotel"]["description"]
+    @day.price_hotel = hash["hotel"]["price"]
+    @day.latitude_hotel = hash["hotel"]["coordinates"]["latitude"]
+    @day.longitude_hotel = hash["hotel"]["coordinates"]["longitude"]
+    if @day.save
+      route = @day.route
+      redirect_to route_path(route), status: :see_other
+      route.total_price += (@day.price_hotel - old_price)
+      route.save
     end
 
   end

@@ -12,7 +12,7 @@ class RoutesController < ApplicationController
   def show
     @route = Route.find(params[:id])
     @bookmark = Bookmark.new
-    @days = @route.days
+    @days = @route.days.order(created_at: :asc)
   end
 
   def create
