@@ -14,8 +14,12 @@ export default class extends Controller {
 
     this.map = new mapboxgl.Map({
       container: this.element,
-      style: "mapbox://styles/mapbox/streets-v10"
+      style: 'mapbox://styles/mapbox/streets-v10',
+      zoom: 14,
+      projection: 'globe'
     });
+    this.map.setProjection('globe');
+
     this.#addMarkersToMap()
     this.#fitMapToMarkers()
     // this.#addRmarkersfirstToMap()
@@ -24,7 +28,7 @@ export default class extends Controller {
     this.markersValue.forEach(marker => markers_array.push([ marker.lng, marker.lat ]))
 
     this.map.on('load', () => {
-      console.log("pleaseee")
+      // console.log("pleaseee")
         this.map.addSource('route', {
             'type': 'geojson',
             'data': {
@@ -45,7 +49,7 @@ export default class extends Controller {
                 'line-cap': 'round'
             },
             'paint': {
-                'line-color': '#888',
+                'line-color': '#ef8a2c',
                 'line-width': 5
             }
         });
