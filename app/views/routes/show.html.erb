@@ -1,21 +1,42 @@
-<h1><%= @route.destination %></h1>
-<h4>Budget: €<%= @route.budget %></h4>
-<h4>Price: €<%= @route.total_price %> (<%= (@route.total_price / @route.budget * 100).round(1) %>% of budget)</h4>
-<h4>From <%= @route.start_date %> to <%= @route.end_date %> (<%= (@route.end_date - @route.start_date + 1).to_i %> days)</h4>
-<br>
+<div class="sticky top-0 bg-white border-b-2 z-10">
+  <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 flex justify-between items-center">
+  <div class="w-1/2">
+    <h1 class="text-3xl font-bold mb-2">Your Route</h1>
+    <h4 class="text-gray-600 mb-2">Total Price: €<%= @route.total_price %></h4>
+  </div>
+    <%= simple_form_for [@route, @bookmark] do |f| %>
+      <div class="flex items-center">
+        <%= f.submit "Bookmark", class: "px-4 py-2 bg-mainYellow text-white rounded-lg hover:bg-darkerYellow focus:bg-darkerYellow focus:outline-none" %>
+      </div>
+    <% end %>
+  </div>
 
-<% @days.each_with_index do |day, i| %>
-  <h4>Day <%= i + 1 %>: <%= day.name %> @<%= day.city %></h4>
-  <p><%= day.description %></p>
-  <p>Price: €<%= day.price %></p>
-  <br>
-<% end %>
+  <div class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between items-center">
+      <div class="w-1/2 h-0.5 bg-gray-300"></div>
+      <% @days.each do |day| %>
+        <div class="flex items-center ml-4">
+          <div class="w-2 h-2 rounded-full bg-mainYellow"></div>
+          <h4 class="text-gray-600 font-medium text-sm ml-2"><%= day.city %></h4>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
 
-<br>
-
-<div class="">
-  <%= simple_form_for [@route, @bookmark] do |f| %>
-    <%= f.input :description, placeholder: "Add your description (Optional)", label: false %>
-    <%= f.submit "Bookmark" %>
+<div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8 mt-20">
+  <% @days.each_with_index do |day, i| %>
+    <div class="my-6 border-b-2 pb-6 flex">
+      <div class="w-1/2">
+        <h4 class="text-lg font-medium mb-2">Day <%= i + 1 %>: <%= day.name %> @<%= day.city %></h4>
+        <p class="text-gray-600 mb-2"><%= day.description %></p>
+        <p class="text-gray-600 font-medium">Price: €<%= day.price %></p>
+      </div>
+      <div class="w-1/2 flex justify-end">
+        <div class="max-w-md rounded-lg shadow-lg p-6">
+          <img src="https://source.unsplash.com/random/1200x800/?<%= day.city %>" alt="Image of city" width="500" height="600">
+        </div>
+      </div>
+    </div>
   <% end %>
 </div>
