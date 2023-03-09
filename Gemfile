@@ -5,6 +5,8 @@ ruby "3.1.2"
 gem "faker"
 gem 'httparty'
 gem 'dotenv-rails', groups: [:development, :test]
+gem 'letter_opener', group: :development
+gem 'erb-formatter'
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 7.0.4", ">= 7.0.4.2"
