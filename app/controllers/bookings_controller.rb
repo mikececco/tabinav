@@ -3,6 +3,10 @@ class BookingsController < ApplicationController
     @bookings = current_user.bookings
   end
 
+  def new
+    @booking = Booking.new
+  end
+
   def create
     @bookmark = Bookmark.find(params[:bookmark_id])
     @booking = Booking.new(bookmark: @bookmark)

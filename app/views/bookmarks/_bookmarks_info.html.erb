@@ -4,10 +4,8 @@
   >
     <%= render "shared/simple_card", route: bookmark.route %>
 
-    <div class="w-2/4 md:w-1/5 pb-4 text-center">
-      <%= simple_form_for [bookmark, @booking] do |f| %>
-        <%= f.submit "Book this trip" %>
-      <% end %>
-    </div>
+  </div>
+  <div class="w-2/4 md:w-1/5 pb-4 text-center">
+    <%= link_to "Book!", new_bookmark_booking_path(bookmark), class: "", data: { turbo_frame: "remote_modal" }%>
   </div>
 <% end %>
