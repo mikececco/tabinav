@@ -11,7 +11,7 @@ Rails.application.routes.draw do
   end
 
   resources :bookings, only: %i[index edit update destroy]
-  resources :days, only: %i[index edit update destroy]
+  resources :days, only: %i[index update destroy]
 
   # resources :bookmarks
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

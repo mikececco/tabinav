@@ -29,6 +29,47 @@ class DaysController < ApplicationController
     end
   end
 
+  def update
+    @day = Day.find(params[:id])
+    @response = ChatgptService.call("
+      I want to find another hotel in #{@day.city} with price about #{@day.price_hotel * 1.5}.
+      Convert all prices to euro.
+      Include coordinates of the places recommended.
+      Use only english language.
+      Keep the description of the place within 200-300 characters.
+      Be creative and inspire me.
+      Respond with just the entire response in JSON.
+      Example response:
+      [{
+        'hotel': {
+          'name': 'Crowne Plaza Amsterdam Zuid',
+          'price': 110,
+          'description': '5 star hotel with a sky bar and an indoor swimming pool.',
+          'coordinates': {
+          'latitude': 56.358468,
+          'longitude': 4.881119
+          }
+        }
+      }]
+      Respond just with the JSON.
+    ")
+    @response = JSON.parse(@response)
+
+    @response.each do |hash|
+      @day.name_hotel = hash["hotel"]["name"]
+      @day.description_hotel = hash["hotel"]["description"]
+      @day.price_hotel = hash["hotel"]["price"]
+      @day.latitude_hotel = hash["hotel"]["coordinates"]["latitude"]
+      @day.longitude_hotel = hash["hotel"]["coordinates"]["longitude"]
+      if @day.save
+        redirect_to route_path(@day.route), status: :see_other
+      else
+        raise
+      end
+    end
+
+  end
+
   private
 
   def day_params

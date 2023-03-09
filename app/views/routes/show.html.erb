@@ -29,7 +29,7 @@
   <% @days.each_with_index do |day, i| %>
     <div class="my-6 border-b-2 pb-6 flex">
       <div class="w-1/2">
-        <h4 class="text-xl font-medium mb-2">Day <%= i + 1 %>: <%= day.city %></h4>
+        <h4 class="text-2xl font-semibold mb-2">Day <%= i + 1 %> - <%= day.city %>, <%= day.nation %></h4>
         <h4 class="text-lg font-medium mb-2"><%= day.name %></h4>
         <p class="text-gray-600 mb-2"><%= day.description %></p>
         <p class="text-gray-600 font-medium"><%= day.price == 0 ? "No entrance fee" : "Entrance fee: €#{day.price}" %></p>
@@ -37,6 +37,9 @@
         <h4 class="text-lg font-medium mb-2">Accommodation: <%= day.name_hotel %></h4>
         <p class="text-gray-600 mb-2"><%= day.description_hotel %></p>
         <p class="text-gray-600 font-medium">Price: €<%= day.price_hotel %></p>
+        <%= simple_form_for day do |f| %>
+          <%= f.submit "Upgrade Accommodation", class: "text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" %>
+        <% end %>
       </div>
       <div class="w-1/2 flex justify-end">
         <div class="max-w-md rounded-lg shadow-lg p-6">

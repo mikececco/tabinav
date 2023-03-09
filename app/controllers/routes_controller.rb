@@ -28,11 +28,12 @@ class RoutesController < ApplicationController
   private
 
   def route_params
-    params.require(:route).permit(:budget, :start_date, :end_date)
+    params.require(:route).permit(:budget, :start_date, :end_date, :destination)
   end
 
   def generate_days(route)
     destination = route.destination == "" ? Route.all.sample : route.destination
+    # budget = route.budget == nil ? Route.all.sample : route.destination
     no_of_days = (route.end_date - route.start_date + 1).to_i
     country_array = []
 
@@ -41,7 +42,8 @@ class RoutesController < ApplicationController
       I will be departing the #{route.start_date} and leaving on the #{route.end_date}.
       The itinerary will be #{no_of_days} days long. Distance with the previous day should be less than 100km.
       Give itinerary for each day.
-      Suggest places to visit and a hotel nearby within €#{route.budget}, convert all prices to euro.
+      Suggest places to visit, convert all prices to euro.
+      Choose hotels with price less than €#{route.budget / no_of_days - 20}.
       Same hotel in the same city.
       Include coordinates of the places recommended.
       Specify the city and country.
