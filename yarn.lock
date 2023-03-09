@@ -428,7 +428,7 @@ flatpickr@^4.6.13:
 
 flowbite@^1.6.3:
   version "1.6.3"
-  resolved "https://registry.npmjs.org/flowbite/-/flowbite-1.6.3.tgz"
+  resolved "https://registry.yarnpkg.com/flowbite/-/flowbite-1.6.3.tgz#f98b52ec0a4cbe397e5a456c7dc281ac22090534"
   integrity sha512-wTtAzZBLrUYqUBoTSNcMAeJrZNAcdx04EDgXWnkQ7gkKoAPFvLaq/H/Zw0JKZLVKFpKxqJ7PlvocfDApSHjhvw==
   dependencies:
     "@popperjs/core" "^2.9.3"
