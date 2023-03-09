@@ -3,5 +3,6 @@ class PagesController < ApplicationController
 
   def home
     @route = Route.new
+    @routes = Route.all.sample(5)
   end
 end
