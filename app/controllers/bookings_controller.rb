@@ -11,6 +11,7 @@ class BookingsController < ApplicationController
     @bookmark = Bookmark.find(params[:bookmark_id])
     @booking = Booking.new(bookmark: @bookmark)
     if @booking.save
+      mail = User.Mailer.with(user: current_user).welcome.deliver_now
       redirect_to bookings_path
     else
       raise

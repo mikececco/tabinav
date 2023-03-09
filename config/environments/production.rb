@@ -1,11 +1,14 @@
 require "active_support/core_ext/integer/time"
 
 Rails.application.configure do
-  config.action_mailer.default_url_options = { host: "http://TODO_PUT_YOUR_DOMAIN_HERE" }
   # Settings specified here will take precedence over those in config/application.rb.
 
   # Code is not reloaded between requests.
   config.cache_classes = true
+
+  # To get email service working in production
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.default_url_options = { host: "www.aqueous-depths-12365.herokuapp.com" }
 
   # Eager load code on boot. This eager loads most of Rails and
   # your application in memory, allowing both threaded web servers

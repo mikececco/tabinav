@@ -2,6 +2,9 @@ class BookmarksController < ApplicationController
   skip_before_action :authenticate_user!, only: [:create]
 
   def index
+    # test UserMailer
+    UserMailer.with(user: current_user).welcome.deliver_now
+
     @bookmarks = current_user.bookmarks
     @booking = Booking.new
   end
