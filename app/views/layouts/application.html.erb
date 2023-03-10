@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Tabinav</title>
+    <title>Your budget, our AI, your dream trip</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
@@ -16,15 +16,12 @@
   </head>
 
   <body>
-    <%# <%= render "shared/navbar" %>
     <%= render "shared/flashes" %>
-
 
     <%= yield %>
 
     <%= render "shared/footer" %>
     <%# <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.3/flowbite.min.js"></script> %>
     <script src="https://api.mapbox.com/mapbox-gl-js/v2.11.0/mapbox-gl.js"></script>
-
   </body>
 </html>
