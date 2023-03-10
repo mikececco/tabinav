@@ -15,13 +15,12 @@ export default class extends Controller {
     this.map = new mapboxgl.Map({
       container: this.element,
       style: 'mapbox://styles/mapbox/streets-v12',
-      projection: 'globe',
-      zoom: 1.5
+      projection: 'globe'
     });
     this.map.setProjection('globe');
     this.#addMarkersToMap()
     this.#fitMapToMarkers()
-    this.#addRmarkersfirstToMap()
+    // this.#addRmarkersfirstToMap()
 
     let markers_array = []
     this.markersValue.forEach(marker => markers_array.push([ marker.lng, marker.lat ]))
@@ -137,7 +136,12 @@ export default class extends Controller {
 
   #addMarkersToMap() {
     this.markersValue.forEach((marker) => {
-      const popup = new mapboxgl.Popup().setHTML(marker.info_window_html) // Add this
+      const popup = new mapboxgl.Popup({ offset: 25 }).setHTML(marker.info_window_html) // Add this
+
+      // const customMarker = document.createElement("div")
+      // customMarker.className = "rounded-full"
+      // customMarker.innerHTML = marker.logo_marker_html
+
       new mapboxgl.Marker()
         .setLngLat([ marker.lng, marker.lat ])
         .setPopup(popup) // Add this
@@ -148,16 +152,16 @@ export default class extends Controller {
   #fitMapToMarkers() {
     const bounds = new mapboxgl.LngLatBounds()
     this.markersValue.forEach(marker => bounds.extend([ marker.lng, marker.lat ]))
-    this.map.fitBounds(bounds, { padding: 70, maxZoom: 25, duration: 0 })
+    this.map.fitBounds(bounds, { padding: 10, maxZoom: 8, duration: 0 })
   }
 
-  #addRmarkersfirstToMap() {
-    this.rmarkersfirstValue.forEach((marker) => {
-      const popup = new mapboxgl.Popup().setHTML(marker.first_marker_html) // Add this
-      new mapboxgl.Marker()
-        .setLngLat([ marker.lng, marker.lat ])
-        .setPopup(popup) // Add this
-        .addTo(this.map)
-    });
-  }
+  // #addRmarkersfirstToMap() {
+  //   this.rmarkersfirstValue.forEach((marker) => {
+  //     const popup = new mapboxgl.Popup().setHTML(marker.first_marker_html) // Add this
+  //     new mapboxgl.Marker()
+  //       .setLngLat([ marker.lng, marker.lat ])
+  //       .setPopup(popup) // Add this
+  //       .addTo(this.map)
+  //   });
+  // }
 }
