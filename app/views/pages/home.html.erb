@@ -1,5 +1,5 @@
 <!-- component -->
-<nav class="w-full flex justify-between items-center mx-auto px-16 h-16 navbar transition duration-1000" id="navbar">
+<nav class="w-full flex justify-between items-center mx-auto px-16 h-16 navbar transition duration-1000 z-10" id="navbar">
     <!-- logo -->
     <div class="inline-flex navbar-element transition duration-1000">
         <a href="/">
@@ -63,8 +63,6 @@
 </nav>
 
 
-
-
 <section id="main-banner" class="h-screen flex items-center justify-center bg-darkerYellow">
   <div class="max-w-5xl mx-auto text-center -mt-40">
     <div id="main-content" class="hover:scale-125 transition duration-1000 ease-in-out">
@@ -102,6 +100,7 @@
   </div>
 </section>
 
-<%= render "shared/hero" %>
+<%# <%= video_tag "airport.mp4", autoplay: :autoplay, loop: :loop, muted: :muted, class: "w-full" %>
 
-<%= render "shared/map" %>
+
+<%= render "shared/hero" %>
