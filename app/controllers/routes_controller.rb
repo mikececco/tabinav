@@ -40,7 +40,7 @@ class RoutesController < ApplicationController
     @response = ChatgptService.call("
       I want to go on a trip around #{destination}.
       I will be departing the #{route.start_date} and leaving on the #{route.end_date}.
-      The itinerary will be #{no_of_days} days long. Distance with the previous day should be less than 100km.
+      The itinerary will be #{no_of_days} days long. Take travelling time into account.
       Give itinerary for each day.
       Suggest places to visit, convert all prices to euro.
       Choose hotels with price less than €#{route.budget / no_of_days - 20}.
