@@ -13,6 +13,24 @@ class RoutesController < ApplicationController
     @route = Route.find(params[:id])
     @bookmark = Bookmark.new
     @days = @route.days.order(created_at: :asc)
+
+    @markers = @days.map do |day|
+      {
+        lat: day.latitude,
+        lng: day.longitude,
+        info_window_html: render_to_string(partial: "info_window", locals: {day: day}),
+        # logo_marker_html: render_to_string(partial: "logo_marker", locals: {day: day})
+      }
+    end
+
+    # @rmarkersfirst = @days.where(id: @days.minimum(:id)).map do |day|
+    #   {
+    #     lat: day.latitude,
+    #     lng: day.longitude,
+    #     info_window_html: render_to_string(partial: "first_marker", locals: {day: day}),
+    #     logo_first_marker_html: render_to_string(partial: "logo_first_marker", locals: {day: day})
+    #   }
+    # end
   end
 
   def create
