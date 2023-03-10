@@ -19,10 +19,11 @@ class RoutesController < ApplicationController
     @route = Route.new(route_params)
     @route.user = current_user
     if @route.save
-      # maybe redirect to other pages first while waiting for api?
       generate_days(@route)
     end
-    @route.destroy if @route.destination == nil
+    Route.all.each do |route|
+      route.destroy if @route.destination == nil
+    end
   end
 
   private
@@ -48,7 +49,7 @@ class RoutesController < ApplicationController
       Include coordinates of the places recommended.
       Specify the city and country.
       Use only english language.
-      Keep the description of the place within 200-300 characters.
+      Use 2 sentences for the description of the place.
       Be creative and inspire me.
       Respond with just the entire response in JSON.
       Example response for 2 stops:

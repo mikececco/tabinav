@@ -15,8 +15,6 @@ class BookmarksController < ApplicationController
     @bookmark.route = @route
     if @bookmark.save
       redirect_to bookmarks_path
-    else
-      raise
     end
   end
 

@@ -1,15 +1,40 @@
 <% @bookmarks.each do |bookmark| %>
-  <div class="w-2/4 md:w-1/5 pb-4 text-center">
-    <div
-      class="transition ease-in-out delay-150 flex-none pb-4 bg-white rounded-lg overflow-hidden mr-16 bg-opacity-90 hover:bg-opacity-100 hover:shadow-xl hover:scale-125"
-    >
-      <%= render "shared/simple_card", route: bookmark.route %>
+  <div class="w-64 h-auto mx-auto mt-20 shadow-md hover:shadow-xl">
 
-    </div>
+      <%# class="transition ease-in-out delay-150 flex-none pb-4 bg-white rounded-lg overflow-hidden mr-16 bg-opacity-90 hover:bg-opacity-100 hover:shadow-xl hover:scale-125" %>
 
+      <%# <%= render "shared/simple_card", route: bookmark.route %>
 
-    <% if bookmark.booking == nil %>
-      <div class="w-2/4 md:w-1/5 pb-4 text-center">
+    <a href="routes/<%= bookmark.route.id %>" class="space-y-4 shadow-lg">
+      <img
+        class="object-cover"
+        src="https://source.unsplash.com/random/1200x800/?<%= bookmark.route.days.first.city %>"
+        alt="Image of city"
+        <%# width="500"
+        height="600" %>
+      >
+      <div class="px-8 py-4">
+        <div class="text-lg leading-6 font-medium space-y-1">
+          <h3 class="font-bold text-gray-800 mb-2">
+            <%= bookmark.route.destination %>
+          </h3>
+        </div>
+        <div class="">
+          <% bookmark.route.days.each do |day| %>
+          <p class="">
+              <%= day.city %> - <%= day.name %>
+          </p>
+          <% end %>
+          <p class="font-medium text-sm text-darkerYellow mt-2">
+            Explore<span class="text-darkerYellow">&hellip;</span>
+          </p>
+        </div>
+      </div>
+    </a>
+
+    <div class="text-center pb-4">
+      <% if bookmark.booking == nil %>
+
         <!-- Modal toggle -->
         <button data-modal-target="defaultModal" data-modal-toggle="defaultModal" class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">
           Book!
@@ -22,15 +47,15 @@
               <%= render "bookings/booking_modal", bookmark: bookmark %>
             </div>
         </div>
-      </div>
-    <% else %>
-      <div class="w-3/4 text-center">
-        <p class="block text-white bg-grey-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center ">
-          You have already booked this trip!
-        </p>
-        <%= link_to "Cancel Booking", booking_path(bookmark.booking), data: {turbo_method: :delete, turbo_confirm: "Are you sure?", class: "block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"} %>
-      </div>
-    <% end %>
-  </div>
 
+      <% else %>
+        <div class="">
+          <p class="block text-black bg-grey-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center ">
+            You have already booked this trip!
+          </p>
+          <%= link_to "Cancel Booking", booking_path(bookmark.booking), data: {turbo_method: :delete, turbo_confirm: "Are you sure?", class: "block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"} %>
+        </div>
+      <% end %>
+    </div>
+  </div>
 <% end %>

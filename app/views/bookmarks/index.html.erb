@@ -1,15 +1,14 @@
-<section id="main-banner" style="overflow: hidden;">
-  <div class="h-screen" style="background-image: url(<%= asset_path 'balloons-brackground.jpg' %>); background-size: cover;">
-    <div class="absolute left-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center bg-mainYellow p-4 rounded-full hover:shadow-2xl">
-      <h1>My Bookmarks</h1>
-    </div>
+<%= render "shared/navbar" %>
 
-    <div
+
+<div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 flex justify-between items-center">
+    <%# <div class="absolute left-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center bg-mainYellow p-4 rounded-full hover:shadow-2xl"> %>
+  <h1 class="text-3xl font-bold mb-2">My Bookmarks</h1>
+</div>
+
+<%= render "bookmarks_info" %>
+
+    <%# <div
       id="scrollContainer"
       class="flex flex-no-wrap overflow-x-scroll scrolling-touch items-start p-40 scrollbar-hide md:scrollbar-default"
-    >
-      <%= render "bookmarks_info" %>
-    </div>
-  </div>
-
-</section>
+    > %>
