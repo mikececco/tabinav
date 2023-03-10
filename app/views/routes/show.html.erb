@@ -1,9 +1,9 @@
-<div class="sticky top-0 bg-white border-b-2 z-10">
+<div data-controller="change-hotel" class="sticky top-0 bg-white border-b-2 z-10">
   <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 flex justify-between items-center">
   <div class="w-1/2">
     <h1 class="text-3xl font-bold mb-2">Your Route</h1>
     <h4 class="text-gray-600 mb-2">Your Budget: €<%= @route.budget %></h4>
-    <h4 class="text-gray-600 mb-2">Total Price: €<%= @route.total_price %></h4>
+    <h4 class="text-gray-600 mb-2" data-change-hotel-target="price">Total Price: €<%= @route.total_price %></h4>
   </div>
     <%= simple_form_for [@route, @bookmark] do |f| %>
       <div class="flex items-center">
@@ -34,10 +34,10 @@
         <p class="text-gray-600 mb-2"><%= day.description %></p>
         <p class="text-gray-600 font-medium"><%= day.price == 0 ? "No entrance fee" : "Entrance fee: €#{day.price}" %></p>
         <br>
-        <h4 class="text-lg font-medium mb-2">Accommodation: <%= day.name_hotel %></h4>
-        <p class="text-gray-600 mb-2"><%= day.description_hotel %></p>
-        <p class="text-gray-600 font-medium">Price: €<%= day.price_hotel %></p>
-        <%= simple_form_for day do |f| %>
+        <div data-change-hotel-target="hotel">
+          <%= render "days/hotel_info", day: day %>
+        </div>
+        <%= simple_form_for day, html: { data: { action: "submit->change-hotel#update" }} do |f| %>
           <%= f.submit "Upgrade Accommodation", class: "my-4 px-4 py-2 bg-mainYellow text-white rounded-lg hover:bg-darkerYellow focus:bg-darkerYellow focus:outline-none" %>
         <% end %>
       </div>
