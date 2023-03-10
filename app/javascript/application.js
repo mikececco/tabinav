@@ -1,9 +1,22 @@
 // Entry point for the build script in your package.json
+
+//=require_tree
 import "@hotwired/turbo-rails"
 import "./controllers"
 import "flowbite"
 import "flowbite/dist/flowbite.turbo.js";
 import mapboxgl from 'mapbox-gl';
+import { displayLogo } from "./searchanimation"
+
+console.log("asfasf")
+
+document.addEventListener("turbo:load", () => {
+  const btn = document.querySelector(".form-submit")
+  console.log(btn)
+  btn.addEventListener("click", () => {
+    displayLogo()
+  })
+})
 
 //
 // *= require mapbox-gl
