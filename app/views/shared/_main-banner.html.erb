@@ -84,7 +84,7 @@
           </div>
           <br>
           <div class="relative px-2">
-            <%= f.input :budget, required: true, :collection => %w[Anywhere Nick Jason Tim], class: "border border-gray-50 text-gray-900 font-semibold rounded-full focus:border-gray-50 focus:placeholder-black focus:ring-gray-50 block w-full pl-10 p-2.5", id:'end_date', label: false, placeholder:"To" %>
+            <%= f.input :destination, as: :string, placeholder: "Anywhere", class: "border border-gray-50 text-gray-900 font-semibold rounded-full focus:border-gray-50 focus:placeholder-black focus:ring-gray-50 block w-full pl-10 p-2.5", id:'destination', label: false %>
           </div>
         </div>
         <%= f.button :button, class: "p-2.5 ml-2 text-sm font-medium text-mainYellow hover:text-white bg-white hover:bg-darkerYellow rounded-full border" do %>
