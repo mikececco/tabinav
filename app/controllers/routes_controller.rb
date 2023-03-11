@@ -52,12 +52,21 @@ class RoutesController < ApplicationController
 
   def generate_days(route)
     destination = route.destination == "" ? Route.all.sample : route.destination
-    @route.hotel_pref = ["luxury hotel", "3-star hotel", "cheapest accommodation"].sample
-    no_of_people = 2 if no_of_people == nil
+    route.no_of_people = 2 if route.no_of_people == nil
+    rooms = route.no_of_people.fdiv(2).ceil
+    route.hotel_pref = case route.budget / rooms / route.no_of_people
+      when 0...100 then "cheapest accommodation"
+      when 100...150 then "3-Star Hotel"
+      when 150...200 then "4-Star Hotel"
+      else "Luxury Hotel"
+    end
 
+    route.hotel_pref = ["luxury hotel", "3-star hotel", "cheapest accommodation"].sample
     no_of_days = (route.end_date - route.start_date + 1).to_i
     country_array = []
-    # with price less than €#{route.budget / no_of_days - 20}.
+    hotel_price = route.budget / no_of_days / rooms - 20 * route.no_of_people
+    # with price less than €#{route.budget / no_of_days - 20 * no_of_people}.
+    # Choose #{@route.hotel_pref}.
 
     @response = ChatgptService.call("
       I want to go on a trip around #{destination}.
@@ -65,7 +74,7 @@ class RoutesController < ApplicationController
       The itinerary will be #{no_of_days} days long.
       Give itinerary for each day. Take travelling time into account.
       Suggest places to visit, convert all prices to euro.
-      Choose #{@route.hotel_pref}.
+      Choose a hotel with price from €#{hotel_price * 0.9} to €#{hotel_price} per night.
       Same hotel in the same city.
       Include coordinates of the places recommended.
       Specify the city and country.
@@ -141,13 +150,13 @@ class RoutesController < ApplicationController
       day.description_hotel = hash["day#{i + 1}"]["hotel"]["description"]
       day.price_hotel = hash["day#{i + 1}"]["hotel"]["price"]
       day.room_type = hash["day#{i + 1}"]["hotel"]["room_type"]
-      day.no_of_rooms = no_of_people.fdiv(hash["day#{i + 1}"]["hotel"]["no_of_people_per_room"]).ceil
+      day.no_of_rooms = route.no_of_people.fdiv(hash["day#{i + 1}"]["hotel"]["no_of_people_per_room"]).ceil
       day.latitude_hotel = hash["day#{i + 1}"]["hotel"]["coordinates"]["latitude"]
       day.longitude_hotel = hash["day#{i + 1}"]["hotel"]["coordinates"]["longitude"]
       day.save
 
       country_array << day.nation unless country_array.include?(day.nation)
-      @route.total_price += ( day.price * no_of_people + day.price_hotel * day.no_of_rooms)
+      @route.total_price += ( day.price * route.no_of_people + day.price_hotel * day.no_of_rooms)
     end
     assign_destination_to_route(route, country_array)
   end
