@@ -16,12 +16,11 @@ User.destroy_all
 
 admin = User.create!(email: "admin@tabinav.com", password: "password", first_name: "Tabinav", last_name: "Yeah", passport_no: "123456789")
 
-
 puts "Email: admin@tabinav.com \nPassword: password"
 puts "---\n"
-puts "Creating 5 routes..."
+puts "Creating 4 routes..."
 
-destinations = ["France", "Dolomites", "California", "New Zealand", "Turkey"]
+destinations = ["France", "Dolomites", "California", "New Zealand"]
 
 destinations.each do |destination|
   start_date = Date.today + 7
