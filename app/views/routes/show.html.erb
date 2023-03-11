@@ -1,7 +1,53 @@
 <%= render "shared/navbar" %>
-<div class="bg-darkYellow">
-  <div class="flex flex-row px-40 mt-8 mb-16">
-    <div class="max-w-5xl mx-auto sm:px-6 lg:px-8">
+<section id="main-banner" class="h-screen w-full flex items-center bg-black">
+  <div class="flex items-center justify-between mx-auto px-16">
+    <div class="w-1/2">
+      <h1 class="text-white">RECAP OF YOUR TRIP</h1>
+      <div class="max-w-md bg-white border border-gray-200 rounded-lg shadow">
+
+        <div class="p-5">
+
+          <dl class="max-w-md text-gray-900 divide-y divide-gray-200 dark:text-white dark:divide-gray-700">
+            <div class="flex flex-col pb-3">
+                <dt class="mb-1 text-gray-500 md:text-lg dark:text-gray-400">Email address</dt>
+                <dd class="text-lg font-semibold">yourname@flowbite.com</dd>
+            </div>
+            <div class="flex flex-col py-3">
+                <dt class="mb-1 text-gray-500 md:text-lg dark:text-gray-400">Home address</dt>
+                <dd class="text-lg font-semibold">92 Miles Drive, Newark, NJ 07103, California, USA</dd>
+            </div>
+            <div class="flex flex-col pt-3">
+                <dt class="mb-1 text-gray-500 md:text-lg dark:text-gray-400">Phone number</dt>
+                <dd class="text-lg font-semibold">+00 123 456 789 / +12 345 678</dd>
+            </div>
+        </dl>
+            <%# <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Summary</h5> %>
+            <%# <h5 class="mb-3 text-md font-normal text-gray-700 dark:text-gray-400"><%= @route.no_of_people people</h5> %>
+            <%# <h5 class="mb-3 text-md font-normal text-gray-700 dark:text-gray-400"><%= @route.hotel_pref s</h5> %>
+            <%# <h5 class="mb-3 text-md font-normal text-gray-700 dark:text-gray-400">Your Budget: €<%= @route.budget </h5> %>
+            <%# <h5 class="mb-3 text-lg font-normal text-gray-700 dark:text-gray-400">Total Price: €<%= @route.total_price </h5> %>
+
+            <%= simple_form_for [@route, @bookmark] do |f| %>
+              <%= f.button :submit, class: "inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" do %>
+                  Bookmark <svg aria-hidden="true" class="w-4 h-4 ml-2 -mr-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+              <% end %>
+            <% end %>
+            <%# <a href="#" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                Read more
+                <svg aria-hidden="true" class="w-4 h-4 ml-2 -mr-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+            </a> %>
+        </div>
+      </div>
+    </div>
+    <div class="basis-3/4 sticky top-0 bg-white w-64 h-64 shadow rounded-lg">
+      <div class="h-full shadow rounded-lg">
+        <div class=" h-full w-full shadow rounded-lg">
+          <%= render "shared/map" %>
+        </div>
+      </div>
+    </div>
+</section>
+<div class="max-w-5xl mx-auto sm:px-6 lg:px-8">
       <% @days.each_with_index do |day, i| %>
         <div class=" border-b-2 mb-6 flex">
           <div class="w-1/2">
@@ -26,50 +72,4 @@
         </div>
       <% end %>
     </div>
-
-    <div class="basis-3/4 sticky top-0 bg-white w-64">
-      <div class="max-w-md bg-white border border-gray-200 rounded-lg shadow">
-        <a href="#">
-            <img class="rounded-t-lg" src="/docs/images/blog/image-1.jpg" alt="" />
-        </a>
-        <div class="p-5">
-
-          <dl class="max-w-md text-gray-900 divide-y divide-gray-200 dark:text-white dark:divide-gray-700">
-            <div class="flex flex-col pb-3">
-                <dt class="mb-1 text-gray-500 md:text-lg dark:text-gray-400">Email address</dt>
-                <dd class="text-lg font-semibold">yourname@flowbite.com</dd>
-            </div>
-            <div class="flex flex-col py-3">
-                <dt class="mb-1 text-gray-500 md:text-lg dark:text-gray-400">Home address</dt>
-                <dd class="text-lg font-semibold">92 Miles Drive, Newark, NJ 07103, California, USA</dd>
-            </div>
-            <div class="flex flex-col pt-3">
-                <dt class="mb-1 text-gray-500 md:text-lg dark:text-gray-400">Phone number</dt>
-                <dd class="text-lg font-semibold">+00 123 456 789 / +12 345 678</dd>
-            </div>
-        </dl>
-            <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Summary</h5>
-            <h5 class="mb-3 text-md font-normal text-gray-700 dark:text-gray-400"><%= @route.no_of_people %> people</h5>
-            <h5 class="mb-3 text-md font-normal text-gray-700 dark:text-gray-400"><%= @route.hotel_pref %>s</h5>
-            <h5 class="mb-3 text-md font-normal text-gray-700 dark:text-gray-400">Your Budget: €<%= @route.budget %></h5>
-            <h5 class="mb-3 text-lg font-normal text-gray-700 dark:text-gray-400">Total Price: €<%= @route.total_price %></h5>
-
-            <%= simple_form_for [@route, @bookmark] do |f| %>
-              <%= f.button :submit, class: "inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" do %>
-                  Bookmark <svg aria-hidden="true" class="w-4 h-4 ml-2 -mr-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-              <% end %>
-            <% end %>
-            <%# <a href="#" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                Read more
-                <svg aria-hidden="true" class="w-4 h-4 ml-2 -mr-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-            </a> %>
-        </div>
-      </div>
-      <div class=" h-52 pt-8">
-        <div class=" h-full w-full shadow rounded-lg">
-          <%= render "shared/map" %>
-        </div>
-      </div>
-    </div>
-  </div>
 </div>
