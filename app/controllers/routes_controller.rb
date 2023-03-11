@@ -1,5 +1,5 @@
 class RoutesController < ApplicationController
-  skip_before_action :authenticate_user!, only: [:index, :show]
+  skip_before_action :authenticate_user!, only: %i[index show]
 
   def index
     if user_signed_in?
@@ -18,7 +18,7 @@ class RoutesController < ApplicationController
       {
         lat: day.latitude,
         lng: day.longitude,
-        info_window_html: render_to_string(partial: "info_window", locals: {day: day}),
+        info_window_html: render_to_string(partial: "info_window", locals: { day: day }),
         # logo_marker_html: render_to_string(partial: "logo_marker", locals: {day: day})
       }
     end
@@ -57,7 +57,7 @@ class RoutesController < ApplicationController
 
     no_of_days = (route.end_date - route.start_date + 1).to_i
     country_array = []
-    #with price less than €#{route.budget / no_of_days - 20}.
+    # with price less than €#{route.budget / no_of_days - 20}.
 
     @response = ChatgptService.call("
       I want to go on a trip around #{destination}.

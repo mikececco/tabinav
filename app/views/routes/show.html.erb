@@ -1,59 +1,75 @@
 <%= render "shared/navbar" %>
-<div class="sticky top-0 bg-white border-b-2 z-10">
-  <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 flex justify-between items-center">
-  <div class="w-1/2">
-    <h1 class="text-3xl font-bold mb-2">Your Route</h1>
-    <h4 class="text-gray-600 mb-2">Your Budget: €<%= @route.budget %></h4>
-    <h4 class="text-gray-600 mb-2">Total Price: €<%= @route.total_price %></h4>
-    <h4 class="text-gray-600 mb-2"><%= @route.no_of_people %> People</h4>
-    <h4 class="text-gray-600 mb-2"><%= @route.hotel_pref %></h4>
-  </div>
-    <%= simple_form_for [@route, @bookmark] do |f| %>
-      <div class="flex items-center">
-        <%= f.submit "Bookmark", class: "px-4 py-2 bg-mainYellow text-white rounded-lg hover:bg-darkerYellow focus:bg-darkerYellow focus:outline-none" %>
-      </div>
-    <% end %>
-  </div>
-
-  <div class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
-    <div class="flex justify-between items-center">
-      <div class="w-1/2 h-0.5 bg-gray-300"></div>
-      <% @days.each do |day| %>
-        <div class="flex items-center ml-4">
-          <div class="w-2 h-2 rounded-full bg-mainYellow"></div>
-          <h4 class="text-gray-600 font-medium text-sm ml-2"><%= day.city %></h4>
+<div class="bg-darkYellow">
+  <div class="flex flex-row px-40 mt-8 mb-16">
+    <div class="max-w-5xl mx-auto sm:px-6 lg:px-8">
+      <% @days.each_with_index do |day, i| %>
+        <div class=" border-b-2 mb-6 flex">
+          <div class="w-1/2">
+            <h4 class="text-2xl font-semibold mb-2">Day <%= i + 1 %> - <%= day.city %>, <%= day.nation %></h4>
+            <h4 class="text-lg font-medium mb-2"><%= day.name %></h4>
+            <p class="text-gray-600 mb-2"><i><%= day.description %></i></p>
+            <p class="text-gray-600 font-medium"><%= day.price == 0 ? "No entrance fee" : "Entrance fee per head: €#{day.price}" %></p>
+            <br>
+            <h4 class="text-lg font-medium mb-2">Accommodation: <br><%= day.name_hotel %> (<%= day.no_of_rooms %> x <%= day.room_type %>)</h4>
+            <p class="text-gray-600 mb-2"><i><%= day.description_hotel %></i></p>
+            <p class="text-gray-600 font-medium">Price: €<%= day.price_hotel %></p>
+            <%= simple_form_for day do |f| %>
+              <%= f.submit "Upgrade Accommodation", class: "my-4 px-4 py-2 bg-mainYellow text-white rounded-lg hover:bg-darkerYellow focus:bg-darkerYellow focus:outline-none" %>
+            <% end %>
+          </div>
+          <div class="w-1/2 flex justify-end">
+            <div class="rounded-lg shadow-lg p-6 h-3/4">
+              <img src="https://source.unsplash.com/random/1200x800/?<%= day.city %>" alt="Image of city" width="300" height="300" class="">
+              <p class="text-sm text-center pt-8"><i>Pic of <%= day.city %></i></p>
+            </div>
+          </div>
         </div>
       <% end %>
     </div>
-  </div>
-</div>
 
-<div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8 mt-20">
-  <% @days.each_with_index do |day, i| %>
-    <div class="my-6 border-b-2 pb-6 flex">
-      <div class="w-1/2">
-        <h4 class="text-2xl font-semibold mb-2">Day <%= i + 1 %> - <%= day.city %>, <%= day.nation %></h4>
-        <h4 class="text-lg font-medium mb-2"><%= day.name %></h4>
-        <p class="text-gray-600 mb-2"><%= day.description %></p>
-        <p class="text-gray-600 font-medium"><%= day.price == 0 ? "No entrance fee" : "Entrance fee per head: €#{day.price}" %></p>
-        <br>
-        <h4 class="text-lg font-medium mb-2">Accommodation: <%= day.name_hotel %> (<%= day.no_of_rooms %> x <%= day.room_type %>)</h4>
-        <p class="text-gray-600 mb-2"><%= day.description_hotel %></p>
-        <p class="text-gray-600 font-medium">Price: €<%= day.price_hotel %></p>
-        <%= simple_form_for day do |f| %>
-          <%= f.submit "Upgrade Accommodation", class: "my-4 px-4 py-2 bg-mainYellow text-white rounded-lg hover:bg-darkerYellow focus:bg-darkerYellow focus:outline-none" %>
-        <% end %>
-      </div>
-      <div class="w-1/2 flex justify-end">
-        <div class="max-w-md rounded-lg shadow-lg p-6">
-          <img src="https://source.unsplash.com/random/1200x800/?<%= day.city %>" alt="Image of city" width="500" height="600">
+    <div class="basis-3/4 sticky top-0 bg-white w-64">
+      <div class="max-w-md bg-white border border-gray-200 rounded-lg shadow">
+        <a href="#">
+            <img class="rounded-t-lg" src="/docs/images/blog/image-1.jpg" alt="" />
+        </a>
+        <div class="p-5">
+
+          <dl class="max-w-md text-gray-900 divide-y divide-gray-200 dark:text-white dark:divide-gray-700">
+            <div class="flex flex-col pb-3">
+                <dt class="mb-1 text-gray-500 md:text-lg dark:text-gray-400">Email address</dt>
+                <dd class="text-lg font-semibold">yourname@flowbite.com</dd>
+            </div>
+            <div class="flex flex-col py-3">
+                <dt class="mb-1 text-gray-500 md:text-lg dark:text-gray-400">Home address</dt>
+                <dd class="text-lg font-semibold">92 Miles Drive, Newark, NJ 07103, California, USA</dd>
+            </div>
+            <div class="flex flex-col pt-3">
+                <dt class="mb-1 text-gray-500 md:text-lg dark:text-gray-400">Phone number</dt>
+                <dd class="text-lg font-semibold">+00 123 456 789 / +12 345 678</dd>
+            </div>
+        </dl>
+            <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Summary</h5>
+            <h5 class="mb-3 text-md font-normal text-gray-700 dark:text-gray-400"><%= @route.no_of_people %> people</h5>
+            <h5 class="mb-3 text-md font-normal text-gray-700 dark:text-gray-400"><%= @route.hotel_pref %>s</h5>
+            <h5 class="mb-3 text-md font-normal text-gray-700 dark:text-gray-400">Your Budget: €<%= @route.budget %></h5>
+            <h5 class="mb-3 text-lg font-normal text-gray-700 dark:text-gray-400">Total Price: €<%= @route.total_price %></h5>
+
+            <%= simple_form_for [@route, @bookmark] do |f| %>
+              <%= f.button :submit, class: "inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" do %>
+                  Bookmark <svg aria-hidden="true" class="w-4 h-4 ml-2 -mr-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+              <% end %>
+            <% end %>
+            <%# <a href="#" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                Read more
+                <svg aria-hidden="true" class="w-4 h-4 ml-2 -mr-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+            </a> %>
         </div>
       </div>
-    </div>
-  <% end %>
-  <div class=" h-96 flex items-center">
-    <div class=" h-full w-full">
-      <%= render "shared/map" %>
+      <div class=" h-52 pt-8">
+        <div class=" h-full w-full shadow rounded-lg">
+          <%= render "shared/map" %>
+        </div>
+      </div>
     </div>
   </div>
 </div>
