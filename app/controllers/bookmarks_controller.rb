@@ -12,11 +12,26 @@ class BookmarksController < ApplicationController
   def create
     @bookmark = Bookmark.new
     @route = Route.find(params[:route_id])
-    @bookmark.route = @route
-    if @bookmark.save
-      redirect_to bookmarks_path
+    if @route.user == current_user
+      @bookmark.route = @route
+      if @bookmark.save
+        redirect_to bookmarks_path
+      end
     else
-      raise
+      new_route = @route.dup
+      # add option to change dates
+      new_route.user = current_user
+      if new_route.save
+        @route.days.each do |day|
+          new_day = day.dup
+          new_day.route = new_route
+          new_day.save
+        end
+        @bookmark.route = new_route
+        if @bookmark.save
+          redirect_to bookmarks_path
+        end
+      end
     end
   end
 
