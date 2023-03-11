@@ -42,14 +42,14 @@ class DaysController < ApplicationController
       Respond with just the entire response in JSON.
       Example response:
       [{
-        'hotel': {
-          'name': 'Crowne Plaza Amsterdam Zuid',
-          'price': 110,
-          'description': '5 star hotel with a sky bar and an indoor swimming pool.',
-          'coordinates': {
-          'latitude': 56.358468,
-          'longitude': 4.881119
-          }
+        'name': 'Crowne Plaza Amsterdam Zuid',
+        'room_type': 'Twin Room',
+        'no_of_people_per_room': 2,
+        'price': 110,
+        'description': '5 star hotel located in the east of Amsterdam, it has a lively bar, a private garden, a restaurant and a terrace. It is within walking distance of many restaurants, bars and clubs.',
+        'coordinates': {
+        'latitude': 56.358468,
+        'longitude': 4.881119
         }
       }]
       Respond just with the JSON.
@@ -59,12 +59,14 @@ class DaysController < ApplicationController
     @day.name_hotel = hash["hotel"]["name"]
     @day.description_hotel = hash["hotel"]["description"]
     @day.price_hotel = hash["hotel"]["price"]
+    @day.room_type = hash["day#{i + 1}"]["hotel"]["room_type"]
+    @day.no_of_rooms = no_of_people.fdiv(hash["day#{i + 1}"]["hotel"]["no_of_people_per_room"]).ceil
     @day.latitude_hotel = hash["hotel"]["coordinates"]["latitude"]
     @day.longitude_hotel = hash["hotel"]["coordinates"]["longitude"]
     if @day.save
       route = @day.route
       redirect_to route_path(route), status: :see_other
-      route.total_price += (@day.price_hotel - old_price)
+      route.total_price += (@day.price_hotel - old_price) * @day.no_of_rooms
       route.save
     end
 

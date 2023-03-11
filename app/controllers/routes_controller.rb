@@ -37,36 +37,40 @@ class RoutesController < ApplicationController
     @route = Route.new(route_params)
     @route.user = current_user
     if @route.save
-      # maybe redirect to other pages first while waiting for api?
       generate_days(@route)
     end
-    @route.destroy if @route.destination == nil
+    Route.all.each do |route|
+      route.destroy if @route.destination == nil
+    end
   end
 
   private
 
   def route_params
-    params.require(:route).permit(:budget, :start_date, :end_date, :destination)
+    params.require(:route).permit(:budget, :start_date, :end_date, :destination, :no_of_people, :hotel_pref)
   end
 
   def generate_days(route)
     destination = route.destination == "" ? Route.all.sample : route.destination
-    # budget = route.budget == nil ? Route.all.sample : route.destination
+    @route.hotel_pref = ["luxury hotel", "3-star hotel", "cheapest accommodation"].sample
+    no_of_people = 2 if no_of_people == nil
+
     no_of_days = (route.end_date - route.start_date + 1).to_i
     country_array = []
+    #with price less than €#{route.budget / no_of_days - 20}.
 
     @response = ChatgptService.call("
       I want to go on a trip around #{destination}.
       I will be departing the #{route.start_date} and leaving on the #{route.end_date}.
-      The itinerary will be #{no_of_days} days long. Distance with the previous day should be less than 100km.
-      Give itinerary for each day.
+      The itinerary will be #{no_of_days} days long.
+      Give itinerary for each day. Take travelling time into account.
       Suggest places to visit, convert all prices to euro.
-      Choose hotels with price less than €#{route.budget / no_of_days - 20}.
+      Choose #{@route.hotel_pref}.
       Same hotel in the same city.
       Include coordinates of the places recommended.
       Specify the city and country.
       Use only english language.
-      Keep the description of the place within 200-300 characters.
+      Keep the description of the place within 250-300 characters.
       Be creative and inspire me.
       Respond with just the entire response in JSON.
       Example response for 2 stops:
@@ -85,8 +89,10 @@ class RoutesController < ApplicationController
           }
           'hotel': {
             'name': 'Crowne Plaza Amsterdam Zuid',
+            'room_type': 'Twin Room',
+            'no_of_people_per_room': 2,
             'price': 110,
-            'description': '5 star hotel with a sky bar and an indoor swimming pool.',
+            'description': '5 star hotel located in the east of Amsterdam, it has a lively bar, a private garden, a restaurant and a terrace. It is within walking distance of many restaurants, bars and clubs.',
             'coordinates': {
             'latitude': 56.358468,
             'longitude': 4.881119
@@ -107,6 +113,8 @@ class RoutesController < ApplicationController
           }
           'hotel': {
             'name': 'Crowne Plaza Amsterdam Zuid',
+            'room_type': 'Twin Room',
+            'no_of_people_per_room': 2,
             'price': 110,
             'description': '5 star hotel with a sky bar and an indoor swimming pool.',
             'coordinates': {
@@ -132,12 +140,14 @@ class RoutesController < ApplicationController
       day.name_hotel = hash["day#{i + 1}"]["hotel"]["name"]
       day.description_hotel = hash["day#{i + 1}"]["hotel"]["description"]
       day.price_hotel = hash["day#{i + 1}"]["hotel"]["price"]
+      day.room_type = hash["day#{i + 1}"]["hotel"]["room_type"]
+      day.no_of_rooms = no_of_people.fdiv(hash["day#{i + 1}"]["hotel"]["no_of_people_per_room"]).ceil
       day.latitude_hotel = hash["day#{i + 1}"]["hotel"]["coordinates"]["latitude"]
       day.longitude_hotel = hash["day#{i + 1}"]["hotel"]["coordinates"]["longitude"]
       day.save
 
       country_array << day.nation unless country_array.include?(day.nation)
-      @route.total_price += ( day.price + day.price_hotel)
+      @route.total_price += ( day.price * no_of_people + day.price_hotel * day.no_of_rooms)
     end
     assign_destination_to_route(route, country_array)
   end
