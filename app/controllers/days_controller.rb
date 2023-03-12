@@ -56,13 +56,13 @@ class DaysController < ApplicationController
     ")
     hash = JSON.parse(@response).first
 
-    @day.name_hotel = hash["hotel"]["name"]
-    @day.description_hotel = hash["hotel"]["description"]
-    @day.price_hotel = hash["hotel"]["price"]
-    @day.room_type = hash["day#{i + 1}"]["hotel"]["room_type"]
-    @day.no_of_rooms = no_of_people.fdiv(hash["day#{i + 1}"]["hotel"]["no_of_people_per_room"]).ceil
-    @day.latitude_hotel = hash["hotel"]["coordinates"]["latitude"]
-    @day.longitude_hotel = hash["hotel"]["coordinates"]["longitude"]
+    @day.name_hotel = hash["name"]
+    @day.description_hotel = hash["description"]
+    @day.price_hotel = hash["price"]
+    @day.room_type = hash["room_type"]
+    @day.no_of_rooms = @day.route.no_of_people.fdiv(hash["no_of_people_per_room"]).ceil
+    @day.latitude_hotel = hash["coordinates"]["latitude"]
+    @day.longitude_hotel = hash["coordinates"]["longitude"]
     if @day.save
       route = @day.route
       redirect_to route_path(route), status: :see_other

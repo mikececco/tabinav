@@ -51,31 +51,34 @@ class RoutesController < ApplicationController
   end
 
   def generate_days(route)
-    destination = route.destination == "" ? Route.all.sample : route.destination
+    destination = route.destination == "" ? Route.all.sample.days.sample.city : route.destination
     route.no_of_people = 2 if route.no_of_people == nil
+
     rooms = route.no_of_people.fdiv(2).ceil
-    route.hotel_pref = case route.budget / rooms / route.no_of_people
-      when 0...100 then "cheapest accommodation"
-      when 100...150 then "3-Star Hotel"
-      when 150...200 then "4-Star Hotel"
-      else "Luxury Hotel"
+    no_of_days = (route.end_date - route.start_date + 1).to_i
+    hotel_price = (route.budget - (15 * route.no_of_people * no_of_days)) / no_of_days / rooms
+    hotel_description = case route.budget / rooms / route.no_of_people
+      when 0...30 then "Choose a hostel to stay."
+      when 300..1000 then "Choose a 5-star hotel."
+      else "Choose a hotel with price from €#{hotel_price * 0.9} to €#{hotel_price}."
     end
 
-    route.hotel_pref = ["luxury hotel", "3-star hotel", "cheapest accommodation"].sample
-    no_of_days = (route.end_date - route.start_date + 1).to_i
+    ["luxury hotel", "3-star hotel", "cheapest accommodation"].sample
     country_array = []
-    hotel_price = route.budget / no_of_days / rooms - 20 * route.no_of_people
+
     # with price less than €#{route.budget / no_of_days - 20 * no_of_people}.
     # Choose #{@route.hotel_pref}.
+    # I would like to stay 3 days in one city.
+
 
     @response = ChatgptService.call("
-      I want to go on a trip around #{destination}.
+      I want to go on a vacation in #{destination} and #{(no_of_days / 4).floor} nearby cities.
       I will be departing the #{route.start_date} and leaving on the #{route.end_date}.
       The itinerary will be #{no_of_days} days long.
-      Give itinerary for each day. Take travelling time into account.
+      Give practical itinerary. Take travelling time into account.
       Suggest places to visit, convert all prices to euro.
-      Choose a hotel with price from €#{hotel_price * 0.9} to €#{hotel_price} per night.
-      Same hotel in the same city.
+      #{hotel_description}
+      Same accommodation in the same city.
       Include coordinates of the places recommended.
       Specify the city and country.
       Use only english language.
@@ -125,7 +128,127 @@ class RoutesController < ApplicationController
             'room_type': 'Twin Room',
             'no_of_people_per_room': 2,
             'price': 110,
-            'description': '5 star hotel with a sky bar and an indoor swimming pool.',
+            'description': '5 star hotel located in the east of Amsterdam, it has a lively bar, a private garden, a restaurant and a terrace. It is within walking distance of many restaurants, bars and clubs.',
+            'coordinates': {
+            'latitude': 56.358468,
+            'longitude': 4.881119
+            }
+          }
+        }}, {
+        'day3': {
+          'city': 'Brussels',
+          'country': 'Belgium',
+          'activity': {
+            'name': 'Grand Place',
+            'price': 0,
+            'description': 'Much of the square's elegant character is due to the unique architecture of its elegant Gildehuizen (guild houses) with their magnificent gables, pilasters, and balustrades, ornately carved stonework, and rich gold decoration.',
+            'coordinates': {
+            'latitude': 52.358468,
+            'longitude': 4.881119
+            }
+          }
+          'hotel': {
+            'name': 'Sleep Well Youth Hostel',
+            'room_type': 'Single bed in Dormitory',
+            'no_of_people_per_room': 1,
+            'price': 25,
+            'description': 'Located in the heart of Brussels, 10 minutes’ walk from Grand Place and Gare du Nord and 100m from the Rogier Metro Station and a shopping center, Sleep Well is the ideal starting point to explore the European capital. All rooms are fully renovated and equipped with bathroom and private toilet.',
+            'coordinates': {
+            'latitude': 56.358468,
+            'longitude': 4.881119
+            }
+          }
+        }}, {
+        'day4': {
+          'city': 'Brussels',
+          'country': 'Belgium',
+          'activity': {
+            'name': 'Grand Place',
+            'price': 0,
+            'description': 'Much of the square's elegant character is due to the unique architecture of its elegant Gildehuizen (guild houses) with their magnificent gables, pilasters, and balustrades, ornately carved stonework, and rich gold decoration.',
+            'coordinates': {
+            'latitude': 52.358468,
+            'longitude': 4.881119
+            }
+          }
+          'hotel': {
+            'name': 'Sleep Well Youth Hostel',
+            'room_type': 'Single bed in Dormitory',
+            'no_of_people_per_room': 1,
+            'price': 25,
+            'description': 'Located in the heart of Brussels, 10 minutes’ walk from Grand Place and Gare du Nord and 100m from the Rogier Metro Station and a shopping center, Sleep Well is the ideal starting point to explore the European capital. All rooms are fully renovated and equipped with bathroom and private toilet.',
+            'coordinates': {
+            'latitude': 56.358468,
+            'longitude': 4.881119
+            }
+          }
+        }}, {
+        'day5': {
+          'city': 'Brussels',
+          'country': 'Belgium',
+          'activity': {
+            'name': 'Grand Place',
+            'price': 0,
+            'description': 'Much of the square's elegant character is due to the unique architecture of its elegant Gildehuizen (guild houses) with their magnificent gables, pilasters, and balustrades, ornately carved stonework, and rich gold decoration.',
+            'coordinates': {
+            'latitude': 52.358468,
+            'longitude': 4.881119
+            }
+          }
+          'hotel': {
+            'name': 'Sleep Well Youth Hostel',
+            'room_type': 'Single bed in Dormitory',
+            'no_of_people_per_room': 1,
+            'price': 25,
+            'description': 'Located in the heart of Brussels, 10 minutes’ walk from Grand Place and Gare du Nord and 100m from the Rogier Metro Station and a shopping center, Sleep Well is the ideal starting point to explore the European capital. All rooms are fully renovated and equipped with bathroom and private toilet.',
+            'coordinates': {
+            'latitude': 56.358468,
+            'longitude': 4.881119
+            }
+          }
+        }}, {
+        'day6': {
+          'city': 'Brussels',
+          'country': 'Belgium',
+          'activity': {
+            'name': 'Grand Place',
+            'price': 0,
+            'description': 'Much of the square's elegant character is due to the unique architecture of its elegant Gildehuizen (guild houses) with their magnificent gables, pilasters, and balustrades, ornately carved stonework, and rich gold decoration.',
+            'coordinates': {
+            'latitude': 52.358468,
+            'longitude': 4.881119
+            }
+          }
+          'hotel': {
+            'name': 'Sleep Well Youth Hostel',
+            'room_type': 'Single bed in Dormitory',
+            'no_of_people_per_room': 1,
+            'price': 25,
+            'description': 'Located in the heart of Brussels, 10 minutes’ walk from Grand Place and Gare du Nord and 100m from the Rogier Metro Station and a shopping center, Sleep Well is the ideal starting point to explore the European capital. All rooms are fully renovated and equipped with bathroom and private toilet.',
+            'coordinates': {
+            'latitude': 56.358468,
+            'longitude': 4.881119
+            }
+          }
+        }}, {
+        'day7': {
+          'city': 'Brussels',
+          'country': 'Belgium',
+          'activity': {
+            'name': 'Grand Place',
+            'price': 0,
+            'description': 'Much of the square's elegant character is due to the unique architecture of its elegant Gildehuizen (guild houses) with their magnificent gables, pilasters, and balustrades, ornately carved stonework, and rich gold decoration.',
+            'coordinates': {
+            'latitude': 52.358468,
+            'longitude': 4.881119
+            }
+          }
+          'hotel': {
+            'name': 'Sleep Well Youth Hostel',
+            'room_type': 'Single bed in Dormitory',
+            'no_of_people_per_room': 1,
+            'price': 25,
+            'description': 'Located in the heart of Brussels, 10 minutes’ walk from Grand Place and Gare du Nord and 100m from the Rogier Metro Station and a shopping center, Sleep Well is the ideal starting point to explore the European capital. All rooms are fully renovated and equipped with bathroom and private toilet.',
             'coordinates': {
             'latitude': 56.358468,
             'longitude': 4.881119
@@ -136,23 +259,23 @@ class RoutesController < ApplicationController
     ")
     @response = JSON.parse(@response)
 
-    @response.each_with_index do |hash, i|
+    @response.each do |hash|
       day = Day.new(route: route)
 
-      day.name = hash["day#{i + 1}"]["activity"]["name"]
-      day.description = hash["day#{i + 1}"]["activity"]["description"]
-      day.price = hash["day#{i + 1}"]["activity"]["price"]
-      day.latitude = hash["day#{i + 1}"]["activity"]["coordinates"]["latitude"]
-      day.longitude = hash["day#{i + 1}"]["activity"]["coordinates"]["longitude"]
-      day.city = hash["day#{i + 1}"]["city"]
-      day.nation = hash["day#{i + 1}"]["country"]
-      day.name_hotel = hash["day#{i + 1}"]["hotel"]["name"]
-      day.description_hotel = hash["day#{i + 1}"]["hotel"]["description"]
-      day.price_hotel = hash["day#{i + 1}"]["hotel"]["price"]
-      day.room_type = hash["day#{i + 1}"]["hotel"]["room_type"]
-      day.no_of_rooms = route.no_of_people.fdiv(hash["day#{i + 1}"]["hotel"]["no_of_people_per_room"]).ceil
-      day.latitude_hotel = hash["day#{i + 1}"]["hotel"]["coordinates"]["latitude"]
-      day.longitude_hotel = hash["day#{i + 1}"]["hotel"]["coordinates"]["longitude"]
+      day.name = hash.values[0]["activity"]["name"]
+      day.description = hash.values[0]["activity"]["description"]
+      day.price = hash.values[0]["activity"]["price"]
+      day.latitude = hash.values[0]["activity"]["coordinates"]["latitude"]
+      day.longitude = hash.values[0]["activity"]["coordinates"]["longitude"]
+      day.city = hash.values[0]["city"]
+      day.nation = hash.values[0]["country"]
+      day.name_hotel = hash.values[0]["hotel"]["name"]
+      day.description_hotel = hash.values[0]["hotel"]["description"]
+      day.price_hotel = hash.values[0]["hotel"]["price"]
+      day.room_type = hash.values[0]["hotel"]["room_type"]
+      day.no_of_rooms = route.no_of_people.fdiv(hash.values[0]["hotel"]["no_of_people_per_room"]).ceil
+      day.latitude_hotel = hash.values[0]["hotel"]["coordinates"]["latitude"]
+      day.longitude_hotel = hash.values[0]["hotel"]["coordinates"]["longitude"]
       day.save
 
       country_array << day.nation unless country_array.include?(day.nation)
