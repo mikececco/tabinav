@@ -6,92 +6,24 @@
         <div class="w-4/12 pr-4 relative">
           <%= render "shared/map" %>
         </div>
-        <div class="w-2/12 pr-4 h-full">
-          <div class="flex flex-col w-full h-full">
-            <div class="flex-1 pb-2">
-              <div class="w-full h-full relative">
-                <img src="https://stackdiary.com/140x100.png" class="absolute top-0 w-full h-full object-cover object-center rounded-lg bg-white">
-              </div>
-            </div>
-            <div class="flex-1 pt-2">
-              <div class="w-full h-full relative">
-                <img src="https://stackdiary.com/140x100.png" class="absolute top-0 w-full h-full object-cover object-bottom rounded-lg bg-white">
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="w-2/12 pr-4 h-full">
-          <div class="flex flex-col w-full h-full">
-            <div class="flex-1 pb-2">
-              <div class="w-full h-full relative">
-                <img src="https://stackdiary.com/140x100.png" class="absolute top-0 w-full h-full object-cover object-center rounded-lg bg-white">
-              </div>
-            </div>
-            <div class="flex-1 pt-2">
-              <div class="w-full h-full relative">
-                <img src="https://stackdiary.com/140x100.png" class="absolute top-0 w-full h-full object-cover object-bottom rounded-lg bg-white">
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="w-2/12 pr-4 h-full">
-          <div class="flex flex-col w-full h-full">
-            <div class="flex-1 pb-2">
-              <div class="w-full h-full relative">
-                <img src="https://stackdiary.com/140x100.png" class="absolute top-0 w-full h-full object-cover object-center rounded-lg bg-white">
-              </div>
-            </div>
-            <div class="flex-1 pt-2">
-              <div class="w-full h-full relative">
-                <img src="https://stackdiary.com/140x100.png" class="absolute top-0 w-full h-full object-cover object-bottom rounded-lg bg-white">
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="w-2/12 h-full">
-          <div class="flex flex-col w-full h-full">
-            <div class="flex-1 pb-2">
-              <div class="w-full h-full relative">
-                <img src="https://stackdiary.com/140x100.png" class="absolute top-0 w-full h-full object-cover object-center rounded-lg bg-white">
-              </div>
-            </div>
-            <div class="flex-1 pt-2">
-              <div class="w-full h-full relative">
-                <img src="https://stackdiary.com/140x100.png" class="absolute top-0 w-full h-full object-cover object-bottom rounded-lg bg-white">
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
-
-
       <div class="w-full pt-8 flex flex-col justify-between">
-
         <div>
-
           <h4 class="text-4xl font-semibold mb-2">Your trip</h4>
-
           <div class="flex flex-wrap text-center pt-4 mb-2">
             <% @days.each_with_index do |day, i| %>
                 <div class="mr-2 mb-2 rounded-full px-3 py-1 text-xs bg-green-400 text-green-900"><%= day.nation %></div>
             <% end %>
           </div>
-
           <ul class="text-xs mt-4 list-disc list-inside text-gray-50 leading-relaxed">
             <% @days.each_with_index do |day, i| %>
               <li class="text-lg font-semibold">Day <%= i + 1 %> - <%= day.city %>, <%= day.nation %></li>
             <% end %>
           </ul>
         </div>
-
-        <div class="w-full sm:flex-1 grid gap-4 grid-cols-2 pt-6">
-
-          <a href="https://stackdiary.com/" class="flex items-center justify-center text-center relative text-white font-bold text-sm bg-gray-200 text-gray-800 px-8 py-3 rounded-lg shadow-lg hover:shadow-none hover:opacity-75">Preview</a>
-
+        <div class="w-full pt-6">
           <%= simple_form_for [@route, @bookmark] do |f| %>
-            <%= f.button :submit, "Bookmark", class: "cursor-pointer w-full block text-center relative text-white font-bold text-sm bg-teal-800 px-4 py-3 rounded-lg shadow-lg hover:shadow-none hover:opacity-75" do %>
-                Bookmark <svg aria-hidden="true" class="w-4 h-4 ml-2 -mr-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-            <% end %>
+            <%= f.button :submit, "Bookmark", class: "cursor-pointer w-full block text-center relative text-white font-bold text-sm bg-teal-800 px-4 py-3 rounded-lg shadow-lg hover:shadow-none hover:opacity-75"%>
           <% end %>
         </div>
       </div>
@@ -99,9 +31,9 @@
   </div>
   <div class="flex items-center justify-between max-w-5xl mx-auto">
 </section>
-<div class="max-w-5xl mx-auto pt-16">
+<div class="container mx-auto p-8 px-40">
       <% @days.each_with_index do |day, i| %>
-        <div class=" border-b-2 mb-10 flex">
+        <div class=" border-b-2 rounded-lg mb-10 flex p-8 hover:shadow-2xl hover:scale-110 transition duration-1000 ease-in-out">
           <div class="w-1/2">
             <h4 class="text-2xl font-semibold mb-2">Day <%= i + 1 %> - <%= day.city %>, <%= day.nation %></h4>
             <h4 class="text-lg font-medium mb-2"><%= day.name %></h4>
