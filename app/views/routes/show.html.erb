@@ -1,26 +1,34 @@
 <%= render "shared/navbar" %>
-<section id="main-banner" class="h-4/5 w-full items-center bg-black">
-  <div class=" bg-transparent text-gray-100 p-16" style="cursor: auto;">
+<section id="main-banner" class="h-screen w-full items-center bg-black">
+    <%= video_tag "airport.mp4", autoplay: :autoplay, loop: :loop, muted: :muted, class: "w-full h-full object-cover absolute z-0" %>
+
+  <div class="container mx-auto p-8 px-40 relative z-10" style="cursor: auto;">
     <div class="flex flex-wrap items-center">
-      <div class="flex w-full h-32 md:h-64 lg:h-72">
-        <div class="w-4/12 pr-4 relative">
-          <%= render "shared/map" %>
-        </div>
-      </div>
       <div class="w-full pt-8 flex flex-col justify-between">
-        <div>
-          <h4 class="text-4xl font-semibold mb-2">Your trip</h4>
-          <div class="flex flex-wrap text-center pt-4 mb-2">
-            <% @days.each_with_index do |day, i| %>
-                <div class="mr-2 mb-2 rounded-full px-3 py-1 text-xs bg-green-400 text-green-900"><%= day.nation %></div>
-            <% end %>
+
+        <div class="flex flex-inline justify-between">
+          <div>
+            <h4 class="text-4xl font-semibold mb-2">Your trip</h4>
+            <div class="flex flex-wrap text-center pt-4 mb-2">
+              <% @days.each_with_index do |day, i| %>
+                  <div class="mr-2 mb-2 rounded-full px-3 py-1 text-xs bg-green-400 text-green-900">
+                    <%= day.nation %>
+                  </div>
+              <% end %>
+            </div>
+            <ul class="text-xs mt-4 list-disc list-inside text-gray-50 leading-relaxed">
+              <% @days.each_with_index do |day, i| %>
+                <li class="text-lg font-semibold">Day <%= i + 1 %> - <%= day.city %>, <%= day.nation %></li>
+              <% end %>
+            </ul>
           </div>
-          <ul class="text-xs mt-4 list-disc list-inside text-gray-50 leading-relaxed">
-            <% @days.each_with_index do |day, i| %>
-              <li class="text-lg font-semibold">Day <%= i + 1 %> - <%= day.city %>, <%= day.nation %></li>
-            <% end %>
-          </ul>
+
+            <div class="w-4/12 relative">
+              <%= render "shared/map" %>
+            </div>
+
         </div>
+
         <div class="w-full pt-6">
           <%= simple_form_for [@route, @bookmark] do |f| %>
             <%= f.button :submit, "Bookmark", class: "cursor-pointer w-full block text-center relative text-white font-bold text-sm bg-teal-800 px-4 py-3 rounded-lg shadow-lg hover:shadow-none hover:opacity-75"%>
@@ -29,8 +37,8 @@
       </div>
     </div>
   </div>
-  <div class="flex items-center justify-between max-w-5xl mx-auto">
 </section>
+
 <div class="container mx-auto p-8 px-40">
       <% @days.each_with_index do |day, i| %>
         <div class=" border-b-2 rounded-lg mb-10 flex p-8 hover:shadow-2xl hover:scale-110 transition duration-1000 ease-in-out">
