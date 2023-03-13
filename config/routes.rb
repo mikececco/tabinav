@@ -10,7 +10,7 @@ Rails.application.routes.draw do
     resources :bookings, only: [:new, :create]
   end
 
-  resources :bookings, only: %i[index edit update destroy]
+  resources :bookings, only: %i[index show edit update destroy]
   resources :days, only: %i[index update destroy]
 
   # resources :bookmarks
