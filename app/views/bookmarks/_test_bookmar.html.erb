@@ -1,22 +1,14 @@
 <% @bookmarks.each do |bookmark| %>
-<a href="routes/<%= bookmark.route.id %>">
+<div class="w-full w-80 rounded-lg pb-8 p-4">
+  <a href="routes/<%= bookmark.route.id %>">
     <div class="c-card block bg-white shadow-md hover:shadow-xl rounded-lg overflow-hidden">
       <div class="relative pb-48 overflow-hidden">
-        <img
-            class="absolute inset-0 h-full w-full object-cover p-6"
-            src="https://source.unsplash.com/random/1200x800/?<%= bookmark.route.days.first.city %>"
-            alt="Image of city"
-            <%# width="500"
-            height="600" %>
-          >
+        <img class="absolute inset-0 h-full w-full object-cover p-6" src="https://source.unsplash.com/random/1200x800/?<%= bookmark.route.days.first.city %>" alt="Image of city">
       </div>
       <div class="p-4">
-        <%# <span class="inline-block px-2 py-1 leading-none bg-orange-200 text-orange-800 rounded-full font-semibold uppercase tracking-wide text-xs">Highlight</span> %>
-        <h2 class="mt-2 mb-2  font-bold"><%= bookmark.route.destination %></h2>
+        <h2 class="mt-2 mb-2 font-bold"><%= bookmark.route.destination %></h2>
         <% bookmark.route.days.each do |day| %>
-          <p class="text-sm">
-            <%= day.name %>
-          </p>
+          <p class="text-sm"><%= day.name %></p>
         <% end %>
         <a href="routes/<%= bookmark.route.id %>" class="font-medium text-sm text-darkerYellow mt-2">
           Explore<span class="text-darkerYellow">&hellip;</span>
@@ -40,23 +32,24 @@
             <button id="bookButton" data-modal-target="defaultModal" data-modal-show="defaultModal" class="hover:scale-125 float-left mr-2 bg-mainYellow hover:bg-darkerYellow text-white text-sm font-bold rounded px-2 py-1 hover:scale-110 transition duration-500 ease-in-out">
               Book!
             </button>
-          <!-- Main modal -->
-          <div id="defaultModal" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] md:h-full">
+            <!-- Main modal -->
+            <div id="defaultModal" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] md:h-full">
               <div class="absolute w-1/3 h-full min-w-1/2 md:h-auto">
-                  <!-- Modal content -->
+                <!-- Modal content -->
                 <%= render "bookings/booking_modal", bookmark: bookmark %>
               </div>
-          </div>
+            </div>
           <% else %>
             <div class="">
-              <p class="block text-black bg-grey-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center ">
+              <p class="block text-black bg-grey-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
                 You have already booked this trip!
               </p>
-              <%= link_to "Cancel Booking", booking_path(bookmark.booking), data: {turbo_method: :delete, turbo_confirm: "Are you sure?", class: "block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"} %>
-            </div>
-          <% end %>
-        </div>
+            <%= link_to "Cancel Booking", booking_path(bookmark.booking), data: {turbo_method: :delete, turbo_confirm: "Are you sure?", class: "block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"} %>
+          </div>
+        <% end %>
       </div>
     </div>
-</a>
+  </a>
+</div>
+</div>
 <% end %>
