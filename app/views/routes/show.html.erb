@@ -9,6 +9,9 @@
         <div class="flex flex-inline justify-between pb-10">
           <div>
             <h4 class="text-4xl font-semibold mb-2 text-white">Your trip</h4>
+            <h5>Total Price: <%= @route.total_price %></h5>
+            <h5>Budget: <%= @route.budget %></h5>
+            <%= @hotel_average_price %>
             <div class="flex flex-wrap text-center pt-4 mb-2">
               <% @days.each_with_index do |day, i| %>
                   <div class="mr-2 mb-2 rounded-full px-3 py-1 text-xs bg-darkerYellow text-white font-bold">

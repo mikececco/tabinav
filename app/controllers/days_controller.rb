@@ -33,7 +33,7 @@ class DaysController < ApplicationController
     @day = Day.find(params[:id])
     old_price = @day.price_hotel
     @response = ChatgptService.call("
-      I want to find another hotel in #{@day.city} with price about #{@day.price_hotel * 1.5}.
+      I want to find another hotel in #{@day.city} with price about #{@day.price_hotel * 1.2}.
       Convert all prices to euro.
       Include coordinates of the places recommended.
       Use only english language.
@@ -56,20 +56,22 @@ class DaysController < ApplicationController
     ")
     hash = JSON.parse(@response).first
 
-    @day.name_hotel = hash["name"]
-    @day.description_hotel = hash["description"]
-    @day.price_hotel = hash["price"]
-    @day.room_type = hash["room_type"]
-    @day.no_of_rooms = @day.route.no_of_people.fdiv(hash["no_of_people_per_room"]).ceil
-    @day.latitude_hotel = hash["coordinates"]["latitude"]
-    @day.longitude_hotel = hash["coordinates"]["longitude"]
-    if @day.save
-      route = @day.route
-      redirect_to route_path(route), status: :see_other
-      route.total_price += (@day.price_hotel - old_price) * @day.no_of_rooms
-      route.save
+    route = @day.route
+    @days = Day.where(route: route, name_hotel: @day.name_hotel)
+    @days.each do |day|
+      day.name_hotel = hash["name"]
+      day.description_hotel = hash["description"]
+      day.price_hotel = hash["price"]
+      day.room_type = hash["room_type"]
+      day.no_of_rooms = day.route.no_of_people.fdiv(hash["no_of_people_per_room"]).ceil
+      day.latitude_hotel = hash["coordinates"]["latitude"]
+      day.longitude_hotel = hash["coordinates"]["longitude"]
+      if day.save
+        route.total_price += (day.price_hotel - old_price) * day.no_of_rooms
+      end
     end
-
+    route.save
+    redirect_to route_path(route), status: :see_other
   end
 
   private
