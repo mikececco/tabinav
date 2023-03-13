@@ -1,15 +1,12 @@
 <%= render "shared/navbar" %>
 
-<div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 flex justify-between items-center">
-  <h1 class="text-5xl font-bold py-8">My bookmarks</h1>
+<div class="container mx-auto p-8 px-40">
+  <h1 class="text-5xl font-bold py-8">Your bookmarks</h1>
+  <div class="flex flex-wrap -mx-4">
+    <div class="w-full sm:w-1/2 md:w-1/2 xl:w-1/4 p-4 rounded-lg pb-8">
+      <%= render "test_bookmar" %>
+    </div>
+  </div>
 </div>
 
-    <%# <div
-      id="scrollContainer"
-      class="flex flex-no-wrap overflow-x-scroll scrolling-touch items-start py-40 scrollbar-hide md:scrollbar-default"
-    > %>
-      <%= render "bookmarks_info" %>
-      <%= render "test_bookmar" %>
-
     <%# </div> %>
-  </div>
