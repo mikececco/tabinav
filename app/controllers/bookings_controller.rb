@@ -10,12 +10,12 @@ class BookingsController < ApplicationController
   def create
     @bookmark = Bookmark.find(params[:bookmark_id])
     @booking = Booking.new(bookmark: @bookmark)
-    # if @booking.save
+    if @booking.save
     #   mail = User.Mailer.with(user: current_user).welcome.deliver_now
       redirect_to booking_path(@booking)
     # else
     #   raise
-    # end
+    end
   end
 
   def destroy
