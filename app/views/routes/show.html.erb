@@ -9,9 +9,9 @@
         <div class="flex flex-inline justify-between pb-10">
           <div>
             <h4 class="text-4xl font-semibold mb-2 text-white">Your trip</h4>
-            <div class="flex flex-wrap text-center pt-4 mb-2">
+            <div class="flex flex-wra p text-center pt-4 mb-2">
               <% @days.each_with_index do |day, i| %>
-                  <div class="mr-2 mb-2 rounded-full px-3 py-1 text-xs bg-darkerYellow text-white font-bold">
+                  <div class="inline-block px-2 py-1 mr-2 mb-2 px-3 py-1 leading-none bg-orange-200 text-orange-800 rounded-full font-semibold uppercase tracking-wide text-xs">
                     <%= day.nation %>
                   </div>
               <% end %>
@@ -29,7 +29,7 @@
 
         <div class="w-full pt-10">
           <%= simple_form_for [@route, @bookmark] do |f| %>
-            <%= f.button :submit, "Bookmark", class: "sticky top-10 cursor-pointer w-full block text-center relative text-white font-bold bg-teal-800 px-4 py-3 rounded-lg shadow-lg hover:shadow-none hover:opacity-100 opacity-75 transition duration-500 "%>
+            <%= f.button :submit, "Bookmark", class: "sticky top-10 cursor-pointer w-full block text-center relative text-white font-bold bg-mainYellow px-4 py-3 rounded-lg shadow-lg hover:shadow-none hover:opacity-100 opacity-75 transition duration-500 "%>
           <% end %>
         </div>
       </div>
