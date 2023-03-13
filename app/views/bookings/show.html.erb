@@ -1,0 +1,20 @@
+<h1>Booking successful!</h1>
+
+  <h3>Your trip
+    <%= @route.days.each do |day|%>
+    <%= end %>
+    <%= @route.total_price %></h3>
+  <h3>From
+    <strong><%= @booking.start_date %></strong>
+    to
+    <strong><%= @booking.end_date %></strong></h3>
+
+  <p style="color: white;">Price per night: €<%= @booking.total_price %></p>
+</div>
+
+<div class="text-center mb-5 pb-5">
+  <h1><%= link_to bookings_path, class: "btn btn-primary btn-flat rounded-5 text-white" do %>
+    <i class="fa-solid fa-calendar-days"></i>  View My Bookings
+  <% end %></h1>
+</div>
+<br><br>
