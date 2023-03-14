@@ -11,14 +11,14 @@
           <div class="flex flex-inline justify-between pb-10">
             <div>
               <h4 class="text-4xl font-semibold mb-2 text-white">Your trip</h4>
-              <div class="flex flex-wra p text-center pt-4 mb-2">
+              <div data-gpt-response-target="nations" class="flex flex-wra p text-center pt-4 mb-2">
                 <% @days.each_with_index do |day, i| %>
                     <div class="inline-block px-2 py-1 mr-2 mb-2 px-3 py-1 leading-none bg-orange-200 text-orange-800 rounded-full font-semibold uppercase tracking-wide text-xs">
                       <%= day.nation %>
                     </div>
                 <% end %>
               </div>
-              <ul class="text-xs mt-4 list-disc list-inside text-gray-50 leading-relaxed">
+              <ul data-gpt-response-target="cities" class="text-xs mt-4 list-disc list-inside text-gray-50 leading-relaxed">
                 <% @days.each_with_index do |day, i| %>
                   <li class="text-lg font-semibold">Day <%= i + 1 %> - <%= day.city %>, <%= day.nation %></li>
                 <% end %>
