@@ -4,6 +4,10 @@ Rails.application.routes.draw do
   resources :routes, only: %i[index show create] do
     resources :bookmarks, only: [:create]
     resources :days, only: [:create]
+    #For Stripe Payments
+    resources :orders, only: [:show, :create] do
+      resources :payments, only: :new
+    end
   end
 
   resources :bookmarks, only: %i[index edit update destroy] do

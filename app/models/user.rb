@@ -6,7 +6,7 @@ class User < ApplicationRecord
   has_many :routes
   has_many :bookmarks, through: :routes
   has_many :bookings, through: :bookmarks
-
+  has_many :orders
   # validates :first_name, presence: true
   # validates :last_name, presence: true
 end
