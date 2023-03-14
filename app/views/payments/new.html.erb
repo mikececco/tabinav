@@ -1,11 +1,10 @@
 <div class="container">
   <div class="row py-4">
-    <div class="col-md-3"><%= image_tag @order.route.photo_url, width: '100%' %></div>
     <div class="col">
       <h1>Checkout summary</h1>
-      <p>Purchase of <strong><%= @order.route.name %></strong> for <strong><%= humanized_money_with_symbol @order.amount %></strong></p>
+      <p>Purchase of <strong>route <%= @order.route.id %></strong> for <strong><%= humanized_money_with_symbol @order.amount %></strong></p>
       <button id="pay" class="btn btn-primary">Pay</button>
-      <!-- # Commented for the lecture, remove comments.
+
       <script src="https://js.stripe.com/v3/"></script>
       <script>
         const paymentButton = document.getElementById('pay');
@@ -15,7 +14,7 @@
             sessionId: '<%= @order.checkout_session_id %>'
           });
         });
-      </script> -->
+      </script>
     </div>
   </div>
 </div>

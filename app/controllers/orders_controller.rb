@@ -1,24 +1,27 @@
 class OrdersController < ApplicationController
-  
+
   def show
     @order = current_user.orders.find(params[:id])
   end
 
   def create
-    teddy = Teddy.find(params[:route_id])
-    order = Order.create!(route: route, route_sku: route.sku, amount: route.price, state: 'pending', user: current_user)
+    route = Route.find(params[:route_id])
+    order = Order.create!(route: route, amount: 300, state: 'pending', user: current_user)
 
     session = Stripe::Checkout::Session.create(
       payment_method_types: ['card'],
-      line_items: [{
-        name: route.sku,
-        # We can't do .photo_url in our app, using unsplash, need to change later
-        images: [route.photo_url],
-        amount: route.price_cents,
-        currency: 'eur',
-        quantity: 1
-      }],
-      success_url: order_url(order),
+      line_items: [
+        quantity: 1,
+        price_data: {
+          unit_amount: 300,
+          currency: 'eur',
+          product_data: {
+            name: route.id
+          }
+        }
+      ],
+      mode: "payment",
+      success_url: "https://2cf1-92-108-209-229.eu.ngrok.io/orders/#{order.id}",
       cancel_url: order_url(order)
     )
 
