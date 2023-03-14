@@ -16,5 +16,11 @@ application.register("hello", HelloController)
 import MapController from "./map_controller"
 application.register("map", MapController)
 
+import TypedJsController from "./typed_js_controller"
+application.register("typed-js", TypedJsController)
+
+import TypedJsPoemController from "./typed_js_poem_controller"
+application.register("typed-js-poem", TypedJsPoemController)
+
 import WeatherDisplayController from "./weather_display_controller"
 application.register("weather-display", WeatherDisplayController)
