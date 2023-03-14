@@ -18,11 +18,15 @@
                     </div>
                 <% end %>
               </div>
-              <ul class="day-order text-xs mt-4 list-disc list-inside text-gray-50 leading-relaxed" data-controller="sortable">
+              <ul class="day-order text-xs mt-4 list-disc list-inside text-gray-50 leading-relaxed" data-controller="sortable change-list-color">
                 <% @days.each_with_index do |day, i| %>
                   <li data-id="<%= day.id %>" class="text-lg font-semibold">Day <%= i + 1 %> - <%= day.name %><small>, <%= day.city %>, <%= day.nation %></small></li>
                 <% end %>
-                <button data-action="click->sortable#update" type="button">Update Sequence!</button>
+<%# , data: { action: "submit->sortable#update" } %>
+                <%= form_with url: "/update_sequence", method: :patch do |form| %>
+                  <%= form.hidden_field :days_order, id: "day-order" %>
+                  <%= form.submit "Update Sequence", class: "text-lg cursor-pointer transition duration-500 mx-3 px-3 py-2 text-mainYellow rounded-lg hover:bg-darkerYellow hover:text-white focus:outline-none" %>
+                <% end %>
               </ul>
             </div>
               <div class="w-6/12 h-96">
@@ -60,10 +64,10 @@
               <div class="grid justify-items-end">
                 <div class="inline-flex">
                   <%= simple_form_for day, :url => day_upgrade_hotel_path(day) do |f| %>
-                    <%= f.submit "Upgrade accommodation", class: "text-xs cursor-pointer transition duration-500 mx-2 px-3 py-2 text-mainYellow rounded-lg hover:bg-darkerYellow hover:text-white focus:outline-none" %>
+                    <%= f.submit "Upgrade Accommodation", class: "text-xs cursor-pointer transition duration-500 mx-2 px-3 py-2 text-mainYellow rounded-lg hover:bg-darkerYellow hover:text-white focus:outline-none" %>
                   <% end %>
                   <%= simple_form_for day, :url => day_downgrade_hotel_path(day) do |f| %>
-                    <%= f.submit "Find a cheaper option", class: "text-xs cursor-pointer transition duration-500 mx-2 px-3 py-2 text-mainYellow rounded-lg hover:bg-darkerYellow hover:text-white focus:outline-none" %>
+                    <%= f.submit "Find a Cheaper Option", class: "text-xs cursor-pointer transition duration-500 mx-2 px-3 py-2 text-mainYellow rounded-lg hover:bg-darkerYellow hover:text-white focus:outline-none" %>
                   <% end %>
                 </div>
               </div>

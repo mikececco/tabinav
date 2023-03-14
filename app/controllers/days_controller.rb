@@ -166,6 +166,15 @@ class DaysController < ApplicationController
   end
 
   def update_sequence
+    days = JSON.parse(params["days_order"])
+    route = Day.find(days.keys.first.to_i).route
+    days.each do |day, sequence|
+      new_day = Day.find(day.to_i)
+      new_day.sequence = sequence
+      new_day.save!
+    end
+    redirect_to route_path(route), status: :see_other
+
     # @day = Day.find(#day id from js)
     # @day.sequence #reassign
 

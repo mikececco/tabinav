@@ -4,6 +4,9 @@
 
 import { application } from "./application"
 
+import ChangeListColorController from "./change_list_color_controller"
+application.register("change-list-color", ChangeListColorController)
+
 import FlatpickrController from "./flatpickr_controller"
 application.register("flatpickr", FlatpickrController)
 
