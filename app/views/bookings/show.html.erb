@@ -1,0 +1,7 @@
+<%= @route.destination %>
+<h1>Pack Advice:</h1>
+<p><%= simple_format(@booking.pack_advice) %></p>
+
+<% @route.days.each do |day| %>
+  <h1><%= day.name_hotel %></h1>
+<% end %>

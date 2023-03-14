@@ -5,7 +5,7 @@ class BookmarksController < ApplicationController
     # test UserMailer
     UserMailer.with(user: current_user).welcome.deliver_now
 
-    @bookmarks = current_user.bookmarks
+    @bookmarks = current_user.bookmarks.order(created_at: :desc).select { |bookmark| bookmark.booking.nil? }
     @booking = Booking.new
   end
 
