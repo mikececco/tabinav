@@ -8,6 +8,7 @@
     "flatpickr": "^4.6.13",
     "flowbite": "^1.6.3",
     "mapbox-gl": "^2.13.0",
+    "sortablejs": "^1.15.0",
     "tailwind-scrollbar-hide": "^1.1.7",
     "webpack": "^5.75.0",
     "webpack-cli": "^5.0.1"

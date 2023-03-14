@@ -12,16 +12,17 @@
             <div>
               <h4 class="text-4xl font-semibold mb-2 text-white">Your trip</h4>
               <div class="flex flex-wra p text-center pt-4 mb-2">
-                <% @days.each_with_index do |day, i| %>
+                <% @countries.each do |country| %>
                     <div class="inline-block px-2 py-1 mr-2 mb-2 px-3 py-1 leading-none bg-orange-200 text-orange-800 rounded-full font-semibold uppercase tracking-wide text-xs">
-                      <%= day.nation %>
+                      <%= country %>
                     </div>
                 <% end %>
               </div>
-              <ul class="text-xs mt-4 list-disc list-inside text-gray-50 leading-relaxed">
+              <ul class="day-order text-xs mt-4 list-disc list-inside text-gray-50 leading-relaxed" data-controller="sortable">
                 <% @days.each_with_index do |day, i| %>
-                  <li class="text-lg font-semibold">Day <%= i + 1 %> - <%= day.city %>, <%= day.nation %></li>
+                  <li data-id="<%= day.id %>" class="text-lg font-semibold">Day <%= i + 1 %> - <%= day.name %><small>, <%= day.city %>, <%= day.nation %></small></li>
                 <% end %>
+                <button data-action="click->sortable#update" type="button">Update Sequence!</button>
               </ul>
             </div>
               <div class="w-6/12 h-96">
@@ -49,15 +50,23 @@
               <p class="text-gray-600 font-medium"><%= day.price == 0 ? "No entrance fee" : "Entrance fee per head: €#{day.price}" %></p>
               <br>
               <div class="flex justify-between bg-darYellow">
-                <h4 class="text-lg font-medium mb-2">Accommodation: <br><%= day.name_hotel %> (<%= day.no_of_rooms %> x <%= day.room_type %>)</h4>
+                <h4 class="text-lg font-medium mb-2">Accommodation: <br><%= day.name_hotel %> <br>(<%= day.no_of_rooms %> x <%= day.room_type %>)</h4>
                 <div class="pt-2" >
                   <p class="text-gray-600 font-medium text-end px-3">Price: €<%= day.price_hotel %></p>
-                  <%= simple_form_for day do |f| %>
-                    <%= f.submit "Upgrade accommodation", class: "text-xs cursor-pointer transition duration-500 ml-10 px-3 py-2 text-mainYellow rounded-lg hover:bg-darkerYellow hover:text-white focus:outline-none" %>
-                  <% end %>
+
                 </div>
               </div>
               <p class="text-gray-600 mb-2"><i><%= day.description_hotel %></i></p>
+              <div class="grid justify-items-end">
+                <div class="inline-flex">
+                  <%= simple_form_for day, :url => day_upgrade_hotel_path(day) do |f| %>
+                    <%= f.submit "Upgrade accommodation", class: "text-xs cursor-pointer transition duration-500 mx-2 px-3 py-2 text-mainYellow rounded-lg hover:bg-darkerYellow hover:text-white focus:outline-none" %>
+                  <% end %>
+                  <%= simple_form_for day, :url => day_downgrade_hotel_path(day) do |f| %>
+                    <%= f.submit "Find a cheaper option", class: "text-xs cursor-pointer transition duration-500 mx-2 px-3 py-2 text-mainYellow rounded-lg hover:bg-darkerYellow hover:text-white focus:outline-none" %>
+                  <% end %>
+                </div>
+              </div>
             </div>
             <div class="w-1/2 flex justify-end">
               <div class="rounded-lg shadow-lg p-6 h-3/4">

@@ -16,5 +16,8 @@ application.register("hello", HelloController)
 import MapController from "./map_controller"
 application.register("map", MapController)
 
+import SortableController from "./sortable_controller"
+application.register("sortable", SortableController)
+
 import WeatherDisplayController from "./weather_display_controller"
 application.register("weather-display", WeatherDisplayController)

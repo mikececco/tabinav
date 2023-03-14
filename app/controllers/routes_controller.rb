@@ -12,7 +12,12 @@ class RoutesController < ApplicationController
   def show
     @route = Route.find(params[:id])
     @bookmark = Bookmark.new
-    @days = @route.days.order(created_at: :asc)
+    @days = @route.days.order(sequence: :asc)
+
+    @countries = []
+    @route.days.each do |day|
+      @countries << day.nation unless @countries.include?(day.nation)
+    end
 
     @markers = @days.map do |day|
       {
@@ -163,6 +168,7 @@ class RoutesController < ApplicationController
           Respond just with the JSON.")
 
         result = JSON.parse(result).first
+        days = 1
 
         hash["days"].times do |i|
           day = Day.new(route: route, city: hash["city"])
@@ -180,6 +186,8 @@ class RoutesController < ApplicationController
           day.price = result["activity#{i + 1}"]["price"]
           day.latitude = result["activity#{i + 1}"]["coordinates"]["latitude"]
           day.longitude = result["activity#{i + 1}"]["coordinates"]["longitude"]
+          day.sequence = days
+          days += 1
 
           day.save
 
