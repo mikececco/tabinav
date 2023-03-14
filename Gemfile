@@ -11,13 +11,11 @@ gem 'erb-formatter'
 gem 'dotenv-rails', groups: [:development, :test]
 gem 'gibbon'
 
-
-
-
-
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 7.0.4", ">= 7.0.4.2"
 
+gem 'money-rails'
+gem 'stripe'
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem "sprockets-rails"
 
