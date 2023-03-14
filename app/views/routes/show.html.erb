@@ -38,8 +38,14 @@
       </div>
     </div>
   </section>
+  
+    <div class="cardscont" data-gpt-response-target="cardcont">
+    wrggwefwefewfewfwefwefwefewfew
+    </div>
+  </div>
 
-  <div class="container mx-auto p-8 px-40">
+<!--
+  <div data-gpt-response-target="card" class="container mx-auto p-8 px-40">
         <% @days.each_with_index do |day, i| %>
           <div class=" border-b-2 rounded-lg mb-10 flex p-8 hover:shadow-2xl hover:scale-110 transition duration-1000 ease-in-out">
             <div class="w-1/2">
@@ -48,7 +54,7 @@
               <p class="text-gray-600 mb-2"><i><%= day.description %></i></p>
               <p class="text-gray-600 font-medium"><%= day.price == 0 ? "No entrance fee" : "Entrance fee per head: €#{day.price}" %></p>
               <br>
-              <div class="flex justify-between bg-darYellow">
+              <div class="flex justify-between bg-darYellow" >
                 <h4 class="text-lg font-medium mb-2">Accommodation: <br><%= day.name_hotel %> (<%= day.no_of_rooms %> x <%= day.room_type %>)</h4>
                 <div class="pt-2" >
                   <p class="text-gray-600 font-medium text-end px-3">Price: €<%= day.price_hotel %></p>
