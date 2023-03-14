@@ -7,8 +7,14 @@ import { application } from "./application"
 import FlatpickrController from "./flatpickr_controller"
 application.register("flatpickr", FlatpickrController)
 
+import GptResponseController from "./gpt_response_controller"
+application.register("gpt-response", GptResponseController)
+
 import HelloController from "./hello_controller"
 application.register("hello", HelloController)
 
 import MapController from "./map_controller"
 application.register("map", MapController)
+
+import WeatherDisplayController from "./weather_display_controller"
+application.register("weather-display", WeatherDisplayController)

@@ -1,19 +1,7 @@
-<h1>Booking successful!</h1>
+<%= @route.destination %>
+<h1>Pack Advice:</h1>
+<p><%= simple_format(@booking.pack_advice) %></p>
 
-  <h3>Your trip
-    <% @route.days.each do |day|%>
-    <%= day.city %>
-    <% end %>
-    <br>
-    €<%=@route.total_price%></h3>
-  <h3>From
-    <strong><%= @route.start_date %></strong>
-    to
-    <strong><%= @route.end_date %></strong></h3>
-
-<div class="text-center mb-5 pb-5">
-  <h1><%= link_to bookings_path, class: "btn btn-primary btn-flat rounded-5 text-black" do %>
-    <i class="fa-solid fa-calendar-days"></i>  View My Bookings
-  <% end %></h1>
-</div>
-<br><br>
+<% @route.days.each do |day| %>
+  <h1><%= day.name_hotel %></h1>
+<% end %>
