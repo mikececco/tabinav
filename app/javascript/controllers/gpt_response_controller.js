@@ -21,19 +21,24 @@ export default class extends Controller {
     Respond just with the JSON.`
 
     const url = 'https://api.openai.com/v1/chat/completions'
+    const headers ={
+      'Content-Type': 'application/json',
+      'Authorization': "Bearer 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"
+    }
+    const body = JSON.stringify({
+      "model": 'gpt-3.5-turbo',
+      "messages": [{ role: 'user', content: text }]
+    })
+
     fetch(url, {
       method: "POST",
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': "Bearer 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"
-      },
-      body: JSON.stringify({
-        "model": 'gpt-3.5-turbo',
-        "messages": [{ role: 'user', content: text }]
-      })
+      headers,
+      body,
     }).then(response => response.json())
-    .then(data => this.addNationsToLabel(data))
-    .then(data => this.addCitiesToList(data))
+    .then(data => {
+      this.addNationsToLabel(data);
+      this.addCitiesToList(data);
+    })
   }
 
       addNationsToLabel(data){
@@ -55,13 +60,9 @@ export default class extends Controller {
         }
         let resp = data['choices'][0]['message']['content'];
         resp = JSON.parse(resp);
-        console.log(resp);
-        // nationsTargets.insertAdjacentHTML('afterbegin', )
         resp.forEach((element, index) => {
-          console.log(element);
           let citiesList = `<li class="text-lg font-semibold">Day ${index + 1} - ${element['city']}, ${element['country']}</li>`
-          this.citiesTarget.insertAdjacentHTML('afterbegin', citiesList);
-        // this.citiesTarget.adjacentHTML("beforeend",data['choices'][0]['message']['content'][0]['city']
+          this.citiesTarget.insertAdjacentHTML('beforeend', citiesList);
       })
     }
 }
