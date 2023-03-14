@@ -1,55 +1,62 @@
-<div class="bg-gray-100 min-h-screen">
-  <div class="max-w-4xl mx-auto px-4 py-12 sm:px-6 lg:px-8">
-    <div class="bg-white shadow overflow-hidden sm:rounded-lg">
-      <div class="px-4 py-5 sm:px-6">
-        <h1 class="text-lg leading-6 font-medium text-gray-900">Booking successful!</h1>
-      </div>
-      <div class="border-t border-gray-200 px-4 py-5 sm:p-0">
-        <dl class="sm:divide-y sm:divide-gray-200">
-          <% @route.days.each do |day|%>
-            <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 sm:py-5">
-              <dt class="text-sm font-medium text-gray-500">
-                <%= day.name_hotel %>, <%= day.city %>
-              </dt>
-              <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                <div class="flex justify-between">
-                  <span>
-                    <%= day.start_date.strftime("%A, %B %d, %Y") %> -
-                    <%= day.end_date.strftime("%A, %B %d, %Y") %>
-                  </span>
-                  <span class="font-bold text-gray-700">
-                    €<%= day.price %>
-                  </span>
-                </div>
-              </dd>
-            </div>
-          <% end %>
-          <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 sm:py-5">
-            <dt class="text-sm font-medium text-gray-500">
-              Total price
-            </dt>
-            <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2 font-bold">
-              €<%=@route.total_price%>
-            </dd>
-          </div>
-          <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 sm:py-5">
-            <dt class="text-sm font-medium text-gray-500">
-              Trip period
-            </dt>
-            <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2 font-bold">
-              <%= @route.start_date.strftime("%A, %B %d, %Y") %> -
-              <%= @route.end_date.strftime("%A, %B %d, %Y") %>
-            </dd>
-          </div>
-        </dl>
-      </div>
-      <div class="px-4 py-3 bg-gray-50 text-right sm:px-6">
-        <%= link_to bookings_path, class: "inline-flex items-center px-4 py-2 border border-transparent rounded-md font-semibold text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" do %>
-          <i class="fa-solid fa-calendar-days mr-2"></i>
-          View My Bookings
-        <% end %>
-      </div>
-      <div class="px-4 py-5 sm:p-0">
-        <h1 class="text-lg leading-6 font-medium text-gray-900 mb-4">Pack Advice for: <%= @route.destination %></h1>
-        <p class="text-gray-700
+<div class="bg-white rounded-lg shadow-lg p-8 mt-8">
+  <h1 class="text-3xl font-bold text-center mb-8">Booking successful!</h1>
 
+<div class="mb-8">
+  <h3 class="text-lg font-semibold mb-4">Your trip summary</h3>
+  <div class="overflow-x-auto">
+    <table class="table-auto border w-full">
+      <thead>
+        <tr class="bg-gray-100 border-b">
+          <th class="py-2 px-3 text-left">Day</th>
+          <th class="py-2 px-3 text-left">City</th>
+          <th class="py-2 px-3 text-left">Accommodation</th>
+          <th class="py-2 px-3 text-left">Room Type</th>
+          <th class="py-2 px-3 text-left">Hotel Price</th>
+          <th class="py-2 px-3 text-left">Activity</th>
+          <th class="py-2 px-3 text-left">Activity Price</th>
+          <th class="py-2 px-3 text-right font-semibold">Price Per Day</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @route.days.each do |day| %>
+          <tr class="border-b">
+            <td class="py-2 px-3 text-gray-700 font-medium"> 1 </td>
+            <td class="py-2 px-3 text-gray-700 font-medium"><%= day.city %></td>
+            <td class="py-2 px-3 text-gray-700 font-medium"><%= day.name_hotel %></td>
+            <td class="py-2 px-3 text-gray-700 font-medium"><%= day.room_type %> x <%= day.no_of_rooms %> </td>
+            <td class="py-2 px-3 text-gray-700 font-medium">€<%= day.price_hotel * day.no_of_rooms %></td>
+            <td class="py-2 px-3 text-gray-700 font-medium"><%= day.name %></td>
+            <td class="py-2 px-3 text-gray-700 font-medium">€<%= day.price %> x <%=day.route.no_of_people%></td>
+            <td class="py-2 px-3 text-right text-gray-700 font-medium">€<%= day.price * day.route.no_of_people + day.price_hotel * day.no_of_rooms %></td>
+          </tr>
+        <% end %>
+        <tr>
+          <td colspan="7" class="py-2 px-3 text-right font-semibold">Total Price:</td>
+          <td class="py-2 px-3 text-right text-gray-700 font-semibold">€<%= @route.total_price %></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+  <div class="mb-8">
+    <h3 class="text-lg font-semibold mb-4">From</h3>
+    <p class="text-gray-600 mb-2">Start Date: <strong><%= @route.start_date %></strong></p>
+    <p class="text-gray-600 mb-2">End Date: <strong><%= @route.end_date %></strong></p>
+  </div>
+
+  <div class="text-center mb-8">
+    <%= link_to bookings_path, class: "inline-block font-bold transition duration-500 py-2 px-3 text-darkerYellow hover:bg-darkerYellow hover:text-white rounded-lg" do %>
+    <div class="flex items-center relative cursor-pointer whitespace-nowrap">
+      <i class="fa-solid fa-calendar-days mr-2"></i> View My Bookings
+    </div>
+    <% end %>
+  </div>
+
+  <hr class="my-8">
+
+  <div>
+    <h1 class="text-2xl font-bold mb-4">Pack Advice for: <%= @route.destination %></h1>
+    <p class="text-gray-600"><%= simple_format(@booking.pack_advice) %></p>
+  </div>
+</div>
