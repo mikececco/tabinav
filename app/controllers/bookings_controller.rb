@@ -1,7 +1,6 @@
 class BookingsController < ApplicationController
   def index
     @bookings = current_user.bookings.order(created_at: :desc)
-
   end
 
   def show
@@ -29,6 +28,11 @@ class BookingsController < ApplicationController
     @booking = Booking.find(params[:id])
     @booking.destroy
     redirect_back(fallback_location: root_path)#, status: :see_other
+  end
+
+  def show
+    @booking = Booking.find(params[:id])
+    @route = @booking.bookmark.route
   end
 
   private
