@@ -21,7 +21,8 @@ class BookingsController < ApplicationController
     else
       @bookmark = Bookmark.find(params[:bookmark_id])
     end
-    @booking = Booking.new(bookmark: @bookmark)
+    @booking = Booking.new#(bookmark: @bookmark)
+    @booking.bookmark = @bookmark
     if @booking.save
       # mail = User.Mailer.with(user: current_user).welcome.deliver_now
       # pack_advice(@booking)

@@ -1,7 +1,9 @@
 <a href="/routes/<%= route.id %>" class="c-card block bg-white shadow-md hover:shadow-xl rounded-lg overflow-hidden">
   <div class="relative pb-48 overflow-hidden">
-    <% unless route.days.nil? %>
-    <img class="absolute inset-0 h-full w-full object-cover p-6" src="https://source.unsplash.com/random/1200x800/?<%= route.days.first.city %>" alt="Image of city">
+    <% if route.days.nil? %>
+      <img class="absolute inset-0 h-full w-full object-cover p-6" src="https://source.unsplash.com/random/1200x800/?amsterdam" alt="Image of city">
+    <% else %>
+      <img class="absolute inset-0 h-full w-full object-cover p-6" src="https://source.unsplash.com/random/1200x800/?<%= route.days.first.city %>" alt="Image of city">
       <%# <img class="absolute inset-0 h-full w-full object-cover" src=<%= route.days.first.city.nil? 'https://source.unsplash.com/random/1200x800/?Amsterdam' : 'https://source.unsplash.com/random/1200x800/?' + route.days.first.city %>
     <% end %>
   </div>

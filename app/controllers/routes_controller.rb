@@ -12,6 +12,7 @@ class RoutesController < ApplicationController
   def show
     @route = Route.find(params[:id])
     @bookmark = Bookmark.new
+    @booking = Booking.new
     @days = @route.days.order(sequence: :asc)
 
     @countries = []
