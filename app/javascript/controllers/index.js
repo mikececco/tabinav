@@ -24,6 +24,11 @@ application.register("map", MapController)
 
 import SortableController from "./sortable_controller"
 application.register("sortable", SortableController)
+import TypedJsController from "./typed_js_controller"
+application.register("typed-js", TypedJsController)
+
+import TypedJsPoemController from "./typed_js_poem_controller"
+application.register("typed-js-poem", TypedJsPoemController)
 
 import WeatherDisplayController from "./weather_display_controller"
 application.register("weather-display", WeatherDisplayController)
