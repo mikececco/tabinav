@@ -1,0 +1,61 @@
+<!-- component -->
+<nav class="w-full flex justify-between items-center mx-auto px-16 h-16" id="navbar">
+    <!-- logo -->
+    <div class="inline-flex">
+        <a href="/">
+          <div class="hidden md:block">
+            <%= image_tag("tabinav-darkorange.svg", display: 'block', width: '100', height: '32')%>
+          </div>
+            <div class="block md:hidden">
+              <%= image_tag("t-darkorange.svg", display: 'block', width: '30', height: '32')%>
+            </div>
+        </a>
+    </div>
+
+    <!-- end logo -->
+
+    <!-- login -->
+    <div class="flex-initial">
+      <div class="flex justify-end items-center relative">
+
+        <div class="flex mr-4 items-center">
+          <% if user_signed_in? %>
+            <a class="inline-block font-bold transition duration-500 hidden md:block py-2 px-3 text-darkerYellow hover:bg-darkerYellow hover:text-white rounded-lg" href="/bookmarks">
+              <div class="flex items-center relative cursor-pointer whitespace-nowrap">My bookmarks</div>
+            </a>
+          <% else %>
+            <a class="inline-block hidden md:block py-2 px-3 text-white bg-mainYellow hover:bg-darkerYellow rounded-full" href="/users/sign_in">
+              <div class="flex items-center relative cursor-pointer whitespace-nowrap">Sign in</div>
+            </a>
+          <% end %>
+        </div>
+
+        <div class="block">
+            <div class="inline relative">
+              <button id="dropdownDefaultButton" data-dropdown-toggle="dropdown" class="text-black bg-white font-medium rounded-full text-sm relative text-center inline-flex items-center" type="button">
+              <!-- Dropdown menu -->
+                <div class="block flex-grow-0 flex-shrink-0 h-10 w-12"> <%# replace with IMG %>
+                  <img class="avatar" id="navbarDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" src="https://kitt.lewagon.com/placeholder/users/ssaunier" />
+                </div>
+                <div id="dropdown" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow-md hover:shadow-xl max-w-xs">
+                  <ul class="py-2 text-sm text-gray-700" aria-labelledby="dropdownDefaultButton">
+                    <li>
+                      <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Dashboard</a>
+                    </li>
+                    <li>
+                      <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Settings</a>
+                    </li>
+                    <li>
+                      <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Earnings</a>
+                    </li>
+                    <li>
+                      <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Sign out</a>
+                    </li>
+                  </ul>
+                </div>
+              </button>
+            </div>
+        </div>
+      </div>
+    </div>
+</nav>

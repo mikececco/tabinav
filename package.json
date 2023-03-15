@@ -1,0 +1,18 @@
+{
+  "name": "app",
+  "private": "true",
+  "dependencies": {
+    "@hotwired/stimulus": "^3.2.1",
+    "@hotwired/turbo-rails": "^7.3.0",
+    "@popperjs/core": "^2.11.6",
+    "flatpickr": "^4.6.13",
+    "flowbite": "^1.6.3",
+    "mapbox-gl": "^2.13.0",
+    "tailwind-scrollbar-hide": "^1.1.7",
+    "webpack": "^5.75.0",
+    "webpack-cli": "^5.0.1"
+  },
+  "scripts": {
+    "build": "webpack --config webpack.config.js"
+  }
+}

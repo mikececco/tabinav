@@ -1,0 +1,22 @@
+// Graphical variables
+@import "config/fonts";
+@import "config/colors";
+@import "config/bootstrap_variables";
+
+// External libraries
+// @import "bootstra/scss/bootstrap";
+@import "font-awesome";
+
+// Your CSS partials
+@import "components/index";
+@import "pages/index";
+@import "flatpickr/dist/flatpickr.css";
+
+
+/* *= require mapbox-gl
+
+
+ *= require mapbox-gl-geocoder
+ *= require mapbox-gl-draw
+ *= require mapbox-gl-directions
+ *= require mapbox-gl-compare */
