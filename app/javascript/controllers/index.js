@@ -4,6 +4,9 @@
 
 import { application } from "./application"
 
+import ChangeHotelController from "./change_hotel_controller"
+application.register("change-hotel", ChangeHotelController)
+
 import ChangeListColorController from "./change_list_color_controller"
 application.register("change-list-color", ChangeListColorController)
 

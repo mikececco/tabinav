@@ -117,7 +117,10 @@ class DaysController < ApplicationController
       end
     end
     route.save
-    redirect_to route_path(route), status: :see_other
+    respond_to do |format|
+      format.html { redirect_to route_path(route), status: :see_other }
+      format.text { render partial: "routes/hotel_info", locals: {day: @day}, formats: [:html] }
+    end
   end
 
   def downgrade_hotel
@@ -162,7 +165,10 @@ class DaysController < ApplicationController
       end
     end
     route.save
-    redirect_to route_path(route), status: :see_other
+    respond_to do |format|
+      format.html { redirect_to route_path(route), status: :see_other }
+      format.text { render partial: "routes/hotel_info", locals: {day: @day}, formats: [:html] }
+    end
   end
 
   def update_sequence

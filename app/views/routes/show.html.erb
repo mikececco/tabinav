@@ -22,7 +22,7 @@
                 <% @days.each_with_index do |day, i| %>
                   <li data-id="<%= day.id %>" class="text-lg font-semibold">Day <%= i + 1 %> - <%= day.name %><small>, <%= day.city %>, <%= day.nation %></small></li>
                 <% end %>
-<%# , data: { action: "submit->sortable#update" } %>
+
                 <%= form_with url: "/update_sequence", method: :patch do |form| %>
                   <%= form.hidden_field :days_order, id: "day-order" %>
                   <%= form.submit "Update Sequence", class: "text-lg cursor-pointer transition duration-500 mx-3 px-3 py-2 text-mainYellow rounded-lg hover:bg-darkerYellow hover:text-white focus:outline-none" %>
@@ -53,22 +53,25 @@
               <p class="text-gray-600 mb-2"><i><%= day.description %></i></p>
               <p class="text-gray-600 font-medium"><%= day.price == 0 ? "No entrance fee" : "Entrance fee per head: €#{day.price}" %></p>
               <br>
-              <div class="flex justify-between bg-darYellow">
-                <h4 class="text-lg font-medium mb-2">Accommodation: <br><%= day.name_hotel %> <br>(<%= day.no_of_rooms %> x <%= day.room_type %>)</h4>
-                <div class="pt-2" >
-                  <p class="text-gray-600 font-medium text-end px-3">Price: €<%= day.price_hotel %></p>
-
+              <div data-controller="change-hotel">
+                <div id="hotel-info" data-change-hotel-target="display">
+                  <div  class="flex justify-between bg-darYellow">
+                    <h4 class="text-lg font-medium mb-2">Accommodation: <br><%= day.name_hotel %> <br>(<%= day.no_of_rooms %> x <%= day.room_type %>)</h4>
+                    <div class="pt-2" >
+                      <p class="text-gray-600 font-medium text-end px-3">Price: €<%= day.price_hotel %></p>
+                    </div>
+                  </div>
+                  <p class="text-gray-600 mb-2"><i><%= day.description_hotel %></i></p>
                 </div>
-              </div>
-              <p class="text-gray-600 mb-2"><i><%= day.description_hotel %></i></p>
-              <div class="grid justify-items-end">
-                <div class="inline-flex">
-                  <%= simple_form_for day, :url => day_upgrade_hotel_path(day) do |f| %>
-                    <%= f.submit "Upgrade Accommodation", class: "text-xs cursor-pointer transition duration-500 mx-2 px-3 py-2 text-mainYellow rounded-lg hover:bg-darkerYellow hover:text-white focus:outline-none" %>
-                  <% end %>
-                  <%= simple_form_for day, :url => day_downgrade_hotel_path(day) do |f| %>
-                    <%= f.submit "Find a Cheaper Option", class: "text-xs cursor-pointer transition duration-500 mx-2 px-3 py-2 text-mainYellow rounded-lg hover:bg-darkerYellow hover:text-white focus:outline-none" %>
-                  <% end %>
+                <div class="grid justify-items-end">
+                  <div class="inline-flex">
+                    <%= simple_form_for day, :url => day_upgrade_hotel_path(day), html: { data: { action: "submit->change-hotel#update" } } do |f| %>
+                      <%= f.submit "Upgrade Accommodation", class: "text-xs cursor-pointer transition duration-500 mx-2 px-3 py-2 text-mainYellow rounded-lg hover:bg-darkerYellow hover:text-white focus:outline-none" %>
+                    <% end %>
+                    <%= simple_form_for day, :url => day_downgrade_hotel_path(day) do |f| %>
+                      <%= f.submit "Find a Cheaper Option", class: "text-xs cursor-pointer transition duration-500 mx-2 px-3 py-2 text-mainYellow rounded-lg hover:bg-darkerYellow hover:text-white focus:outline-none" %>
+                    <% end %>
+                  </div>
                 </div>
               </div>
             </div>
