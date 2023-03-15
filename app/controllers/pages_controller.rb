@@ -3,6 +3,8 @@ class PagesController < ApplicationController
 
   def home
     @route = Route.new
-    @routes = Route.where.not(total_price: 0).sample(4)
+    good_routes = Route.where.not(total_price: 0)
+    @routes = good_routes.nil? ? Route.all.sample(4) : good_routes.sample(4)
+    # fuck you
   end
 end
