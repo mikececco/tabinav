@@ -11,10 +11,12 @@
           <div class="flex flex-inline justify-between pb-10">
             <% if current_user == @route.user %>
               <div>
-                <h4 class="text-4xl font-semibold mb-2 text-white">Your trip</h4>
-                <h5 class="text-2xl font-semibold mb-2 text-white">From <%= @route.start_date %> to <%= @route.end_date %></h5>
-                <h5 class="text-2xl font-semibold mb-2 text-white">Budget: €<%= @route.budget %>  |  Total Price: <%= @route.total_price.round(2) %></h5>
-                <h5 class="text-2xl font-semibold mb-2 text-white"><i class="far fa-user fa-fw"></i> <%= @route.no_of_people %></h5>
+                <% unless @route.booking.nil? %>
+                  <h6 class="text-sm font-semibold mb-2 text-white"><i class="fa-check fa-solid mr-2"></i>Booked!</h6>
+                <% end %>
+                <h4 class="text-3xl font-semibold mb-2 text-white">Your trip on <%= @route.start_date.strftime("%-d %b") %> - <%= @route.end_date.strftime("%d %b %Y") %></h4>
+                <h5 class="text-xl font-semibold mb-2 text-white"><i class="far fa-user fa-fw"></i> <%= @route.no_of_people %></h5>
+                <h5 class="text-xl font-semibold mb-2 text-white">Total Price: €<%= @route.total_price.round(2) %>  <small>(Budget: €<%= @route.budget %>)</small></h5>
                 <div class="flex flex-wra p text-center pt-4 mb-2">
                   <% @countries.each do |country| %>
                       <div class="inline-block px-2 py-1 mr-2 mb-2 px-3 py-1 leading-none bg-orange-200 text-orange-800 rounded-full font-semibold uppercase tracking-wide text-xs">
@@ -22,14 +24,14 @@
                       </div>
                   <% end %>
                 </div>
-                <ul class="day-order text-xs mt-4 list-disc list-inside text-gray-50 leading-relaxed" data-controller="sortable change-list-color">
+                <ul class="day-order fa-ul text-xs mt-4 list-disc list-inside text-gray-50 leading-relaxed" data-controller="sortable change-list-color">
                   <% @days.each_with_index do |day, i| %>
-                    <li data-id="<%= day.id %>" class="text-lg font-semibold">Day <%= i + 1 %> - <%= day.name %><small>, <%= day.city %>, <%= day.nation %></small></li>
+                    <li data-id="<%= day.id %>" class="text-lg font-semibold"><span class="fa-li"><i class="fa-solid fa-arrows-up-down-left-right"></i></span>Day <%= i + 1 %> - <%= day.name %><small>, <%= day.city %>, <%= day.nation %></small></li>
                   <% end %>
                   <% if @route.booking.nil? %>
                     <%= form_with url: "/update_sequence", method: :patch do |form| %>
                       <%= form.hidden_field :days_order, id: "day-order" %>
-                      <%= form.submit "Update Sequence", class: "text-lg cursor-pointer transition duration-500 mx-3 px-3 py-2 text-mainYellow rounded-lg hover:bg-darkerYellow hover:text-white focus:outline-none" %>
+                      <%= form.submit "Update Sequence", class: "text-base cursor-pointer transition duration-500 my-4 px-3 py-2 text-mainYellow border border-mainYellow font-medium rounded-lg hover:bg-darkerYellow hover:text-white hover:border-darkerYellow focus:outline-none" %>
                     <% end %>
                   <% end %>
                 </ul>
@@ -37,6 +39,8 @@
             <% else %>
               <div>
                 <h4 class="text-4xl font-semibold mb-2 text-white">Itinerary</h4>
+                <h5 class="text-xl font-semibold mb-2 text-white"><i class="far fa-user fa-fw"></i> <%= @route.no_of_people %></h5>
+                <h5 class="text-xl font-semibold mb-2 text-white">Total Price: €<%= @route.total_price.round(2) %></h5>
                 <div class="flex flex-wra p text-center pt-4 mb-2">
                   <% @countries.each do |country| %>
                       <div class="inline-block px-2 py-1 mr-2 mb-2 px-3 py-1 leading-none bg-orange-200 text-orange-800 rounded-full font-semibold uppercase tracking-wide text-xs">
@@ -94,7 +98,7 @@
                 <h4 class="text-lg font-medium mb-2"><%= day.name %></h4>
                 <% if (current_user == @route.user) && @route.booking.nil? %>
                   <%= simple_form_for day, :url => day_change_activity_path(day) do |f| %>
-                    <%= f.submit "Change Activity", class: "text-xs cursor-pointer transition duration-500 px-3 py-2 text-mainYellow rounded-lg hover:bg-darkerYellow hover:text-white focus:outline-none" %>
+                    <%= f.submit "Change Activity", class: "text-xs cursor-pointer transition duration-500 mx-2 px-3 py-2 text-mainYellow font-medium rounded-lg hover:bg-darkerYellow hover:text-white focus:outline-none" %>
                   <% end %>
                 <% end %>
               </div>
@@ -117,10 +121,10 @@
                   <div class="grid justify-items-end">
                     <div class="inline-flex">
                       <%= simple_form_for day, :url => day_upgrade_hotel_path(day), html: { data: { action: "submit->change-hotel#update" } } do |f| %>
-                        <%= f.submit "Upgrade Accommodation", class: "text-xs cursor-pointer transition duration-500 mx-2 px-3 py-2 text-mainYellow rounded-lg hover:bg-darkerYellow hover:text-white focus:outline-none" %>
+                        <%= f.submit "Upgrade Accommodation", class: "text-xs cursor-pointer transition duration-500 mx-2 px-3 py-2 text-mainYellow font-medium rounded-lg hover:bg-darkerYellow hover:text-white focus:outline-none" %>
                       <% end %>
                       <%= simple_form_for day, :url => day_downgrade_hotel_path(day) do |f| %>
-                        <%= f.submit "Find a Cheaper Option", class: "text-xs cursor-pointer transition duration-500 mx-2 px-3 py-2 text-mainYellow rounded-lg hover:bg-darkerYellow hover:text-white focus:outline-none" %>
+                        <%= f.submit "Find a Cheaper Option", class: "text-xs cursor-pointer transition duration-500 mx-2 px-3 py-2 text-mainYellow font-medium rounded-lg hover:bg-darkerYellow hover:text-white focus:outline-none" %>
                       <% end %>
                     </div>
                   </div>
