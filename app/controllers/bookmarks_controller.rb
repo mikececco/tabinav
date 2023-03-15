@@ -1,5 +1,5 @@
 class BookmarksController < ApplicationController
-  skip_before_action :authenticate_user!, only: [:create]
+  # skip_before_action :authenticate_user!, only: [:create]
 
   def index
     # test UserMailer
