@@ -22,7 +22,7 @@ export default class extends Controller {
     const url = 'https://api.openai.com/v1/chat/completions'
     const headers = {
       'Content-Type': 'application/json',
-      'Authorization': "Bearer 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"
+      'Authorization': "Bearer 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"
     }
     const body = JSON.stringify({
       "model": 'gpt-3.5-turbo',
@@ -35,12 +35,11 @@ export default class extends Controller {
       body,
     }).then(response => response.json())
     .then(data => {
-      this.addNationsToLabel(data);
+      // this.addNationsToLabel(data);
       this.addCitiesToList(data);
-      console.log("Making second request");
-      this.getHotelPrice();
-      console.log("Making third request");
-      this.generateCities();
+      // console.log("Making second request");
+      // this.getHotelPrice();
+
     })
   }
 
@@ -75,25 +74,24 @@ export default class extends Controller {
       let card = `<div class=" border-b-2 rounded-lg mb-10 flex p-8 hover:shadow-2xl hover:scale-110 transition duration-1000 ease-in-out">
       <div class="w-1/2">
         <h4 class="text-2xl font-semibold mb-2">Day ${index + 1} - ${element['city']}, ${element['country']}</h4>
-        <h4 class="text-lg font-medium mb-2 mydays"></h4>
-        <p class="text-gray-600 mb-2"><i><%= day.description %></i></p>
-        <p class="text-gray-600 font-medium"><%= day.price == 0 ? "No entrance fee" : "Entrance fee per head: €#{day.price}" %></p>
+        <h4 class="text-lg font-medium mb-2 mydays">HERE YOU NEED NAME OF THE DAY</h4>
+        <p class="text-gray-600 mb-2"><i class="dayDescription">DESCRIPTION OF THE DAY</i></p>
+        <p class="text-gray-600 font-medium priceDay">PRICE OF THE DAY<%= day.price == 0 ? "No entrance fee" : "Entrance fee per head: €#{day.price}" %></p>
         <br>
         <div class="flex justify-between bg-darYellow" >
-          <h4 class="text-lg font-medium mb-2">Accommodation: <br class="dayNameHotel"><%= day.name_hotel %> (<%= day.no_of_rooms %> x <%= day.room_type %>)</h4>
-          <div class="pt-2" >
-            <p class="text-gray-600 font-medium text-end px-3">Price: €<%= day.price_hotel %></p>
-            <%= simple_form_for day do |f| %>
-              <%= f.submit "Upgrade accommodation", class: "text-xs cursor-pointer transition duration-500 ml-10 px-3 py-2 text-mainYellow rounded-lg hover:bg-darkerYellow hover:text-white focus:outline-none" %>
-            <% end %>
+          <h4 class="text-lg font-medium mb-2 dayNameHotel">Accommodation: <br>HOTEL NAME (NUMBER OF ROOMS<%= day.no_of_rooms %> x TYPE OF ROOM<%= day.room_type %>)</h4>
+          <div class="pt-2 upgradeSubmit">
+            <p class="text-gray-600 font-medium text-end px-3 priceHotel"></p>
+              <form>
+                <input type="submit" value="Upgrade accommodation" class="text-xs cursor-pointer transition duration-500 ml-10 px-3 py-2 text-mainYellow rounded-lg hover:bg-darkerYellow hover:text-white focus:outline-none">
+              </form>
             </div>
           </div>
           <p class="text-gray-600 mb-2"><i class="dayHotel"></i></p>
         </div>
         <div class="w-1/2 flex justify-end">
-          <div class="rounded-lg shadow-lg p-6 h-3/4">
-            <img src="https://source.unsplash.com/random/1200x800/?<%= day.city %>" alt="Image of city" width="300" height="300" class="">
-            <%# <p class="text-sm text-center pt-8"><i>Pic of <%= day.city %>
+          <div class="rounded-lg shadow-lg p-6 h-3/4 imageCity">
+            INSERT PIC
           </div>
         </div>
       </div>`
@@ -101,11 +99,12 @@ export default class extends Controller {
       this.cardcontTarget.insertAdjacentHTML("beforeend", card)
     })
 
+    const mydays = document.querySelectorAll(".imageCity")
     resp.forEach((obj, index) => {
-      const mydays = document.querySelectorAll(".mydays")
-      mydays[index].innerText = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      mydays[index].innerHTML = `<img src="https://source.unsplash.com/random/1200x800/?${obj['city']}" alt="Image of city" width="300" height="300">`
     })
 
+    this.generateCities();
     //-----------------------
   }
 
@@ -128,7 +127,7 @@ export default class extends Controller {
     const url = 'https://api.openai.com/v1/chat/completions'
     const headers = {
       'Content-Type': 'application/json',
-      'Authorization': "Bearer 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"
+      'Authorization': "Bearer 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"
     }
     const body = JSON.stringify({
       "model": 'gpt-3.5-turbo',
@@ -166,7 +165,7 @@ export default class extends Controller {
     const url = 'https://api.openai.com/v1/chat/completions'
     const headers = {
       'Content-Type': 'application/json',
-      'Authorization': "Bearer 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"
+      'Authorization': "Bearer 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"
     }
     const body = JSON.stringify({
       "model": 'gpt-3.5-turbo',
@@ -188,10 +187,17 @@ export default class extends Controller {
   addCard(data){
     let resp = data['choices'][0]['message']['content'];
     resp = JSON.parse(resp);
-    resp.forEach(obj => {
-      const dayHotel = document.querySelectorAll(".dayHotel")
-      dayHotel.innerText = obj['name']
+    resp.forEach((obj, index) => {
+      console.log("INSERTING PRICE OF HOTEL");
+      const myhotel = document.querySelectorAll(".priceHotel")
+      myhotel[index].innerText = `Price: €${obj["price"]}`
     })
+
+    // resp.forEach(obj => {
+    //   const dayHotel = document.querySelectorAll(".dayHotel")
+    //   dayHotel.innerText = obj['name']
+    // })
+    console.log("Making third request");
   }
 
   generateCities(){
@@ -243,7 +249,7 @@ export default class extends Controller {
       const url = 'https://api.openai.com/v1/chat/completions'
       const headers = {
         'Content-Type': 'application/json',
-        'Authorization': "Bearer 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"
+        'Authorization': "Bearer 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"
       }
       const body = JSON.stringify({
         "model": 'gpt-3.5-turbo',
@@ -257,18 +263,44 @@ export default class extends Controller {
       }).then(response => response.json())
       .then(data =>
         {
-          console.log(data);
-        this.addHotelInfo(data);
+          console.log("Generating cities");
+          this.addHotelInfo(data);
       }
       )
   }
 
   addHotelInfo(data){
+    console.log("AddHotelInfo function");
     let resp = data['choices'][0]['message']['content'];
     resp = JSON.parse(resp);
-    resp.forEach(obj => {
-      const dayHotel = document.querySelectorAll(".dayNameHotel")
-      dayHotel.innerText = obj['hotel']['name']
+    console.log("Inserting hotel name");
+
+    const myhotel = document.querySelectorAll(".dayNameHotel")
+    resp.forEach((obj, index) => {
+      console.log(obj["hotel"]);
+      myhotel[index].innerText = `Accommodation: <br>${obj["hotel"]["name"]} (${obj["hotel"]["no_of_people_per_room"]} x ${obj["hotel"]["room_type"]})`
+    })
+    // resp.forEach(obj => {
+    //   const dayHotel = document.querySelectorAll(".dayNameHotel")
+    //   dayHotel.innerText = obj['hotel']['name']
+    // })
+    console.log("Going to insert day name");
+    const mydays = document.querySelectorAll(".mydays")
+    resp.forEach((obj, index) => {
+      console.log("Inserting activity name/day");
+      mydays[index].innerText = obj[`activity${index+1}`]["name"]
+    })
+
+    const dayDescription = document.querySelectorAll(".dayDescription")
+    resp.forEach((obj, index) => {
+      console.log("Inserting day description");
+      dayDescription[index].innerText = obj[`activity${index+1}`]["description"]
+    })
+
+    const priceDay = document.querySelectorAll(".priceDay")
+    resp.forEach((obj, index) => {
+      console.log("Inserting day hotel price");
+      priceDay[index].innerText = `<%= ${obj[`activity${index+1}`]["price"]} == 0 ? "No entrance fee" : "Entrance fee per head: €${obj[`activity${index+1}`]["price"]}" %>`
     })
   }
 }

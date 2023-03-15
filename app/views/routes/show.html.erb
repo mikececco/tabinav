@@ -11,14 +11,14 @@
           <div class="flex flex-inline justify-between pb-10">
             <div>
               <h4 class="text-4xl font-semibold mb-2 text-white">Your trip</h4>
-              <div data-gpt-response-target="nations" class="flex flex-wra p text-center pt-4 mb-2">
+              <div class="flex flex-wra p text-center pt-4 mb-2">
                 <% @days.each_with_index do |day, i| %>
                     <div class="inline-block px-2 py-1 mr-2 mb-2 px-3 py-1 leading-none bg-orange-200 text-orange-800 rounded-full font-semibold uppercase tracking-wide text-xs">
                       <%= day.nation %>
                     </div>
                 <% end %>
               </div>
-              <ul data-gpt-response-target="cities" class="text-xs mt-4 list-disc list-inside text-gray-50 leading-relaxed">
+              <ul class="text-xs mt-4 list-disc list-inside text-gray-50 leading-relaxed">
                 <% @days.each_with_index do |day, i| %>
                   <li class="text-lg font-semibold">Day <%= i + 1 %> - <%= day.city %>, <%= day.nation %></li>
                 <% end %>
@@ -38,14 +38,8 @@
       </div>
     </div>
   </section>
-  
-    <div class="cardscont" data-gpt-response-target="cardcont">
-    wrggwefwefewfewfwefwefwefewfew
-    </div>
-  </div>
 
-<!--
-  <div data-gpt-response-target="card" class="container mx-auto p-8 px-40">
+  <div class="container mx-auto p-8 px-40">
         <% @days.each_with_index do |day, i| %>
           <div class=" border-b-2 rounded-lg mb-10 flex p-8 hover:shadow-2xl hover:scale-110 transition duration-1000 ease-in-out">
             <div class="w-1/2">
@@ -54,7 +48,7 @@
               <p class="text-gray-600 mb-2"><i><%= day.description %></i></p>
               <p class="text-gray-600 font-medium"><%= day.price == 0 ? "No entrance fee" : "Entrance fee per head: €#{day.price}" %></p>
               <br>
-              <div class="flex justify-between bg-darYellow" >
+              <div class="flex justify-between bg-darYellow">
                 <h4 class="text-lg font-medium mb-2">Accommodation: <br><%= day.name_hotel %> (<%= day.no_of_rooms %> x <%= day.room_type %>)</h4>
                 <div class="pt-2" >
                   <p class="text-gray-600 font-medium text-end px-3">Price: €<%= day.price_hotel %></p>
