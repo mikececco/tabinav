@@ -9,7 +9,8 @@ export default class extends Controller {
     const loader = document.getElementById("loading");
 
     function toggleDiv() {
-      loader.classList.toggle("hidden");
+      console.log("click")
+      loader.classList.remove("hidden");
     }
 
     search.addEventListener("click", toggleDiv)

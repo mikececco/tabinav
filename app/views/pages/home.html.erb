@@ -59,21 +59,14 @@
     </div>
 </nav>
 
-<div class="fixed inset-0 z-50 hidden" id="loading">
-  <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
-  <div class="absolute inset-0 flex justify-center items-center">
-    <div class="bg-white p-6 rounded-lg">
-      This content is displayed over the whole screen with a grey overlay.
-    </div>
-  </div>
-</div>
 
 <section id="main-banner" class="h-screen flex items-center justify-center bg-darkerYellow">
   <div class="max-w-5xl mx-auto text-center -mt-40">
     <div id="main-content" class="hover:scale-125 transition duration-1000 ease-in-out">
       <h1 class="text-9xl font-bold">
       <%# Needed for TypedJS on front page %>
-        <span data-controller="typed-js"></span>
+      <span data-controller="typed-js"></span>
+      <%# data-typed-js-target="text" %>
         <%# <u>A<span class="text-mainYellow">I</span></u>mazing trips %>
       </h1>
       <%= simple_form_for @route, html: { class: "mt-16 flex items-center bg-white p-2 rounded-full hover:shadow-2xl" }, data: { controller: 'flatpickr'}  do |f| %>
@@ -92,10 +85,10 @@
         <%= f.input :destination, as: :string, placeholder: "Anywhere", input_html: {class: "border border-gray-50 text-gray-900 font-semibold rounded-full focus:border-gray-50 placeholder-black focus:ring-gray-50 block w-full pl-10 p-2.5 font-bold", autocomplete:"off", id:'destination'}, label: false %>
         </div>
         <div class="relative px-2">
-          <%= f.input :no_of_people, as: :integer, input_html: {class:"border border-gray-50 text-gray-900 font-semibold rounded-full focus:border-gray-50 focus:placeholder-black focus:ring-gray-50 block w-full pl-10 p-2.5", autocomplete:"off", id:"PeopleInput"}, label: false, placeholder: "2"%>
+          <%= f.input :no_of_people, as: :integer, input_html: {class:"border border-gray-50 text-gray-900 font-semibold rounded-full focus:border-gray-50 focus:placeholder-black focus:ring-gray-50 block w-full pl-10 p-2.5", autocomplete:"off", id:"PeopleInput"}, label: false, placeholder: "2 people"%>
         </div>
       <div data-controller="animation">
-        <%= f.button :button, class: "searchbar p-2.5 ml-2 text-sm font-medium text-mainYellow hover:text-white bg-white hover:bg-darkerYellow rounded-full border" do %>
+        <%= f.button :button, class: "searchbar p-2.5 ml-2 text-sm font-medium text-mainYellow hover:text-white bg-white hover:bg-darkerYellow rounded-full border" do%>
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
         <% end %>
       </div>
@@ -111,11 +104,38 @@
   </div>
 </section>
 
-<%# <%= video_tag "airport.mp4", autoplay: :autoplay, loop: :loop, muted: :muted, class: "w-full" %>
+<%# <%= video_tag "airport.mp4", autoplay: :autoplay, loop: :loop, muted: :muted, class: "w-full"
+<div>
+
 <div class="container mx-auto p-8 px-40">
   <h1 class="text-5xl font-bold py-8"> ChatGPT what's your vision on Tabinav?</h1>
-  <div class="flex flex-wrap -mx-4">
-    <p><span data-controller="typed-js-poem"></span></p>
+  <div class="">
+    <div class="flex flex-wrap -mx-4">
+    </div>
   </div>
-</div>
+</div> %>
+
 <%= render "shared/hero" %>
+<div class="hidden" id="loading" style="height: 100%; position: absolute; bottom: 0; right: 0; left: 0; background-color: rgba(0, 0, 0, 0.9);">
+  <div class="flex absolute justify-center items-center w-full">
+    <h1 class="text-6xl font-bold px-40" style="position: absolute; top: 0; left: 0; z-index: 9999; margin-top: 40vh; color: white;" data-controller="typed-js-poem"></h1>
+  </div>
+
+  <%= video_tag "world-rotating.mp4", autoplay: :autoplay, loop: :loop, muted: :muted, class: "w-full h-full fixed object-cover absolute top-0 z-1"%>
+  <div class="absolute inset-0 bg-gray-500 bg-opacity-50"></div>
+</div>
+
+
+
+<%# <div class="hidden" id="loading" style="height: 100%; position: absolute; bottom: 0; right: 0; left: 0; background-color: rgba(0, 0, 0, 0.9);">
+  <div class="flex justify-center items-center w-full h-full z-1">
+  <h1 class="text-4xl font-bold text-white" data-controller="typed-js-poem"></h1>
+</div>
+
+
+  <video autoplay loop muted class="w-full h-full object-cover fixed z-1">
+    <source src="world-rotating.mp4" type="video/mp4">
+  </video>
+
+  <div class="absolute inset-0 bg-gray-500 bg-opacity-50"></div>
+</div> %>
