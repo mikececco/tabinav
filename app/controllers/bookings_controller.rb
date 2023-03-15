@@ -1,7 +1,6 @@
 class BookingsController < ApplicationController
   def index
     @bookings = current_user.bookings.order(created_at: :desc)
-
   end
 
   def show
@@ -14,11 +13,18 @@ class BookingsController < ApplicationController
   end
 
   def create
-    @bookmark = Bookmark.find(params[:bookmark_id])
+    @route = Route.find(params[:route_id])
+    if @route.bookmark.nil?
+      @bookmark = Bookmark.new
+      @bookmark.route = @route if @route.user == current_user
+      @bookmark.save
+    else
+      @bookmark = Bookmark.find(params[:bookmark_id])
+    end
     @booking = Booking.new(bookmark: @bookmark)
     if @booking.save
       # mail = User.Mailer.with(user: current_user).welcome.deliver_now
-      pack_advice(@booking)
+      # pack_advice(@booking)
       redirect_to booking_path(@booking)
     else
       raise
@@ -29,6 +35,11 @@ class BookingsController < ApplicationController
     @booking = Booking.find(params[:id])
     @booking.destroy
     redirect_back(fallback_location: root_path)#, status: :see_other
+  end
+
+  def show
+    @booking = Booking.find(params[:id])
+    @route = @booking.bookmark.route
   end
 
   private

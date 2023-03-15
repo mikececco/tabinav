@@ -1,5 +1,5 @@
 class BookmarksController < ApplicationController
-  skip_before_action :authenticate_user!, only: [:create]
+  # skip_before_action :authenticate_user!, only: [:create]
 
   def index
     # test UserMailer
@@ -33,6 +33,12 @@ class BookmarksController < ApplicationController
         end
       end
     end
+  end
+
+  def destroy
+    @bookmark = Bookmark.find(params[:id])
+    @bookmark.destroy
+    redirect_back(fallback_location: root_path)#, status: :see_other
   end
 
   private
