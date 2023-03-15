@@ -25,11 +25,17 @@ class BookingsController < ApplicationController
     @booking.bookmark = @bookmark
     if @booking.save
       # mail = User.Mailer.with(user: current_user).welcome.deliver_now
-      # pack_advice(@booking)
+      #
       redirect_to booking_path(@booking)
     else
       raise
     end
+  end
+
+  def update
+    @booking = Booking.find(params[:id])
+    pack_advice(@booking)
+    redirect_to booking_path(@booking)
   end
 
   def destroy
