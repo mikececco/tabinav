@@ -18,21 +18,21 @@
         </tr>
       </thead>
       <tbody>
-        <% @route.days.each do |day| %>
+        <% @route.days.each_with_index do |day, i| %>
           <tr class="border-b">
-            <td class="py-2 px-3 text-gray-700 font-medium"> 1 </td>
+            <td class="py-2 px-3 text-gray-700 font-medium">  <%= i + 1 %> </td>
             <td class="py-2 px-3 text-gray-700 font-medium"><%= day.city %></td>
             <td class="py-2 px-3 text-gray-700 font-medium"><%= day.name_hotel %></td>
             <td class="py-2 px-3 text-gray-700 font-medium"><%= day.room_type %> x <%= day.no_of_rooms %> </td>
             <td class="py-2 px-3 text-gray-700 font-medium">€<%= day.price_hotel * day.no_of_rooms %></td>
             <td class="py-2 px-3 text-gray-700 font-medium"><%= day.name %></td>
             <td class="py-2 px-3 text-gray-700 font-medium">€<%= day.price %> x <%=day.route.no_of_people%></td>
-            <td class="py-2 px-3 text-right text-gray-700 font-medium">€<%= day.price * 1 + day.price_hotel * day.no_of_rooms %></td> <%#TO BE FIXED THE 1 to number of people%>
+            <td class="py-2 px-3 text-right text-gray-700 font-medium">€<%= day.price * day.route.no_of_people + day.price_hotel * day.no_of_rooms %></td> <%#TO BE FIXED THE 1 to number of people%>
           </tr>
         <% end %>
         <tr>
           <td colspan="7" class="py-2 px-3 text-right font-semibold">Total Price:</td>
-          <td class="py-2 px-3 text-right text-gray-700 font-semibold">€<%= @route.total_price %></td>
+          <td class="py-2 px-3 text-right text-gray-700 font-semibold">€<%= @route.total_price.round(2) %></td>
         </tr>
       </tbody>
     </table>
