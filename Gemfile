@@ -8,7 +8,6 @@ gem 'letter_opener', group: :development
 gem 'erb-formatter'
 
 # Needed for email service
-gem 'dotenv-rails', groups: [:development, :test]
 gem 'gibbon'
 
 
@@ -93,4 +92,3 @@ gem "tailwindcss-rails", "~> 2.0"
 
 gem "geocoder"
 # gem 'mapbox-gl-rails'
-# gem 'open-weather-ruby-client'
