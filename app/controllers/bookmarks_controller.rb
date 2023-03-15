@@ -15,7 +15,7 @@ class BookmarksController < ApplicationController
     if @route.user == current_user
       @bookmark.route = @route
       if @bookmark.save
-        redirect_to bookmarks_path
+        redirect_to route_path(@route), status: :see_other
       end
     else
       new_route = @route.dup
@@ -29,7 +29,7 @@ class BookmarksController < ApplicationController
         end
         @bookmark.route = new_route
         if @bookmark.save
-          redirect_to bookmarks_path
+          redirect_to route_path(new_route), status: :see_other
         end
       end
     end

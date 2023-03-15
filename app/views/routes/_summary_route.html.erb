@@ -21,7 +21,7 @@
     <div class="w-1/2">
       <h1 class="text-3xl font-bold mb-2">Your Route</h1>
       <h4 class="text-gray-600 mb-2">Your Budget: €<%= @route.budget %></h4>
-      <h4 class="text-gray-600 mb-2">Total Price: €<%= @route.total_price %></h4>
+      <h4 class="text-gray-600 mb-2">Total Price: €<%= @route.total_price.round(2) %></h4>
       <h4 class="text-gray-600 mb-2"><%= @route.no_of_people %> People</h4>
       <h4 class="text-gray-600 mb-2"><%= @route.hotel_pref %></h4>
     </div>
