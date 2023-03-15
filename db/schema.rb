@@ -53,7 +53,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_14_092305) do
   end
 
   create_table "routes", force: :cascade do |t|
-    t.string "destination", default: "Anywhere"
+    t.string "destination"
     t.float "total_price", default: 0.0
     t.date "start_date"
     t.date "end_date"

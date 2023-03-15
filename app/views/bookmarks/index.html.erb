@@ -2,15 +2,9 @@
 
 <div class="flex flex-col container mx-auto p-8 px-40">
   <h1 class="text-5xl font-bold py-8">Your bookmarks</h1>
-      <div
-        class="flex overflow-x-scroll pb-10 hide-scroll-bar"
-      >
-              <div
-          class="flex flex-nowrap -mx-4"
-        >
-            <%= render "test_bookmar" %>
-        </div>
+  <div class="flex overflow-x-scroll pb-10 hide-scroll-bar">
+    <div class="flex flex-nowrap -mx-4">
+      <%= render "bookmarks_info", bookmarks: @bookmarks %>
+    </div>
   </div>
 </div>
-
-    <%# </div> %>
