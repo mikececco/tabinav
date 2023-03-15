@@ -45,7 +45,7 @@ class RoutesController < ApplicationController
       pick_cities(@route)
     end
     Route.all.each do |route|
-      route.destroy if @route.destination == nil
+      route.destroy if @route.days == nil
     end
   end
 
