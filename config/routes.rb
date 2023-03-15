@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   resources :days, only: %i[index update destroy] do
     patch "upgrade_hotel", to: "days#upgrade_hotel"
     patch "downgrade_hotel", to: "days#downgrade_hotel"
+    patch "change_activity", to: "days#change_activity"
   end
 
   patch "update_sequence", to: "days#update_sequence"

@@ -171,6 +171,49 @@ class DaysController < ApplicationController
     end
   end
 
+  def change_activity
+    @day = Day.find(params[:day_id])
+    route = @day.route
+    old_price = @day.price
+    @days = Day.where(route: route, city: @day.city)
+    current_activities = []
+    @days.each { |day| current_activities << day.name }
+
+    @response = ChatgptService.call("
+      I want to find another place to visit in #{@day.city} except #{current_activities.join(", ")}.
+      Convert all prices to euro. Price can be 0.
+      Include coordinates of the places recommended.
+      Use only english language.
+      Keep the description of the place within 200-300 characters.
+      Be creative and inspire me.
+      Respond with just the entire response in JSON.
+      Example response:
+      [{
+        'name': 'Grand Place',
+        'price': 20,
+        'description': 'Much of the square's elegant character is due to the unique architecture of its elegant Gildehuizen (guild houses) with their magnificent gables, pilasters, and balustrades, ornately carved stonework, and rich gold decoration.',
+        'coordinates': {
+          'latitude': 52.358468,
+          'longitude': 4.881119
+        }
+      }]
+      Respond just with the JSON.
+    ")
+    hash = JSON.parse(@response).first
+
+    @day.name = hash["name"]
+    @day.description = hash["description"]
+    @day.price = hash["price"]
+    @day.latitude = hash["coordinates"]["latitude"]
+    @day.longitude = hash["coordinates"]["longitude"]
+    if @day.save
+      route.total_price += (@day.price - old_price) * route.no_of_people
+    end
+
+    route.save
+    redirect_to route_path(route), status: :see_other
+  end
+
   def update_sequence
     days = JSON.parse(params["days_order"])
     route = Day.find(days.keys.first.to_i).route
@@ -181,13 +224,6 @@ class DaysController < ApplicationController
     end
     redirect_to route_path(route), status: :see_other
 
-    # @day = Day.find(#day id from js)
-    # @day.sequence #reassign
-
-    # respond_to do |format|
-    #   format.html { redirect_to movies_path }
-    #   format.text { render partial: "movies/movie_infos", locals: {movie: @movie}, formats: [:html] }
-    # end
   end
 
   private

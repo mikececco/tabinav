@@ -49,9 +49,15 @@
           <div class=" border-b-2 rounded-lg mb-10 flex p-8 hover:shadow-2xl hover:scale-110 transition duration-1000 ease-in-out">
             <div class="w-1/2">
               <h4 class="text-2xl font-semibold mb-2">Day <%= i + 1 %> - <%= day.city %>, <%= day.nation %></h4>
-              <h4 class="text-lg font-medium mb-2"><%= day.name %></h4>
+              <div  class="flex justify-between bg-darYellow">
+                <h4 class="text-lg font-medium mb-2"><%= day.name %></h4>
+                <%= simple_form_for day, :url => day_change_activity_path(day) do |f| %>
+                  <%= f.submit "Change Activity", class: "text-xs cursor-pointer transition duration-500 px-3 py-2 text-mainYellow rounded-lg hover:bg-darkerYellow hover:text-white focus:outline-none" %>
+                <% end %>
+              </div>
               <p class="text-gray-600 mb-2"><i><%= day.description %></i></p>
-              <p class="text-gray-600 font-medium"><%= day.price == 0 ? "No entrance fee" : "Entrance fee per head: €#{day.price}" %></p>
+              <p class="text-gray-600 font-medium"><%= day.price == 0 ? "No entrance fee" : "Entrance fee per person: €#{day.price}" %></p>
+
               <br>
               <div data-controller="change-hotel">
                 <div id="hotel-info" data-change-hotel-target="display">
