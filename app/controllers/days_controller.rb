@@ -1,5 +1,4 @@
 class DaysController < ApplicationController
-
   def index
   #   @route = Route.last
   #   @days = @route.days
