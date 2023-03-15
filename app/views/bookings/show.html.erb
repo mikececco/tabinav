@@ -27,7 +27,7 @@
             <td class="py-2 px-3 text-gray-700 font-medium">€<%= day.price_hotel * day.no_of_rooms %></td>
             <td class="py-2 px-3 text-gray-700 font-medium"><%= day.name %></td>
             <td class="py-2 px-3 text-gray-700 font-medium">€<%= day.price %> x <%=day.route.no_of_people%></td>
-            <td class="py-2 px-3 text-right text-gray-700 font-medium">€<%= day.price * day.route.no_of_people + day.price_hotel * day.no_of_rooms %></td>
+            <td class="py-2 px-3 text-right text-gray-700 font-medium">€<%= day.price * 1 + day.price_hotel * day.no_of_rooms %></td> <%#TO BE FIXED THE 1 to number of people%>
           </tr>
         <% end %>
         <tr>

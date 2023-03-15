@@ -22,7 +22,7 @@ export default class extends Controller {
     const url = 'https://api.openai.com/v1/chat/completions'
     const headers = {
       'Content-Type': 'application/json',
-      'Authorization': "Bearer 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"
+      'Authorization': "Bearer"
     }
     const body = JSON.stringify({
       "model": 'gpt-3.5-turbo',
@@ -127,7 +127,7 @@ export default class extends Controller {
     const url = 'https://api.openai.com/v1/chat/completions'
     const headers = {
       'Content-Type': 'application/json',
-      'Authorization': "Bearer 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"
+      'Authorization': "Bearer"
     }
     const body = JSON.stringify({
       "model": 'gpt-3.5-turbo',
@@ -165,7 +165,7 @@ export default class extends Controller {
     const url = 'https://api.openai.com/v1/chat/completions'
     const headers = {
       'Content-Type': 'application/json',
-      'Authorization': "Bearer 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"
+      'Authorization': "Bearer"
     }
     const body = JSON.stringify({
       "model": 'gpt-3.5-turbo',
@@ -249,7 +249,7 @@ export default class extends Controller {
       const url = 'https://api.openai.com/v1/chat/completions'
       const headers = {
         'Content-Type': 'application/json',
-        'Authorization': "Bearer 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"
+        'Authorization': "Bearer"
       }
       const body = JSON.stringify({
         "model": 'gpt-3.5-turbo',
