@@ -191,7 +191,7 @@ class RoutesController < ApplicationController
 
           day.save
 
-          country_array << day.nation unless country_array.include?(day.nation)
+          country_array << day.nation.capitalize unless country_array.include?(day.nation.capitalize)
           route.total_price += ( day.price * route.no_of_people + day.price_hotel * day.no_of_rooms)
         end
       end

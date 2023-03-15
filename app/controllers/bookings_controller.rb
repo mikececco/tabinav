@@ -14,11 +14,18 @@ class BookingsController < ApplicationController
   end
 
   def create
-    @bookmark = Bookmark.find(params[:bookmark_id])
+    @route = Route.find(params[:route_id])
+    if @route.bookmark.nil?
+      @bookmark = Bookmark.new
+      @bookmark.route = @route if @route.user == current_user
+      @bookmark.save
+    else
+      @bookmark = Bookmark.find(params[:bookmark_id])
+    end
     @booking = Booking.new(bookmark: @bookmark)
     if @booking.save
       # mail = User.Mailer.with(user: current_user).welcome.deliver_now
-      pack_advice(@booking)
+      # pack_advice(@booking)
       redirect_to booking_path(@booking)
     else
       raise

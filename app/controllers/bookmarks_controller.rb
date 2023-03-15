@@ -35,6 +35,12 @@ class BookmarksController < ApplicationController
     end
   end
 
+  def destroy
+    @bookmark = Bookmark.find(params[:id])
+    @bookmark.destroy
+    redirect_back(fallback_location: root_path)#, status: :see_other
+  end
+
   private
 
   def bookmark_params
