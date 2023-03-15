@@ -114,10 +114,11 @@ GEM
     execjs (2.8.1)
     faker (3.1.1)
       i18n (>= 1.8.11, < 2)
-    faraday (2.7.4)
-      faraday-net_http (>= 2.0, < 3.1)
-      ruby2_keywords (>= 0.0.4)
-    faraday-net_http (3.0.2)
+    faraday (1.2.0)
+      multipart-post (>= 1.2, < 3)
+      ruby2_keywords
+    faraday_middleware (1.2.0)
+      faraday (~> 1.0)
     ffi (1.15.5)
     font-awesome-sass (6.3.0)
       sassc (~> 2.0)
@@ -127,6 +128,7 @@ GEM
       multi_json (>= 1.11.0)
     globalid (1.1.0)
       activesupport (>= 5.0)
+    hashie (5.0.0)
     httparty (0.21.0)
       mini_mime (>= 1.0.0)
       multi_xml (>= 0.5.2)
@@ -160,6 +162,7 @@ GEM
     msgpack (1.6.1)
     multi_json (1.15.0)
     multi_xml (0.6.0)
+    multipart-post (2.3.0)
     net-imap (0.3.4)
       date
       net-protocol
@@ -170,8 +173,15 @@ GEM
     net-smtp (0.3.3)
       net-protocol
     nio4r (2.5.8)
+    nokogiri (1.14.2-arm64-darwin)
+      racc (~> 1.4)
     nokogiri (1.14.2-x86_64-linux)
       racc (~> 1.4)
+    open-weather-ruby-client (0.2.0)
+      activesupport
+      faraday (>= 1.0.0)
+      faraday_middleware
+      hashie
     orm_adapter (0.5.0)
     pg (1.4.6)
     prettier_print (1.2.1)
@@ -235,6 +245,8 @@ GEM
       railties (>= 6.0.0)
     syntax_tree (5.3.0)
       prettier_print (>= 1.2.0)
+    tailwindcss-rails (2.0.24-arm64-darwin)
+      railties (>= 6.0.0)
     tailwindcss-rails (2.0.24-x86_64-linux)
       railties (>= 6.0.0)
     thor (1.2.1)
@@ -265,6 +277,7 @@ GEM
     zeitwerk (2.6.7)
 
 PLATFORMS
+  arm64-darwin-20
   x86_64-linux
 
 DEPENDENCIES
@@ -283,6 +296,7 @@ DEPENDENCIES
   jbuilder
   jsbundling-rails
   letter_opener
+  open-weather-ruby-client
   pg (~> 1.1)
   puma (~> 5.0)
   rails (~> 7.0.4, >= 7.0.4.2)
