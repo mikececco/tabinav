@@ -4,15 +4,14 @@ import { Controller } from "@hotwired/stimulus"
 export default class extends Controller {
   connect() {
     console.log("connected with code")
-    const loader = document.querySelector("#loading");
+    // const loader = document.querySelector("#loading");
     const search = document.querySelector(".searchbar")
+    const loader = document.getElementById("loading");
 
-    // showing loading
-    function displayLoading() {
-        loader.classList.add("display");
-        // to stop loading after some time
+    function toggleDiv() {
+      loader.classList.toggle("hidden");
     }
 
-    search.addEventListener("click", displayLoading)
+    search.addEventListener("click", toggleDiv)
   }
 }
