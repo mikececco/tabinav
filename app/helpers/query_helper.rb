@@ -206,9 +206,11 @@
       day.save
     end
     assign_destination_to_route(route, country_array)
-  end
+
 
   def assign_destination_to_route(route, country_array)
     route.destination = country_array.join(" | ")
     if route.save
       redirect_to route_path(route)
+    end
+  end
