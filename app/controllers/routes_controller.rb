@@ -120,7 +120,7 @@ class RoutesController < ApplicationController
       Respond just with the JSON.
       ")
 
-    hotel_average_price.include?("AI") ? 80 : JSON.parse(hotel_average_price).first["price"]
+    hotel_average_price.include?("AI") ? 100 : JSON.parse(hotel_average_price).first["price"]
   end
 
   def generate_days(cities_hash, route, hotel_average_price, no_of_days)
