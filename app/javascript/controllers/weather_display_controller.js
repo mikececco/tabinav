@@ -45,7 +45,7 @@ export default class extends Controller {
 
         this.weatherTarget.insertAdjacentHTML("beforeend", weather);
         // this.imgTarget.setAttribute("src", `https://openweathermap.org/img/w/${iconId}.png`)
-        this.tempTarget.insertAdjacentHTML("beforeend", `<i>Usually around ${temp.toFixed(0)}°C in ${new Date(date).toLocaleString('default', { month: 'long' })}</i>`);
+      this.tempTarget.insertAdjacentHTML("beforeend", `Usually around ${temp.toFixed(0)}°C in ${new Date(date).toLocaleString('default', { month: 'long' })}`);
       });
   };
 }
