@@ -5,7 +5,7 @@
         <a href="routes/<%= bookmark.route.id %>">
           <div class="c-card block bg-white shadow-md hover:shadow-xl rounded-lg overflow-hidden">
             <div class="relative pb-48 overflow-hidden">
-              <img class="absolute inset-0 h-full w-full object-cover p-6" src="https://source.unsplash.com/random/1200x800/?<%= bookmark.route.days.first.city %>" alt="Image of city">
+              <img class="absolute inset-0 h-full w-full object-cover p-6" src="https://source.unsplash.com/random/900x600/?<%= bookmark.route.days.first.city %>" alt="Image of city">
             </div>
             <div class="p-4">
               <h2 class="mt-2 mb-2 font-bold"><%= bookmark.route.destination %></h2>
@@ -16,7 +16,7 @@
                 View Route<span class="text-darkerYellow">&hellip;</span>
               </a>
               <div class="mt-3 flex items-center">
-                <span class="text-sm font-semibold">for</span>&nbsp;<span class="font-bold text-xl"><%= bookmark.route.total_price %></span>&nbsp;<span class="text-sm font-semibold">€</span>
+                <span class="text-sm font-semibold">for</span>&nbsp;<span class="font-bold text-xl"><%= bookmark.route.total_price.round(2) %></span>&nbsp;<span class="text-sm font-semibold">€</span>
               </div>
             </div>
             <div class="p-4 border-t text-xs text-gray-700">
@@ -42,7 +42,7 @@
                   </p>
                   <%= link_to "Cancel Booking", booking_path(bookmark.booking), data: {turbo_method: :delete, turbo_confirm: "Are you sure?"}, class: "inline-block ml-2 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" %>
                 <% end %>
-                <%= link_to "Remove", bookmark_path(bookmark), method: :destroy, data: {turbo_confirm: "Are you sure?"}, class: "inline-block ml-2 text-white bg-red-500 hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800" %>
+                <%= link_to "Remove", bookmark_path(bookmark), data: {turbo_method: :delete, turbo_confirm: "Are you sure?"}, class: "inline-block ml-2 text-white bg-red-500 hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800" %>
               </div>
             </div>
           </div>

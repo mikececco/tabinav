@@ -121,6 +121,7 @@ class RoutesController < ApplicationController
                         end
 
       country_array = []
+      days = 1
 
       cities_hash.each do |hash|
         result = ChatgptService.call("
@@ -169,7 +170,6 @@ class RoutesController < ApplicationController
           Respond just with the JSON.")
 
         result = JSON.parse(result).first
-        days = 1
 
         hash["days"].times do |i|
           day = Day.new(route: route, city: hash["city"])

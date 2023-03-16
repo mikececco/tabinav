@@ -10,10 +10,14 @@
 
           <div class="flex flex-inline justify-between pb-10">
             <% if current_user == @route.user %>
-              <div>
-                <% unless @route.booking.nil? %>
-                  <h6 class="text-sm font-semibold mb-2 text-white"><i class="fa-check fa-solid mr-2"></i>Booked!</h6>
-                <% end %>
+              <div class="">
+                <div class="mb-5">
+                  <% if @route.booking != nil %>
+                    <h6 class="text-sm font-semibold text-white border border-white px-3 py-2 rounded-lg inline"><i class="fa-check fa-solid mr-2"></i>Booked!</h6>
+                  <% elsif @route.bookmark != nil %>
+                    <h6 class="text-sm font-semibold text-white border border-white px-3 py-2 rounded-lg inline"><i class="fa-bookmark fa-solid mr-2"></i>Bookmarked</h6>
+                  <% end %>
+                </div>
                 <h4 class="text-3xl font-semibold mb-2 text-white">Your trip on <%= @route.start_date.strftime("%-d %b") %> - <%= @route.end_date.strftime("%d %b %Y") %></h4>
                 <h5 class="text-xl font-semibold mb-2 text-white"><i class="far fa-user fa-fw"></i> <%= @route.no_of_people %></h5>
                 <h5 class="text-xl font-semibold mb-2 text-white">Total Price: €<%= @route.total_price.round(2) %>  <small>(Budget: €<%= @route.budget %>)</small></h5>
@@ -134,7 +138,7 @@
             </div>
             <div class="w-1/2 flex justify-end">
               <div class="rounded-lg shadow-lg p-6 h-3/4">
-                <img src="https://source.unsplash.com/random/1200x800/?<%= day.city %>" alt="Image of city" width="300" height="300" class="">
+                <img src="https://source.unsplash.com/random/90<%= rand(0..9) %>x60<%= rand(0..9) %>/?<%= day.city %>" alt="Image of city" width="300" height="300" class="">
                 <%# <p class="text-sm text-center pt-8"><i>Pic of <%= day.city %>
               </div>
             </div>
