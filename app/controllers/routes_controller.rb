@@ -45,12 +45,15 @@ class RoutesController < ApplicationController
     if @route.save
       case @route.destination.downcase
       when "new zealand"
-        city_hash = [
-          { 'city'=>'Auckland', 'country'=> 'New Zealand', 'days'=> 3 }
-        ]
-        no_of_days = (@route.end_date - @route.start_date + 1).to_i
-        nz_queenstown(@route)
-        generate_days(city_hash, @route, 100, no_of_days)
+        # city_hash = [
+        #   { 'city'=>'Auckland', 'country'=> 'New Zealand', 'days'=> 3 }
+        # ]
+        nz_hardcode_1(@route)
+        nz_hardcode_2(@route)
+        @route.destination = "New Zealand"
+        if @route.save
+          redirect_to route_path(@route)
+        end
       else
         pick_cities(@route)
       end
@@ -212,7 +215,78 @@ class RoutesController < ApplicationController
     assign_destination_to_route(route, country_array)
   end
 
-  def nz_queenstown(route)
+  def nz_hardcode_1(route)
+    result = {
+      'city': 'Auckland',
+      'country': 'New Zealand',
+      'hotel': {
+        'name': 'The Grand by SkyCity',
+        'room_type': 'Deluxe Queen Room',
+        'no_of_people_per_room': 2,
+        'price': 195.42,
+        'description': 'Located in the heart of Auckland, The Grand by SkyCity offers impeccable service and luxurious amenities such as a 25-metre heated lap pool, fitness centre and sauna. This 5-star hotel is within walking distance of the city\'s top attractions.',
+        'coordinates': {
+          'latitude': -36.8485,
+          'longitude': 174.7708
+        }
+      },
+      'activity1': {
+        'name': 'Auckland Domain',
+        'price': 0,
+        'description': 'One of Auckland\'s oldest and largest parks, the Auckland Domain features beautiful gardens, walking trails, historic monuments and the Auckland War Memorial Museum. It\'s the perfect place to relax and take in the natural beauty of the city.',
+        'coordinates': {
+          'latitude': -36.8642,
+          'longitude': 174.7708
+        }
+      },
+      'activity2': {
+        'name': 'Auckland Harbour Bridge',
+        'price': 141.65,
+        'description': 'Climb to the top of Auckland Harbour Bridge, 67 metres above the sparkling Waitemata Harbour. This unforgettable experience also includes a commentary on the bridge\'s history and engineering, as well as stunning panoramic views.',
+        'coordinates': {
+          'latitude': -36.8203,
+          'longitude': 174.7617
+        }
+      },
+      'activity3': {
+        'name': 'Sky Tower',
+        'price': 32.25,
+        'description': 'The tallest freestanding structure in the Southern Hemisphere, the Sky Tower offers breathtaking 360-degree views of Auckland from 220 metres above ground. It also features a revolving restaurant, SkyWalk and SkyJump activities.',
+        'coordinates': {
+          'latitude': -36.8485,
+          'longitude': 174.7628
+        }
+      }
+    }
+
+    days = 1
+
+    3.times do |i|
+      day = Day.new(route: route, city: "Auckland")
+      day.nation = result[:country]
+      day.name_hotel = result[:hotel][:name]
+      day.description_hotel = result[:hotel][:description]
+      day.price_hotel = result[:hotel][:price]
+      day.room_type = result[:hotel][:room_type]
+      day.no_of_rooms = route.no_of_people.fdiv(result[:hotel][:no_of_people_per_room]).ceil
+      day.latitude_hotel = result[:hotel][:coordinates][:latitude]
+      day.longitude_hotel = result[:hotel][:coordinates][:longitude]
+
+      day.name = result[:"activity#{i + 1}"][:name]
+      day.description = result[:"activity#{i + 1}"][:description]
+      day.price = result[:"activity#{i + 1}"][:price]
+      day.latitude = result[:"activity#{i + 1}"][:coordinates][:latitude]
+      day.longitude = result[:"activity#{i + 1}"][:coordinates][:longitude]
+      day.sequence = days
+      days += 1
+
+      day.save
+
+      route.total_price += ( day.price * route.no_of_people + day.price_hotel * day.no_of_rooms)
+    end
+  end
+
+  def nz_hardcode_2(route)
     result = {
       'city': 'Queenstown',
       'country': 'New Zealand',
@@ -289,6 +363,7 @@ class RoutesController < ApplicationController
       day.save
 
       route.total_price += ( day.price * route.no_of_people + day.price_hotel * day.no_of_rooms)
+
     end
   end
 
