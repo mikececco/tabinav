@@ -108,7 +108,7 @@
                 <% end %>
               </div>
               <p class="text-gray-600 mb-2"><i><%= day.description %></i></p>
-              <p class="text-gray-600 font-medium"><%= day.price == 0 ? "No entrance fee" : "Entrance fee per person: €#{day.price}" %></p>
+              <p class="text-gray-600 font-medium"><%= day.price == 0 ? "No entrance fee" : "Entrance fee per person: €#{day.price.round(2)}" %></p>
 
               <br>
               <div data-controller="change-hotel">
@@ -116,7 +116,7 @@
                   <div  class="flex justify-between bg-darYellow">
                     <h4 class="text-lg font-medium mb-2">Accommodation: <br><%= day.name_hotel %> <br>(<%= day.no_of_rooms %> x <%= day.room_type %>)</h4>
                     <div class="pt-2" >
-                      <p class="text-gray-600 font-medium text-end px-3">Price: €<%= day.price_hotel %></p>
+                      <p class="text-gray-600 font-medium text-end px-3">Price: €<%= day.price_hotel.round(2) %></p>
                     </div>
                   </div>
                   <p class="text-gray-600 mb-2"><i><%= day.description_hotel %></i></p>
