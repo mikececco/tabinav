@@ -55,9 +55,9 @@ class RoutesController < ApplicationController
         pick_cities(@route)
       end
     end
-    # Route.all.each do |route|
-    #   route.destroy if @route.days == nil
-    # end
+    Route.all.each do |route|
+      route.destroy if @route.total_price == 0
+    end
   end
 
   private
@@ -69,7 +69,6 @@ class RoutesController < ApplicationController
   def pick_cities(route)
     destination = route.destination == "" ? Route.all.sample.days.sample.city : route.destination
     route.no_of_people = 2 if route.no_of_people == nil
-    route.save
 
     no_of_days = (route.end_date - route.start_date + 1).to_i
     no_of_cities = case no_of_days
@@ -96,7 +95,7 @@ class RoutesController < ApplicationController
       # hotel_average_price = check_hotel_price(@cities.first["city"])
       hotel_average_price = 90
 
-      generate_days(@cities, @route, hotel_average_price, no_of_days)
+      generate_days(@cities, route, hotel_average_price, no_of_days)
 
   end
 
