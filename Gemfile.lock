@@ -115,8 +115,6 @@ GEM
     faraday (1.2.0)
       multipart-post (>= 1.2, < 3)
       ruby2_keywords
-    faraday-multipart (1.0.4)
-      multipart-post (~> 2)
     ffi (1.15.5)
     font-awesome-sass (6.3.0)
       sassc (~> 2.0)
@@ -280,7 +278,6 @@ DEPENDENCIES
   devise
   dotenv-rails
   erb-formatter
-  faraday-multipart (~> 1.0, >= 1.0.4)
   font-awesome-sass (~> 6.1)
   geocoder
   gibbon
@@ -288,7 +285,6 @@ DEPENDENCIES
   jbuilder
   jsbundling-rails
   letter_opener
-  multipart-post (~> 2.3)
   pg (~> 1.1)
   puma (~> 5.0)
   rails (~> 7.0.4, >= 7.0.4.2)
