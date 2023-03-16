@@ -21,8 +21,8 @@ class OrdersController < ApplicationController
         }
       ],
       mode: "payment",
-      success_url: "http://localhost:3000/hack?bookmark_id=#{bookmark.id}",#hackhack_path(bookmark_id: bookmark),
-      cancel_url: "http://localhost:3000/hack"
+      success_url: "http://www.tabinav.com/hack?bookmark_id=#{bookmark.id}",#hackhack_path(bookmark_id: bookmark),
+      cancel_url: "http://www.tabinav.com/hack?bookmark_id=#{bookmark.id}"
     )
     order.update(checkout_session_id: session.id)
     redirect_to new_order_payment_path(order)
