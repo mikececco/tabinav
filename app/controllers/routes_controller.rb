@@ -73,11 +73,11 @@ class RoutesController < ApplicationController
 
     no_of_days = (route.end_date - route.start_date + 1).to_i
     no_of_cities = case no_of_days
-      when 1..4 then 1
-      when 5..7 then 2
-      when 8..10 then 3
-      else (no_of_days / 3).floor
-    end
+                   when 1..4 then 1
+                   when 5..7 then 2
+                   when 8..10 then 3
+                   else (no_of_days / 3).floor
+                   end
 
     @cities = ChatgptService.call("
       I want to go on a vacation in #{destination}.
@@ -117,21 +117,21 @@ class RoutesController < ApplicationController
       Respond just with the JSON.
       ")
 
-      hotel_average_price.include?("AI") ? 80 : JSON.parse(hotel_average_price).first["price"]
+    hotel_average_price.include?("AI") ? 80 : JSON.parse(hotel_average_price).first["price"]
   end
 
   def generate_days(cities_hash, route, hotel_average_price, no_of_days)
-      no_of_rooms = route.no_of_people.fdiv(2).ceil
-      daily_hotel_budget = (route.budget - (25 * route.no_of_people * no_of_days)) / no_of_days / no_of_rooms
+    no_of_rooms = route.no_of_people.fdiv(2).ceil
+    daily_hotel_budget = (route.budget - (25 * route.no_of_people * no_of_days)) / no_of_days / no_of_rooms
 
-      hotel_description = case daily_hotel_budget / hotel_average_price * 100
-        when 0...50 then "Choose a hostel to stay."
-        when 50...100 then "Choose a 2-star:hotel"
-        when 100...150 then "Choose a 3-star hotel."
-        when 150...300 then "Choose a 4-star hotel."
-        else "Choose a 5-star hotel with price lower than #{daily_hotel_budget}."
-        # else "Choose a hotel with price from €#{hotel_price * 0.9} to €#{hotel_price}."
-      end
+    hotel_description = case daily_hotel_budget / hotel_average_price * 100
+                        when 0...50 then "Choose a hostel to stay."
+                        when 50...100 then "Choose a 2-star hotel."
+                        when 100...150 then "Choose a 3-star hotel."
+                        when 150...300 then "Choose a 4-star hotel."
+                        else "Choose a 5-star hotel."
+                          # else "Choose a hotel with price from €#{hotel_price * 0.9} to €#{hotel_price}."
+                        end
 
       country_array = []
       days = 1

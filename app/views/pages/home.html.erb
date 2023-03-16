@@ -123,9 +123,9 @@
 </div> %>
 
 <%= render "shared/hero" unless @routes == false %>
-<div class="hidden" id="loading" style="height: 100%; position: absolute; bottom: 0; right: 0; left: 0; background-color: rgba(0, 0, 0, 0.9);">
-  <div class="flex absolute justify-center items-center w-full">
-    <h1 class="text-6xl font-bold px-40" style="position: absolute; top: 0; left: 0; z-index: 9999; margin-top: 40vh; color: white;" data-controller="typed-js-poem"></h1>
+<div class="hidden text-center" id="loading" style="height: 100%; position: absolute; bottom: 0; right: 0; left: 0; background-color: rgba(0, 0, 0, 0.9);">
+  <div class="flex absolute text-center justify-center items-center w-full">
+    <h1 class=" text-center text-6xl font-bold px-40 drop-shadow-2xl" style="position: absolute; top: 0; left: 0; z-index: 9999; margin-top: 40vh; color: white;" data-controller="typed-js-poem"></h1>
   </div>
 
   <%= video_tag "world-rotating.mp4", autoplay: :autoplay, loop: :loop, muted: :muted, class: "w-full h-full fixed object-cover absolute top-0 z-1"%>
