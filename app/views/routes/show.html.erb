@@ -68,20 +68,20 @@
             <div class="w-full pt-10">
               <% if current_user == @route.user %>
                 <% if @route.bookmark.nil? %>
-                  <%= simple_form_for [@route, @bookmark] do |f| %>
-                    <%= f.button :submit, "Bookmark", class: "sticky top-10 cursor-pointer w-full block text-center relative text-white font-bold bg-mainYellow px-4 py-3 rounded-lg shadow-lg hover:shadow-none hover:opacity-100 opacity-75 transition duration-500 "%>
+                  <%= simple_form_for [@route, @bookmark], class: "sticky top-10" do |f| %>
+                    <%= f.button :submit, "Bookmark", class: "cursor-pointer w-full block text-center relative text-white font-bold bg-mainYellow px-4 py-3 rounded-lg shadow-lg hover:shadow-none hover:opacity-100 opacity-75 transition duration-500 "%>
                   <% end %>
                 <% elsif @route.booking.nil? %>
-                  <%= simple_form_for [@route.bookmark, @booking] do |f| %>
-                    <%= f.button :submit, "Book!", class: "sticky top-10 cursor-pointer w-full block text-center relative text-white font-bold bg-mainYellow px-4 py-3 rounded-lg shadow-lg hover:shadow-none hover:opacity-100 opacity-75 transition duration-500 " %>
+                  <%= simple_form_for [@route.bookmark, @booking], class: "sticky top-10" do |f| %>
+                    <%= f.button :submit, "Book!", class: "cursor-pointer w-full block text-center relative text-white font-bold bg-mainYellow px-4 py-3 rounded-lg shadow-lg hover:shadow-none hover:opacity-100 opacity-75 transition duration-500 " %>
                   <% end %>
                 <% else %>
-                  <%= link_to "View Booking Confirmation", booking_path(@route.booking), class: "sticky top-10 cursor-pointer w-full block text-center relative text-white font-bold bg-mainYellow px-4 py-3 rounded-lg shadow-lg hover:shadow-none hover:opacity-100 opacity-75 transition duration-500 " %>
+                  <%= link_to "View Booking Confirmation", booking_path(@route.booking), class: "cursor-pointer w-full block text-center relative text-white font-bold bg-mainYellow px-4 py-3 rounded-lg shadow-lg hover:shadow-none hover:opacity-100 opacity-75 transition duration-500 " %>
                   <%# <h3 class="sticky top-10 w-full block text-center relative text-white font-bold bg-mainYellow px-4 py-3 rounded-lg shadow-lg">You have booked this trip!</h3> %>
                 <% end %>
               <% else %>
                 <%= simple_form_for [@route, @bookmark] do |f| %>
-                  <%= f.button :submit, "Bookmark to customize the trip!", class: "sticky top-10 cursor-pointer w-full block text-center relative text-white font-bold bg-mainYellow px-4 py-3 rounded-lg shadow-lg hover:shadow-none hover:opacity-100 opacity-75 transition duration-500 "%>
+                  <%= f.button :submit, "Bookmark to customize the trip!", class: "cursor-pointer w-full block text-center relative text-white font-bold bg-mainYellow px-4 py-3 rounded-lg shadow-lg hover:shadow-none hover:opacity-100 opacity-75 transition duration-500 "%>
                 <% end %>
               <% end %>
             </div>
