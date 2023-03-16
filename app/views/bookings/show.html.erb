@@ -18,7 +18,7 @@
         </tr>
       </thead>
       <tbody>
-        <% @route.days.each_with_index do |day, i| %>
+        <% @route.days.order(sequence: :asc).each_with_index do |day, i| %>
           <tr class="border-b">
             <td class="py-2 px-3 text-gray-700 font-medium">  <%= i + 1 %> </td>
             <td class="py-2 px-3 text-gray-700 font-medium"><%= day.city %></td>
