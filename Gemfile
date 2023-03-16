@@ -2,10 +2,11 @@ source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby "3.1.2"
-gem "faker"
 gem 'httparty'
 gem 'letter_opener', group: :development
 gem 'erb-formatter'
+gem 'multipart-post', '~> 2.3'
+gem 'faraday-multipart', '~> 1.0', '>= 1.0.4'
 
 # Needed for email service
 gem 'gibbon'

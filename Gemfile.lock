@@ -112,11 +112,11 @@ GEM
       syntax_tree (~> 5.0)
     erubi (1.12.0)
     execjs (2.8.1)
-    faker (3.1.1)
-      i18n (>= 1.8.11, < 2)
     faraday (1.2.0)
       multipart-post (>= 1.2, < 3)
       ruby2_keywords
+    faraday-multipart (1.0.4)
+      multipart-post (~> 2)
     ffi (1.15.5)
     font-awesome-sass (6.3.0)
       sassc (~> 2.0)
@@ -280,7 +280,7 @@ DEPENDENCIES
   devise
   dotenv-rails
   erb-formatter
-  faker
+  faraday-multipart (~> 1.0, >= 1.0.4)
   font-awesome-sass (~> 6.1)
   geocoder
   gibbon
@@ -288,6 +288,7 @@ DEPENDENCIES
   jbuilder
   jsbundling-rails
   letter_opener
+  multipart-post (~> 2.3)
   pg (~> 1.1)
   puma (~> 5.0)
   rails (~> 7.0.4, >= 7.0.4.2)
