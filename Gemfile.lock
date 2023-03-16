@@ -154,6 +154,15 @@ GEM
     method_source (1.0.0)
     mini_mime (1.1.2)
     minitest (5.18.0)
+    monetize (1.12.0)
+      money (~> 6.12)
+    money (6.16.0)
+      i18n (>= 0.6.4, <= 2)
+    money-rails (1.15.0)
+      activesupport (>= 3.0)
+      monetize (~> 1.9)
+      money (~> 6.13)
+      railties (>= 3.0)
     msgpack (1.6.1)
     multi_json (1.15.0)
     multi_xml (0.6.0)
@@ -233,6 +242,10 @@ GEM
       sprockets (>= 3.0.0)
     stimulus-rails (1.2.1)
       railties (>= 6.0.0)
+    stripe (8.3.0)
+    stripe_event (2.7.0)
+      activesupport (>= 3.1)
+      stripe (>= 2.8, < 9)
     syntax_tree (5.3.0)
       prettier_print (>= 1.2.0)
     tailwindcss-rails (2.0.24-arm64-darwin)
@@ -285,6 +298,7 @@ DEPENDENCIES
   jbuilder
   jsbundling-rails
   letter_opener
+  money-rails
   pg (~> 1.1)
   puma (~> 5.0)
   rails (~> 7.0.4, >= 7.0.4.2)
@@ -292,6 +306,8 @@ DEPENDENCIES
   simple_form!
   sprockets-rails
   stimulus-rails
+  stripe
+  stripe_event
   tailwindcss-rails (~> 2.0)
   turbo-rails
   tzinfo-data

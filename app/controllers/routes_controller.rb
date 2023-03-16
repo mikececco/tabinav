@@ -70,6 +70,7 @@ class RoutesController < ApplicationController
     destination = route.destination == "" ? Route.all.sample.days.sample.city : route.destination
     route.no_of_people = 2 if route.no_of_people == nil
 
+    rooms = route.no_of_people.fdiv(2).ceil
     no_of_days = (route.end_date - route.start_date + 1).to_i
     no_of_cities = case no_of_days
                    when 1..4 then 1
