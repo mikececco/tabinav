@@ -112,8 +112,6 @@ GEM
       syntax_tree (~> 5.0)
     erubi (1.12.0)
     execjs (2.8.1)
-    faker (3.1.1)
-      i18n (>= 1.8.11, < 2)
     faraday (1.2.0)
       multipart-post (>= 1.2, < 3)
       ruby2_keywords
@@ -293,7 +291,6 @@ DEPENDENCIES
   devise
   dotenv-rails
   erb-formatter
-  faker
   font-awesome-sass (~> 6.1)
   geocoder
   gibbon
