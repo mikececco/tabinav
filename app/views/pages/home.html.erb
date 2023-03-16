@@ -122,7 +122,7 @@
   </div>
 </div> %>
 
-<%= render "shared/hero" %>
+<%= render "shared/hero" unless @routes == false %>
 <div class="hidden" id="loading" style="height: 100%; position: absolute; bottom: 0; right: 0; left: 0; background-color: rgba(0, 0, 0, 0.9);">
   <div class="flex absolute justify-center items-center w-full">
     <h1 class="text-6xl font-bold px-40" style="position: absolute; top: 0; left: 0; z-index: 9999; margin-top: 40vh; color: white;" data-controller="typed-js-poem"></h1>

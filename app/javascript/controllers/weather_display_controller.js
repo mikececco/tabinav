@@ -3,10 +3,11 @@ import { Controller } from "@hotwired/stimulus"
 // Connects to data-controller="weather-display"
 export default class extends Controller {
 
-  static targets = ["city", "weather", "temp", "img", "date"];
+  static targets = ["city", "weather", "temp", "date"];
 
   connect() {
-    const city = this.cityTarget.innerText.match(/\-\s(.*),\s/)[1];
+    console.log("hello from weather controller!!");
+    const city = this.cityTarget.innerText;
     this.weatherTarget.innerHTML = '';
     this.tempTarget.innerHTML = '';
 
@@ -14,7 +15,7 @@ export default class extends Controller {
   };
 
   searchCity(city) {
-    const url = `http://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=1&appid=`;
+    const url = `http://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=1&appid=${this.apiKeyValue}`;
     fetch(url)
       .then(response => response.json())
       .then((data) => {
@@ -31,7 +32,7 @@ export default class extends Controller {
     const time = Date.parse(date).toString().substring(0,10)
 
     // const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=`;
-    const url = `https://api.openweathermap.org/data/3.0/onecall/timemachine?lat=${lat}&lon=${lon}&dt=${time}&appid=`;
+    const url = `https://api.openweathermap.org/data/3.0/onecall/timemachine?lat=${lat}&lon=${lon}&dt=${time}&appid=${this.apiKeyValue}`;
     fetch(url)
       .then(response => response.json())
       .then((data) => {
