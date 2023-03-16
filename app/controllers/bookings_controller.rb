@@ -1,7 +1,6 @@
 class BookingsController < ApplicationController
   def index
-    @bookings = current_user.bookings
-
+    @bookings = current_user.bookings.order(created_at: :desc)
   end
 
   def show
@@ -15,20 +14,51 @@ class BookingsController < ApplicationController
 
   def create
     @bookmark = Bookmark.find(params[:bookmark_id])
-    @booking = Booking.new(bookmark: @bookmark)
+    @route = @bookmark.route
+    # if @route.bookmark.nil?
+    #   @bookmark = Bookmark.new
+    #   @bookmark.route = @route if @route.user == current_user
+    #   @bookmark.save
+    # else
+    # end
+    @booking = Booking.new#(bookmark: @bookmark)
+    @booking.bookmark = @bookmark
     if @booking.save
       # mail = User.Mailer.with(user: current_user).welcome.deliver_now
-      pack_advice(@booking)
+      #
       redirect_to booking_path(@booking)
     else
       raise
     end
   end
 
+  def update
+    @booking = Booking.find(params[:id])
+    pack_advice(@booking)
+    redirect_to booking_path(@booking)
+  end
+
   def destroy
     @booking = Booking.find(params[:id])
     @booking.destroy
-    redirect_back(fallback_location: root_path)#, status: :see_other
+    redirect_to bookings_path, status: :see_other
+  end
+
+  def show
+    @booking = Booking.find(params[:id])
+    @route = @booking.bookmark.route
+  end
+
+  private
+
+  def pack_advice(booking)
+    route = @booking.bookmark.route
+    @booking.pack_advice = ChatgptService.call("
+      Suggest what to pack for a vacation in #{route.destination} in #{Date::MONTHNAMES[route.start_date.month]}.
+      Respond in a list:
+      - Lightweight and comfortable clothes: The weather in the Netherlands in May is usually mild, with average temperatures ranging from 10°C to 17°C. Pack clothes that can be layered to accommodate changes in temperature.\n\n
+      - Rain jacket or umbrella: May is one of the rainiest months in the Netherlands, so it's a good idea to pack a waterproof jacket or umbrella.")
+    @booking.save
   end
 
   private

@@ -4,14 +4,33 @@
 
 import { application } from "./application"
 
+import AnimationController from "./animation_controller"
+application.register("animation", AnimationController)
+import ChangeHotelController from "./change_hotel_controller"
+application.register("change-hotel", ChangeHotelController)
+
+import ChangeListColorController from "./change_list_color_controller"
+application.register("change-list-color", ChangeListColorController)
+
 import FlatpickrController from "./flatpickr_controller"
 application.register("flatpickr", FlatpickrController)
+
+import GptResponseController from "./gpt_response_controller"
+application.register("gpt-response", GptResponseController)
 
 import HelloController from "./hello_controller"
 application.register("hello", HelloController)
 
 import MapController from "./map_controller"
 application.register("map", MapController)
+
+import SortableController from "./sortable_controller"
+application.register("sortable", SortableController)
+import TypedJsController from "./typed_js_controller"
+application.register("typed-js", TypedJsController)
+
+import TypedJsPoemController from "./typed_js_poem_controller"
+application.register("typed-js-poem", TypedJsPoemController)
 
 import WeatherDisplayController from "./weather_display_controller"
 application.register("weather-display", WeatherDisplayController)

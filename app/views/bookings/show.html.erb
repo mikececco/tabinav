@@ -1,7 +1,68 @@
-<%= @route.destination %>
-<h1>Pack Advice:</h1>
-<p><%= @booking.pack_advice %></p>
+<div class="bg-white rounded-lg shadow-lg p-8 mt-8">
+  <h1 class="text-3xl font-bold text-center mb-8">Booking successful!</h1>
 
-<% @route.days.each do |day| %>
-  <h1><%= day.name_hotel %></h1>
-<% end %>
+<div class="mb-8">
+  <h3 class="text-lg font-semibold mb-4">Your trip summary</h3>
+  <div class="overflow-x-auto">
+    <table class="table-auto border w-full">
+      <thead>
+        <tr class="bg-gray-100 border-b">
+          <th class="py-2 px-3 text-left">Day</th>
+          <th class="py-2 px-3 text-left">City</th>
+          <th class="py-2 px-3 text-left">Accommodation</th>
+          <th class="py-2 px-3 text-left">Room Type</th>
+          <th class="py-2 px-3 text-left">Hotel Price</th>
+          <th class="py-2 px-3 text-left">Activity</th>
+          <th class="py-2 px-3 text-left">Activity Price</th>
+          <th class="py-2 px-3 text-right font-semibold">Price Per Day</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @route.days.order(sequence: :asc).each_with_index do |day, i| %>
+          <tr class="border-b">
+            <td class="py-2 px-3 text-gray-700 font-medium">  <%= i + 1 %> </td>
+            <td class="py-2 px-3 text-gray-700 font-medium"><%= day.city %></td>
+            <td class="py-2 px-3 text-gray-700 font-medium"><%= day.name_hotel %></td>
+            <td class="py-2 px-3 text-gray-700 font-medium"><%= day.room_type %> x <%= day.no_of_rooms %> </td>
+            <td class="py-2 px-3 text-gray-700 font-medium">€<%= day.price_hotel * day.no_of_rooms %></td>
+            <td class="py-2 px-3 text-gray-700 font-medium"><%= day.name %></td>
+            <td class="py-2 px-3 text-gray-700 font-medium">€<%= day.price %> x <%=day.route.no_of_people%></td>
+            <td class="py-2 px-3 text-right text-gray-700 font-medium">€<%= day.price * day.route.no_of_people + day.price_hotel * day.no_of_rooms %></td> <%#TO BE FIXED THE 1 to number of people%>
+          </tr>
+        <% end %>
+        <tr>
+          <td colspan="7" class="py-2 px-3 text-right font-semibold">Total Price:</td>
+          <td class="py-2 px-3 text-right text-gray-700 font-semibold">€<%= @route.total_price.round(2) %></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+  <div class="mb-8">
+    <h3 class="text-lg font-semibold mb-4">From</h3>
+    <p class="text-gray-600 mb-2">Start Date: <strong><%= @route.start_date %></strong></p>
+    <p class="text-gray-600 mb-2">End Date: <strong><%= @route.end_date %></strong></p>
+  </div>
+
+  <div class="text-center mb-8">
+    <%= link_to bookings_path, class: "inline-block font-bold transition duration-500 py-2 px-3 text-darkerYellow hover:bg-darkerYellow hover:text-white rounded-lg" do %>
+    <div class="flex items-center relative cursor-pointer whitespace-nowrap">
+      <i class="fa-solid fa-calendar-days mr-2"></i> View My Bookings
+    </div>
+    <% end %>
+  </div>
+
+  <hr class="my-8">
+
+  <div>
+    <% if @booking.pack_advice.nil? %>
+      <%= simple_form_for @booking do |f| %>
+        <%= f.submit "View Pack Advice", class: "text-xs cursor-pointer transition duration-500 mx-2 px-3 py-2 text-white bg-mainYellow font-medium rounded-lg hover:bg-darkerYellow hover:text-white focus:outline-none" %>
+      <% end %>
+    <% else %>
+    <h1 class="text-2xl font-bold mb-4">Pack Advice for: <%= @route.destination.capitalize %></h1>
+    <p class="text-gray-600"><%= simple_format(@booking.pack_advice) %></p>
+    <% end %>
+  </div>
+</div>

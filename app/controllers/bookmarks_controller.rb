@@ -1,11 +1,11 @@
 class BookmarksController < ApplicationController
-  skip_before_action :authenticate_user!, only: [:create]
+  # skip_before_action :authenticate_user!, only: [:create]
 
   def index
     # test UserMailer
     UserMailer.with(user: current_user).welcome.deliver_now
 
-    @bookmarks = current_user.bookmarks
+    @bookmarks = current_user.bookmarks.order(created_at: :desc).select { |bookmark| bookmark.booking.nil? }
     @booking = Booking.new
   end
 
@@ -15,7 +15,7 @@ class BookmarksController < ApplicationController
     if @route.user == current_user
       @bookmark.route = @route
       if @bookmark.save
-        redirect_to bookmarks_path
+        redirect_to route_path(@route), status: :see_other
       end
     else
       new_route = @route.dup
@@ -29,10 +29,16 @@ class BookmarksController < ApplicationController
         end
         @bookmark.route = new_route
         if @bookmark.save
-          redirect_to bookmarks_path
+          redirect_to route_path(new_route), status: :see_other
         end
       end
     end
+  end
+
+  def destroy
+    @bookmark = Bookmark.find(params[:id])
+    @bookmark.destroy
+    redirect_back(fallback_location: root_path)#, status: :see_other
   end
 
   private

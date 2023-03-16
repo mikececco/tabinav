@@ -48,6 +48,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_14_111154) do
     t.float "price_hotel"
     t.string "room_type"
     t.integer "no_of_rooms"
+    t.integer "sequence"
     t.index ["route_id"], name: "index_days_on_route_id"
   end
 

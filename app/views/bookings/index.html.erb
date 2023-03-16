@@ -1,4 +1,14 @@
-<div>
-  <h1 class="font-bold text-4xl">Bookings#index</h1>
-  <p>Find me in app/views/bookings/index.html.erb</p>
+<%= render "shared/navbar" %>
+
+<div class="h-screen flex flex-col container mx-auto p-8 px-40">
+  <h1 class="text-5xl font-bold py-8">Your bookings</h1>
+  <div
+    class="flex overflow-x-scroll pb-10 hide-scroll-bar"
+  >
+    <div
+      class="flex flex-nowrap -mx-4"
+    >
+      <%= render "bookings_info", bookings: @bookings %>
+    </div>
+  </div>
 </div>
