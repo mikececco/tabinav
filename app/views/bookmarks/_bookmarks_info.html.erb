@@ -25,10 +25,15 @@
               </div>
               <div class="mx-auto mt-3">
                 <% if bookmark.booking.nil? %>
-                  <!-- Modal toggle -->
-                  <button data-modal-target="defaultModal-<%= bookmark.id %>" data-modal-toggle="defaultModal-<%= bookmark.id %>" class="mr-4 hover:scale-125 bg-mainYellow hover:bg-darkerYellow text-white text-sm font-bold rounded px-3 py-2 hover:scale-110 transition duration-5000 ease-in-out" type="button">
+                  <!-- Modal toggle
+                  <button data-modal-target="defaultModal-<%= bookmark.id %>" data-modal-toggle="defaultModal-<%= bookmark.id %>" class="inline-block text-white bg-mainYellow hover:bg-darkerYellow focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">
                     Book!
-                  </button>
+                  </button>-->
+
+                  <%= form_with url: orders_path do %>
+                    <%= hidden_field_tag 'bookmark_id', bookmark.id %>
+                    <%= submit_tag 'Book!', class: 'inline-block text-white bg-mainYellow hover:bg-darkerYellow focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800' %>
+                  <% end %>
                   <!-- Main modal -->
                   <div id="defaultModal-<%= bookmark.id %>" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] md:h-full">
                     <div class="relative w-1/3 h-full min-w-1/2 md:h-auto">

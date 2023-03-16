@@ -43,10 +43,23 @@ class RoutesController < ApplicationController
     @route = Route.new(route_params)
     @route.user = current_user
     if @route.save
-      pick_cities(@route)
+      case @route.destination.downcase
+      when "new zealand"
+        # city_hash = [
+        #   { 'city'=>'Auckland', 'country'=> 'New Zealand', 'days'=> 3 }
+        # ]
+        nz_hardcode_1(@route)
+        nz_hardcode_2(@route)
+        @route.destination = "New Zealand"
+        if @route.save
+          redirect_to route_path(@route)
+        end
+      else
+        pick_cities(@route)
+      end
     end
     Route.all.each do |route|
-      route.destroy if @route.days == nil
+      route.destroy if route.total_price == 0
     end
   end
 
@@ -60,6 +73,7 @@ class RoutesController < ApplicationController
     destination = route.destination == "" ? Route.all.sample.days.sample.city : route.destination
     route.no_of_people = 2 if route.no_of_people == nil
 
+    rooms = route.no_of_people.fdiv(2).ceil
     no_of_days = (route.end_date - route.start_date + 1).to_i
     no_of_cities = case no_of_days
                    when 1..4 then 1
@@ -81,15 +95,17 @@ class RoutesController < ApplicationController
       ]
       Respond just with the JSON.")
 
-    @cities = JSON.parse(@cities)
-    hotel_average_price = check_hotel_price(@cities.first["city"])
-    generate_days(@cities, @route, hotel_average_price, no_of_days)
+      @cities = JSON.parse(@cities)
+      # hotel_average_price = check_hotel_price(@cities.first["city"])
+      hotel_average_price = 90
+
+      generate_days(@cities, route, hotel_average_price, no_of_days)
 
   end
 
   def check_hotel_price(city)
     hotel_average_price = ChatgptService.call("
-      Name any 3-star hotel in #{city}.
+      Name any 3-star:hotelin #{city}.
       Convert price to Euro.
       Respond with just the entire response in JSON.
       Example response for Amsterdam:
@@ -109,7 +125,7 @@ class RoutesController < ApplicationController
 
   def generate_days(cities_hash, route, hotel_average_price, no_of_days)
     no_of_rooms = route.no_of_people.fdiv(2).ceil
-    daily_hotel_budget = (route.budget - (15 * route.no_of_people * no_of_days)) / no_of_days / no_of_rooms
+    daily_hotel_budget = (route.budget - (25 * route.no_of_people * no_of_days)) / no_of_days / no_of_rooms
 
     hotel_description = case daily_hotel_budget / hotel_average_price * 100
                         when 0...50 then "Choose a hostel to stay."
@@ -197,6 +213,158 @@ class RoutesController < ApplicationController
         end
       end
     assign_destination_to_route(route, country_array)
+  end
+
+  def nz_hardcode_1(route)
+    result = {
+      'city': 'Auckland',
+      'country': 'New Zealand',
+      'hotel': {
+        'name': 'The Grand by SkyCity',
+        'room_type': 'Deluxe Queen Room',
+        'no_of_people_per_room': 2,
+        'price': 195.42,
+        'description': 'Located in the heart of Auckland, The Grand by SkyCity offers impeccable service and luxurious amenities such as a 25-metre heated lap pool, fitness centre and sauna. This 5-star hotel is within walking distance of the city\'s top attractions.',
+        'coordinates': {
+          'latitude': -36.8485,
+          'longitude': 174.7708
+        }
+      },
+      'activity1': {
+        'name': 'Auckland Domain',
+        'price': 0,
+        'description': 'One of Auckland\'s oldest and largest parks, the Auckland Domain features beautiful gardens, walking trails, historic monuments and the Auckland War Memorial Museum. It\'s the perfect place to relax and take in the natural beauty of the city.',
+        'coordinates': {
+          'latitude': -36.8642,
+          'longitude': 174.7708
+        }
+      },
+      'activity2': {
+        'name': 'Auckland Harbour Bridge',
+        'price': 141.65,
+        'description': 'Climb to the top of Auckland Harbour Bridge, 67 metres above the sparkling Waitemata Harbour. This unforgettable experience also includes a commentary on the bridge\'s history and engineering, as well as stunning panoramic views.',
+        'coordinates': {
+          'latitude': -36.8203,
+          'longitude': 174.7617
+        }
+      },
+      'activity3': {
+        'name': 'Sky Tower',
+        'price': 32.25,
+        'description': 'The tallest freestanding structure in the Southern Hemisphere, the Sky Tower offers breathtaking 360-degree views of Auckland from 220 metres above ground. It also features a revolving restaurant, SkyWalk and SkyJump activities.',
+        'coordinates': {
+          'latitude': -36.8485,
+          'longitude': 174.7628
+        }
+      }
+    }
+
+    days = 1
+
+    3.times do |i|
+      day = Day.new(route: route, city: "Auckland")
+      day.nation = result[:country]
+      day.name_hotel = result[:hotel][:name]
+      day.description_hotel = result[:hotel][:description]
+      day.price_hotel = result[:hotel][:price]
+      day.room_type = result[:hotel][:room_type]
+      day.no_of_rooms = route.no_of_people.fdiv(result[:hotel][:no_of_people_per_room]).ceil
+      day.latitude_hotel = result[:hotel][:coordinates][:latitude]
+      day.longitude_hotel = result[:hotel][:coordinates][:longitude]
+
+      day.name = result[:"activity#{i + 1}"][:name]
+      day.description = result[:"activity#{i + 1}"][:description]
+      day.price = result[:"activity#{i + 1}"][:price]
+      day.latitude = result[:"activity#{i + 1}"][:coordinates][:latitude]
+      day.longitude = result[:"activity#{i + 1}"][:coordinates][:longitude]
+      day.sequence = days
+      days += 1
+
+      day.save
+
+      route.total_price += ( day.price * route.no_of_people + day.price_hotel * day.no_of_rooms)
+    end
+  end
+
+  def nz_hardcode_2(route)
+    result = {
+      'city': 'Queenstown',
+      'country': 'New Zealand',
+      'hotel': {
+        'name': 'Sofitel Queenstown Hotel & Spa',
+        'room_type': 'Superior Room',
+        'no_of_people_per_room': 2,
+        'price': 300.31,
+        'description': 'Located in the heart of Queenstown, this luxurious 5-star hotel features elegant accommodations, a spa, a fitness center, and stunning views of the Remarkables mountain range.',
+        'coordinates': {
+          'latitude': -45.031249,
+          'longitude': 168.662643
+        }
+      },
+      'activity1': {
+        'name': 'Skyline Queenstown',
+        'price': 46.45,
+        'description': 'Enjoy breathtaking views of Queenstown and the surrounding mountains from the Skyline gondola. Try the thrilling luge ride, have a delicious meal at the restaurant or take a scenic walk.',
+        'coordinates': {
+          'latitude': -45.021882,
+          'longitude': 168.643035
+        }
+      },
+      'activity2': {
+        'name': 'Milford Sound',
+        'price': 120.89,
+        'description': 'Discover one of the most stunning natural wonders of New Zealand on a scenic cruise through Milford Sound. See towering waterfalls, snow-capped mountains, and playful dolphins.',
+        'coordinates': {
+          'latitude': -44.641682,
+          'longitude': 167.897103
+        }
+      },
+      'activity3': {
+        'name': 'Arrowtown',
+        'price': 0,
+        'description': 'A quaint historic town located 20 minutes from Queenstown. Wander through the main street and take in the beautifully preserved architecture, boutique shops and dine on delicious local cuisine.',
+        'coordinates': {
+          'latitude': -44.9445,
+          'longitude': 168.834
+        }
+      },
+      'activity4': {
+        'name': 'Queenstown Gardens',
+        'price': 0,
+        'description': 'Take a stroll in this beautiful public park where you can see a diverse range of flora, gardens, lawns, and walking tracks. You can also visit the heritage Queenstown Bowling Club and enjoy a game.',
+        'coordinates': {
+          'latitude': -45.032491,
+          'longitude': 168.662665
+        }
+      }
+    }
+
+    days = 4
+
+    4.times do |i|
+      day = Day.new(route: route, city: "Queenstown")
+      day.nation = result[:country]
+      day.name_hotel = result[:hotel][:name]
+      day.description_hotel = result[:hotel][:description]
+      day.price_hotel = result[:hotel][:price]
+      day.room_type = result[:hotel][:room_type]
+      day.no_of_rooms = route.no_of_people.fdiv(result[:hotel][:no_of_people_per_room]).ceil
+      day.latitude_hotel = result[:hotel][:coordinates][:latitude]
+      day.longitude_hotel = result[:hotel][:coordinates][:longitude]
+
+      day.name = result[:"activity#{i + 1}"][:name]
+      day.description = result[:"activity#{i + 1}"][:description]
+      day.price = result[:"activity#{i + 1}"][:price]
+      day.latitude = result[:"activity#{i + 1}"][:coordinates][:latitude]
+      day.longitude = result[:"activity#{i + 1}"][:coordinates][:longitude]
+      day.sequence = days
+      days += 1
+
+      day.save
+
+      route.total_price += ( day.price * route.no_of_people + day.price_hotel * day.no_of_rooms)
+
+    end
   end
 
   def assign_destination_to_route(route, country_array)

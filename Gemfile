@@ -2,7 +2,6 @@ source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby "3.1.2"
-gem "faker"
 gem 'httparty'
 gem 'letter_opener', group: :development
 gem 'erb-formatter'
@@ -10,12 +9,13 @@ gem 'erb-formatter'
 # Needed for email service
 gem 'gibbon'
 
-
-
-
-
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 7.0.4", ">= 7.0.4.2"
+
+# Needed for Stripe payments
+gem 'money-rails'
+gem 'stripe'
+gem 'stripe_event'
 
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem "sprockets-rails"

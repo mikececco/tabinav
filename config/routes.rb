@@ -1,10 +1,20 @@
 Rails.application.routes.draw do
   devise_for :users
   root to: "pages#home"
+  mount StripeEvent::Engine, at: '/stripe-webhooks'
+
   resources :routes, only: %i[index show create] do
     resources :bookmarks, only: [:create]
     resources :days, only: [:create]
   end
+
+  #For Stripe Payments
+  resources :orders, only: [:show, :create] do
+    resources :payments, only: :new
+  end
+
+  get "hack", to: "bookings#hack", as: :hack
+  #==============
 
   resources :bookmarks, only: %i[index edit update destroy] do
     resources :bookings, only: [:new, :create]
