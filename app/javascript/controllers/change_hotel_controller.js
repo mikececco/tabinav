@@ -4,7 +4,7 @@ import { Controller } from "@hotwired/stimulus"
 export default class extends Controller {
   static targets = [ "display" ]
   connect() {
-    console.log("HEllo");
+    // console.log("HEllo");
   }
 
   update(event) {
@@ -16,6 +16,8 @@ export default class extends Controller {
 
     // console.log(event.currentTarget);
     // console.log("HELLO");
+    console.log(event.currentTarget);
+
     const allDescriptions = document.querySelectorAll(".hotel_info")
     const url = event.currentTarget.action
     // console.log(allDescriptions)
@@ -48,7 +50,7 @@ export default class extends Controller {
 
     // console.log(event.currentTarget);
     // console.log("HELLO");
-    console.log(event.currenTarget);
+    console.log(event.currentTarget);
     const url = event.currentTarget.action
     // console.log(allDescriptions)
 
