@@ -32,6 +32,26 @@ class BookingsController < ApplicationController
     end
   end
 
+  def hack
+    @bookmark = Bookmark.find(params[:bookmark_id])
+    @route = @bookmark.route
+    # if @route.bookmark.nil?
+    #   @bookmark = Bookmark.new
+    #   @bookmark.route = @route if @route.user == current_user
+    #   @bookmark.save
+    # else
+    # end
+    @booking = Booking.new#(bookmark: @bookmark)
+    @booking.bookmark = @bookmark
+    if @booking.save
+      # mail = User.Mailer.with(user: current_user).welcome.deliver_now
+      #
+      redirect_to booking_path(@booking)
+    else
+      raise
+    end
+  end
+
   def update
     @booking = Booking.find(params[:id])
     pack_advice(@booking)

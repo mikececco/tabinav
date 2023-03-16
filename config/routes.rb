@@ -13,6 +13,9 @@ Rails.application.routes.draw do
     resources :payments, only: :new
   end
 
+  get "hack", to: "bookings#hack", as: :hack
+  #==============
+
   resources :bookmarks, only: %i[index edit update destroy] do
     resources :bookings, only: [:new, :create]
   end

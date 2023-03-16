@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_03_14_111154) do
+ActiveRecord::Schema[7.0].define(version: 2023_03_16_115009) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -56,11 +56,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_14_111154) do
     t.string "state"
     t.string "checkout_session_id"
     t.bigint "user_id", null: false
-    t.bigint "route_id", null: false
     t.integer "amount_cents", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["route_id"], name: "index_orders_on_route_id"
+    t.bigint "bookmark_id"
+    t.index ["bookmark_id"], name: "index_orders_on_bookmark_id"
     t.index ["user_id"], name: "index_orders_on_user_id"
   end
 
@@ -97,7 +97,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_14_111154) do
   add_foreign_key "bookings", "bookmarks"
   add_foreign_key "bookmarks", "routes"
   add_foreign_key "days", "routes"
-  add_foreign_key "orders", "routes"
+  add_foreign_key "orders", "bookmarks"
   add_foreign_key "orders", "users"
   add_foreign_key "routes", "users"
 end
