@@ -56,7 +56,7 @@ class RoutesController < ApplicationController
       end
     end
     Route.all.each do |route|
-      route.destroy if @route.total_price == 0
+      route.destroy if route.total_price == 0
     end
   end
 
