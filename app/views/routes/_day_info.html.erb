@@ -1,0 +1,8 @@
+<div  class="flex justify-between">
+                <h4 class="text-lg font-medium mb-2"><%= day.name %></h4>
+                <% if (current_user == @route.user) && @route.booking.nil? %>
+                  <%= simple_form_for day, :url => day_change_activity_path(day) do |f| %>
+                    <%= f.submit "Change activity", class: "text-xs cursor-pointer transition duration-500 mx-2 px-3 py-2 text-mainYellow font-medium rounded-lg hover:bg-darkerYellow hover:text-white focus:outline-none" %>
+                  <% end %>
+                <% end %>
+              </div>
