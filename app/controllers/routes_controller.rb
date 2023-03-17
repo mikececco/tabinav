@@ -2,6 +2,7 @@ class RoutesController < ApplicationController
   skip_before_action :authenticate_user!, only: %i[index show]
 
   def index
+    @route = Route.last
     if user_signed_in?
       @routes = current_user.routes
     else
@@ -10,6 +11,7 @@ class RoutesController < ApplicationController
   end
 
   def show
+    raise
     @route = Route.find(params[:id])
     @bookmark = Bookmark.new
     @booking = Booking.new
@@ -361,6 +363,8 @@ class RoutesController < ApplicationController
       days += 1
 
       day.save
+      # redirect_to route_path(route)
+
 
       route.total_price += ( day.price * route.no_of_people + day.price_hotel * day.no_of_rooms)
 
