@@ -56,9 +56,9 @@ class RoutesController < ApplicationController
         nz_hardcode_1(@route)
         nz_hardcode_2(@route)
         @route.destination = "New Zealand"
-        if @route.save
+        @route.save
           # redirect_to route_path(@route)
-        end
+
       else
         pick_cities(@route)
       end
