@@ -41,6 +41,10 @@ class RoutesController < ApplicationController
   end
 
   def create
+    Route.all.each do |route|
+      route.destroy if route.total_price == 0
+    end
+
     @route = Route.new(route_params)
     @route.user = current_user
     if @route.save
@@ -52,15 +56,12 @@ class RoutesController < ApplicationController
         nz_hardcode_1(@route)
         nz_hardcode_2(@route)
         @route.destination = "New Zealand"
-        if @route.save
+        @route.save
           # redirect_to route_path(@route)
-        end
+
       else
         pick_cities(@route)
       end
-    end
-    Route.all.each do |route|
-      route.destroy if route.total_price == 0
     end
   end
 
@@ -209,7 +210,7 @@ class RoutesController < ApplicationController
 
           day.save
 
-          country_array << day.nation.capitalize unless country_array.include?(day.nation.capitalize)
+          country_array << day.nation unless country_array.include?(day.nation)
           route.total_price += ( day.price * route.no_of_people + day.price_hotel * day.no_of_rooms)
         end
       end
@@ -372,8 +373,7 @@ class RoutesController < ApplicationController
 
   def assign_destination_to_route(route, country_array)
     route.destination = country_array.join(", ")
-    if route.save
-      redirect_to route_path(route)
-    end
+    route.save
+    redirect_to route_path(route)
   end
 end

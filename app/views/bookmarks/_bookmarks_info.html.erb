@@ -8,7 +8,7 @@
               <img class="absolute inset-0 h-full w-full object-cover p-6" src="https://source.unsplash.com/random/900x600/?<%= bookmark.route.days.first.city %>" alt="Image of city">
             </div>
             <div class="p-4 flex-grow">
-              <h2 class="mt-2 mb-2 font-bold"><%= bookmark.route.destination.capitalize %></h2>
+              <h2 class="mt-2 mb-2 font-bold"><%= bookmark.route.destination %></h2>
               <% bookmark.route.days.limit(4).each do |day| %>
                 <p class="text-sm"><%= day.name %></p>
               <% end %>

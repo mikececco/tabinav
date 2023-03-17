@@ -10,7 +10,7 @@
   <div class="flex justify-between">
     <div class="py-4 pl-4">
       <span class="inline-block px-2 py-1 leading-none bg-orange-200 text-orange-800 rounded-full font-semibold uppercase tracking-wide text-xs">Highlight</span>
-      <h2 class="mt-2 mb-2  font-bold"><%= route.destination.capitalize %></h2>
+      <h2 class="mt-2 mb-2  font-bold"><%= route.destination %></h2>
       <% route.days.first(4).each do |day| %>
         <p class="text-sm">
           <%= day.name %>

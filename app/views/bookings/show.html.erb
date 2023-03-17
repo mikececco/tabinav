@@ -24,10 +24,10 @@
             <td class="py-2 px-3 text-gray-700 font-medium"><%= day.city %></td>
             <td class="py-2 px-3 text-gray-700 font-medium"><%= day.name_hotel %></td>
             <td class="py-2 px-3 text-gray-700 font-medium"><%= day.room_type %> x <%= day.no_of_rooms %> </td>
-            <td class="py-2 px-3 text-gray-700 font-medium">€<%= day.price_hotel * day.no_of_rooms %></td>
+            <td class="py-2 px-3 text-gray-700 font-medium">€<%= day.price_hotel.round(2) * day.no_of_rooms %></td>
             <td class="py-2 px-3 text-gray-700 font-medium"><%= day.name %></td>
-            <td class="py-2 px-3 text-gray-700 font-medium">€<%= day.price %> x <%=day.route.no_of_people%></td>
-            <td class="py-2 px-3 text-right text-gray-700 font-medium">€<%= day.price * day.route.no_of_people + day.price_hotel * day.no_of_rooms %></td> <%#TO BE FIXED THE 1 to number of people%>
+            <td class="py-2 px-3 text-gray-700 font-medium">€<%= day.price.round(2) %> x <%=day.route.no_of_people%></td>
+            <td class="py-2 px-3 text-right text-gray-700 font-medium">€<%= day.price.round(2) * day.route.no_of_people + day.price_hotel.round(2) * day.no_of_rooms %></td> <%#TO BE FIXED THE 1 to number of people%>
           </tr>
         <% end %>
         <tr>
@@ -61,7 +61,7 @@
         <%= f.submit "View Pack Advice", class: "text-xs cursor-pointer transition duration-500 mx-2 px-3 py-2 text-white bg-mainYellow font-medium rounded-lg hover:bg-darkerYellow hover:text-white focus:outline-none" %>
       <% end %>
     <% else %>
-    <h1 class="text-2xl font-bold mb-4">Pack Advice for: <%= @route.destination.capitalize %></h1>
+    <h1 class="text-2xl font-bold mb-4">Pack Advice for: <%= @route.destination %></h1>
     <p class="text-gray-600"><%= simple_format(@booking.pack_advice) %></p>
     <% end %>
   </div>
