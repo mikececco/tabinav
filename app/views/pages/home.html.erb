@@ -148,6 +148,7 @@
 </div> %>
 
 <script>
+console.log("Script not there");
    const search = document.querySelector(".searchbar")
    const loader = document.getElementById("loading");
 
@@ -161,7 +162,7 @@
    function toggleDiv() {
      // console.log("click")
      loader.classList.remove("hidden");
-     setTimeout(addClass, 20000);
+     setTimeout(addClass, 25000);
      }
 
    search.addEventListener("click", toggleDiv)
