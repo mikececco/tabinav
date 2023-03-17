@@ -22,17 +22,15 @@
             <a class="inline-block font-bold transition duration-500 hidden md:block py-2 px-3 text-darkerYellow hover:bg-darkerYellow hover:text-white rounded-lg" href="/bookmarks">
               <div class="flex items-center relative cursor-pointer whitespace-nowrap">My bookmarks</div>
             </a>
-            <a class="inline-block font-bold transition duration-500 hidden md:block mx-5 py-2 px-3 text-darkerYellow border-2 border-darkerYellow hover:bg-darkerYellow hover:text-white rounded-lg" href="/bookings">
+            <a class="inline-block font-bold transition duration-500 hidden md:block mx-5 py-2 px-3 text-white bg-mainYellow hover:bg-darkerYellow hover:text-white rounded-lg" href="/bookings">
               <div class="flex items-center relative cursor-pointer whitespace-nowrap">My bookings</div>
             </a>
 
             <div class="block">
-              <div class="inline relative">
+              <%# <div class="inline relative"> %>
                 <button id="dropdownHoverButton" data-dropdown-toggle="dropdownHover" data-dropdown-trigger="hover" class="text-black bg-white font-medium rounded-full text-sm relative text-center inline-flex items-center" type="button">
                 <!-- Dropdown menu -->
-                  <div class="flex-grow-0 flex-shrink-0 h-10 w-10"> <%# replace with IMG %>
-                    <img class="avatar" id="navbarDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" src="https://kitt.lewagon.com/placeholder/users/ssaunier" />
-                  </div>
+                    <img class="avatar" id="navbarDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" src="https://kitt.lewagon.com/placeholder/users/Jeroen000" />
                   <div id="dropdownHover" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow-md hover:shadow-xl max-w-xs">
                     <ul class="py-2 text-sm text-gray-700" aria-labelledby="dropdownDefaultButton">
                       <li>
@@ -94,14 +92,14 @@
         <div class="relative px-2">
           <%= f.input :no_of_people, as: :integer, input_html: {class:"border border-gray-50 text-gray-900 font-semibold rounded-full focus:border-gray-50 focus:placeholder-black focus:ring-gray-50 block w-full pl-10 p-2.5", autocomplete:"off", id:"PeopleInput"}, label: false, placeholder: "2 people"%>
         </div>
-      <div data-controller="animation">
+      <div>
         <%= f.button :button, class: "searchbar p-2.5 ml-2 text-sm font-medium text-mainYellow hover:text-white bg-white hover:bg-darkerYellow rounded-full border" do%>
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
         <% end %>
       </div>
     <% end %>
       <%# <%= render "shared/hero" %>
-      <div id="powered_ by" class="transition duration-1000 ease-in-out opacity-0 inline-flex items-center pt-8">
+      <div id="powered_by" class="transition duration-1000 ease-in-out opacity-0 inline-flex items-center pt-8">
         <p class="px-2">Powered by</p>
         <%= image_tag("openAI_logo.svg", display: 'block', width: '100', height: '32', class:"mr-4")%>
         <p class="mr-4">&</p>
@@ -146,3 +144,24 @@
 
   <div class="absolute inset-0 bg-gray-500 bg-opacity-50"></div>
 </div> %>
+
+<script>
+console.log("Script not there");
+   const search = document.querySelector(".searchbar")
+   const loader = document.getElementById("loading");
+
+  const addClass = () => {
+    // console.log("Hello");
+    // console.log("remove") %>
+     loader.classList.add("hidden");
+     window.location.href = `<%= route_path(Route.last) %>`;
+   }
+
+   function toggleDiv() {
+     // console.log("click")
+     loader.classList.remove("hidden");
+     setTimeout(addClass, 25000);
+     }
+
+   search.addEventListener("click", toggleDiv)
+ </script>

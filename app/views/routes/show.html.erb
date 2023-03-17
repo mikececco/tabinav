@@ -6,45 +6,50 @@
 
     <div class="container mx-auto p-8 pt-16 px-40 relative z-10" style="cursor: auto;">
       <div class="flex flex-wrap items-center">
-        <div class="w-full pt-8 flex flex-col justify-between">
+        <div class="w-full pt-4 flex flex-col justify-between">
 
           <div class="flex flex-inline justify-between pb-10">
             <% if current_user == @route.user %>
               <div class="">
                 <div class="mb-5">
                   <% if @route.booking != nil %>
-                    <h6 class="text-sm font-semibold text-white border border-white px-3 py-2 rounded-lg inline"><i class="fa-check fa-solid mr-2"></i>Booked!</h6>
+                    <h6 class="text-sm font-semibold text-darkerYellow bg-white px-3 py-2 rounded-lg inline"><i class="fa-check fa-solid mr-2 text-darkerYellow"></i>Booked!</h6>
                   <% elsif @route.bookmark != nil %>
-                    <h6 class="text-sm font-semibold text-white border border-white px-3 py-2 rounded-lg inline"><i class="fa-bookmark fa-solid mr-2"></i>Bookmarked</h6>
+                    <h6 class="text-sm font-semibold text-darkerYellow bg-white px-3 py-2 rounded-lg inline"><i class="fa-bookmark fa-solid mr-2 text-darkerYellow"></i>Bookmarked</h6>
                   <% end %>
                 </div>
-                <h4 class="text-3xl font-semibold mb-2 text-white">Your trip on <%= @route.start_date.strftime("%-d %b") %> - <%= @route.end_date.strftime("%d %b %Y") %></h4>
-                <h5 class="text-xl font-semibold mb-2 text-white"><i class="far fa-user fa-fw"></i> <%= @route.no_of_people %></h5>
-                <h5 class="text-xl font-semibold mb-2 text-white">Total Price: €<%= @route.total_price.round(2) %>  <small>(Budget: €<%= @route.budget %>)</small></h5>
-                <div class="flex flex-wra p text-center pt-4 mb-2">
-                  <% @countries.each do |country| %>
-                      <div class="inline-block px-2 py-1 mr-2 mb-2 px-3 py-1 leading-none bg-orange-200 text-orange-800 rounded-full font-semibold uppercase tracking-wide text-xs">
-                        <%= country %>
-                      </div>
-                  <% end %>
+                <h4 class="text-2xl font-normal mb-2 text-white">Your trip:</h4>
+
+                <div class="flex justify-between">
+                  <div>
+                    <h4 class="text-4xl font-semibold mb-2 text-white"><%= @route.start_date.strftime("%-d %b") %> - <%= @route.end_date.strftime("%d %b %Y") %></h4>
+                  </div>
+                  <div class="flex items-center">
+                    <h5 class="inline-block px-2 py-1 mr-2 mb-2 px-3 py-1 leading-none bg-gray-300 text-gray-600 rounded-full font-semibold tracking-wide text-s"><i class="far fa-user fa-fw"></i>x<%= @route.no_of_people %></h5>
+                  </div>
+                </div>
+                <div class="flex">
+                    <h5 class="text-xl font-semibold mb-2 mr-2 text-white">Price: €<%= @route.total_price.round() %></h5>
+                    <br>
+                    <h5 class="text-xl font-normal mb-2 text-white"><small>(Your budget: €<%= @route.budget.round() %>)</small></h5>
                 </div>
                 <ul class="day-order fa-ul text-xs mt-4 list-disc list-inside text-gray-50 leading-relaxed" data-controller="sortable change-list-color">
                   <% @days.each_with_index do |day, i| %>
-                    <li data-id="<%= day.id %>" class="text-lg font-semibold"><span class="fa-li"><i class="fa-solid fa-arrows-up-down-left-right"></i></span>Day <%= i + 1 %> - <%= day.name %><small>, <%= day.city %>, <%= day.nation %></small></li>
+                    <li data-id="<%= day.id %>" class="text-lg font-semibold cursor-move"><span class="fa-li"><i class="fa-solid fa-arrows-up-down-left-right"></i></span>Day <%= i + 1 %> - <%= day.name %><small>, <%= day.city %>, <%= day.nation %></small></li>
                   <% end %>
+                </ul>
                   <% if @route.booking.nil? %>
                     <%= form_with url: "/update_sequence", method: :patch do |form| %>
                       <%= form.hidden_field :days_order, id: "day-order" %>
-                      <%= form.submit "Update Sequence", class: "text-base cursor-pointer transition duration-500 my-4 px-3 py-2 text-mainYellow border border-mainYellow font-medium rounded-lg hover:bg-darkerYellow hover:text-white hover:border-darkerYellow focus:outline-none" %>
+                      <%= form.submit "Update route", class: "cursor-pointer transition duration-500 mt-4 px-3 py-2 text-darkerYellow font-medium rounded-lg hover:bg-darkerYellow hover:text-white hover:border-darkerYellow focus:outline-none" %>
                     <% end %>
                   <% end %>
-                </ul>
               </div>
             <% else %>
               <div>
                 <h4 class="text-4xl font-semibold mb-2 text-white">Itinerary</h4>
                 <h5 class="text-xl font-semibold mb-2 text-white"><i class="far fa-user fa-fw"></i> <%= @route.no_of_people %></h5>
-                <h5 class="text-xl font-semibold mb-2 text-white">Total Price: €<%= @route.total_price.round(2) %></h5>
+                <h5 class="text-xl font-semibold mb-2 text-white">Total Price: €<%= @route.total_price.round() %></h5>
                 <div class="flex flex-wra p text-center pt-4 mb-2">
                   <% @countries.each do |country| %>
                       <div class="inline-block px-2 py-1 mr-2 mb-2 px-3 py-1 leading-none bg-orange-200 text-orange-800 rounded-full font-semibold uppercase tracking-wide text-xs">
@@ -62,10 +67,18 @@
 
               <div class="w-6/12 h-96">
                 <%= render "shared/map" %>
+                <div class="flex flex-wrap text-center py-2">
+                  <% @countries.each do |country| %>
+                      <div class="inline-block px-2 py-1 mr-2 mb-2 px-3 py-1 leading-none bg-gray-300 text-gray-600 rounded-full font-semibold uppercase tracking-wide text-xs">
+                        <%= country %>
+                      </div>
+                  <% end %>
+                </div>
               </div>
+
           </div>
 
-            <div class="w-full pt-10">
+            <div class="w-full pt-4">
               <% if current_user == @route.user %>
                 <% if @route.bookmark.nil? %>
                   <%= simple_form_for [@route, @bookmark], class: "sticky top-10" do |f| %>
@@ -93,30 +106,38 @@
     </div>
   </section>
 
-  <div class="container mx-auto p-8 px-40">
         <% @days.each_with_index do |day, i| %>
-          <div class=" border-b-2 rounded-lg mb-10 flex p-8 hover:shadow-2xl hover:scale-110 transition duration-1000 ease-in-out">
+  <div class="container mx-auto p-8 px-40" >
+          <div class=" border-b-2 rounded-lg mb-10 flex p-8 hover:shadow-2xl hover:bg-veryLightGray hover:scale-110 transition duration-1000 ease-in-out">
             <div class="w-1/2">
               <h4 class="text-2xl font-semibold mb-2">Day <%= i + 1 %> - <%= day.city %>, <%= day.nation %></h4>
               <%= render "shared/display_weather", day: day %>
+              <%# <div  class="flex justify-between"> %>
               <div  class="flex justify-between bg-darYellow">
-                <h4 class="text-lg font-medium mb-2"><%= day.name %></h4>
+                  <h4 class="text-lg font-medium mb-2"><%= day.name %></h4>
+                    <div class="" >
+                      <p class="inline-block px-2 py-1 mr-2 mb-2 px-3 py-1 leading-none bg-gray-300 text-gray-600 rounded-full font-semibold uppercase tracking-wide text-xs"><%= day.price == 0 ? "No entrance fee" : "Entrance fee per person: €#{day.price.round()}" %></p>
+                    </div>
+                  </div>
+              <%# </div> %>
+              <p class="text-gray-600 mb-2"><i><%= day.description %></i></p>
+              <div  class="flex justify-end">
                 <% if (current_user == @route.user) && @route.booking.nil? %>
-                  <%= simple_form_for day, :url => day_change_activity_path(day) do |f| %>
-                    <%= f.submit "Change Activity", class: "text-xs cursor-pointer transition duration-500 mx-2 px-3 py-2 text-mainYellow font-medium rounded-lg hover:bg-darkerYellow hover:text-white focus:outline-none" %>
+                  <%= simple_form_for day, :url => day_change_activity_path(day) do |f| %> <%#, html: { data: { action: "submit->change-hotel#change" } }%>
+                      <%# <%= f.hidden_field :authenticity_token, value: form_authenticity_token %>
+                    <%= f.submit "Change activity", class: "text-xs cursor-pointer transition duration-500 mx-2 px-3 py-2 text-mainYellow font-medium rounded-lg hover:bg-darkerYellow hover:text-white focus:outline-none" %>
                   <% end %>
                 <% end %>
               </div>
-              <p class="text-gray-600 mb-2"><i><%= day.description %></i></p>
-              <p class="text-gray-600 font-medium"><%= day.price == 0 ? "No entrance fee" : "Entrance fee per person: €#{day.price.round(2)}" %></p>
-
-              <br>
+              <%# <p class="text-gray-600 mb-2"><i><%= day.description %>
+              <%# <p class="text-gray-600 font-medium"><%= day.price == 0 ? "No entrance fee" : "Entrance fee per person: €#{day.price.round(2)}" %>
+              <hr class="mt-2 mb-4">
               <div data-controller="change-hotel">
-                <div id="hotel-info" data-change-hotel-target="display">
-                  <div  class="flex justify-between bg-darYellow">
+                <div id="hotel-info" data-change-hotel-target="display" class="hotel_info">
+                  <div  class="flex justify-between">
                     <h4 class="text-lg font-medium mb-2">Accommodation: <br><%= day.name_hotel %> <br>(<%= day.no_of_rooms %> x <%= day.room_type %>)</h4>
-                    <div class="pt-2" >
-                      <p class="text-gray-600 font-medium text-end px-3">Price: €<%= day.price_hotel.round(2) %></p>
+                    <div class="" >
+                      <p class="inline-block px-2 py-1 mr-2 mb-2 px-3 py-1 leading-none bg-gray-300 text-gray-600 rounded-full font-semibold uppercase tracking-wide text-xs">Price: €<%= day.price_hotel.round() %></p>
                     </div>
                   </div>
                   <p class="text-gray-600 mb-2"><i><%= day.description_hotel %></i></p>
@@ -126,10 +147,10 @@
                   <div class="grid justify-items-end">
                     <div class="inline-flex">
                       <%= simple_form_for day, :url => day_upgrade_hotel_path(day), html: { data: { action: "submit->change-hotel#update" } } do |f| %>
-                        <%= f.submit "Upgrade Accommodation", class: "text-xs cursor-pointer transition duration-500 mx-2 px-3 py-2 text-mainYellow font-medium rounded-lg hover:bg-darkerYellow hover:text-white focus:outline-none" %>
+                        <%= f.submit "Upgrade accommodation", class: "text-xs cursor-pointer transition duration-500 mx-2 px-3 py-2 text-mainYellow font-medium rounded-lg hover:bg-darkerYellow hover:text-white focus:outline-none" %>
                       <% end %>
-                      <%= simple_form_for day, :url => day_downgrade_hotel_path(day) do |f| %>
-                        <%= f.submit "Find a Cheaper Option", class: "text-xs cursor-pointer transition duration-500 mx-2 px-3 py-2 text-mainYellow font-medium rounded-lg hover:bg-darkerYellow hover:text-white focus:outline-none" %>
+                      <%= simple_form_for day, :url => day_downgrade_hotel_path(day), html: { data: { action: "submit->change-hotel#update" } } do |f| %>
+                        <%= f.submit "Find a cheaper option", class: "text-xs cursor-pointer transition duration-500 mx-2 px-3 py-2 text-mainYellow font-medium rounded-lg hover:bg-darkerYellow hover:text-white focus:outline-none" %>
                       <% end %>
                     </div>
                   </div>
@@ -138,7 +159,7 @@
               </div>
             </div>
             <div class="w-1/2 flex justify-end">
-              <div class="rounded-lg shadow-lg p-6 h-3/4">
+              <div class="rounded-lg shadow-lg p-6 h-3/4 bg-white hover:shadow-2xl hover:scale-125 hover:-translate-x-32 hover:translate-y-8	transition duration-1000 ease-in-out">
                 <img src="https://source.unsplash.com/random/90<%= rand(0..9) %>x60<%= rand(0..9) %>/?<%= day.city %>" alt="Image of city" width="300" height="300" class="">
                 <%# <p class="text-sm text-center pt-8"><i>Pic of <%= day.city %>
               </div>
@@ -150,4 +171,3 @@
 </div>
 
 <%# Button For Strip payment %>
-

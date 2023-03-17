@@ -2,6 +2,7 @@ class RoutesController < ApplicationController
   skip_before_action :authenticate_user!, only: %i[index show]
 
   def index
+    @route = Route.last
     if user_signed_in?
       @routes = current_user.routes
     else
@@ -52,7 +53,7 @@ class RoutesController < ApplicationController
         nz_hardcode_2(@route)
         @route.destination = "New Zealand"
         if @route.save
-          redirect_to route_path(@route)
+          # redirect_to route_path(@route)
         end
       else
         pick_cities(@route)
@@ -361,6 +362,8 @@ class RoutesController < ApplicationController
       days += 1
 
       day.save
+      # redirect_to route_path(route)
+
 
       route.total_price += ( day.price * route.no_of_people + day.price_hotel * day.no_of_rooms)
 
