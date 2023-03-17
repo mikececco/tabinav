@@ -11,7 +11,6 @@ class RoutesController < ApplicationController
   end
 
   def show
-    raise
     @route = Route.find(params[:id])
     @bookmark = Bookmark.new
     @booking = Booking.new

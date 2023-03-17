@@ -147,21 +147,22 @@
   <div class="absolute inset-0 bg-gray-500 bg-opacity-50"></div>
 </div> %>
 
-<%# <script> %>
-  <%# const search = document.querySelector(".searchbar") %>
-  <%# const loader = document.getElementById("loading"); %>
+<script>
+   const search = document.querySelector(".searchbar")
+   const loader = document.getElementById("loading");
 
-  <%# const addClass = () => { %>
-    <%# // console.log("remove") %>
-    <%# loader.classList.add("hidden"); %>
-  <%# } %>
+  const addClass = () => {
+    // console.log("Hello");
+    // console.log("remove") %>
+     loader.classList.add("hidden");
+     window.location.href = `<%= route_path(Route.last) %>`;
+   }
 
-  <%# function toggleDiv() { %>
-    <%# // console.log("click") %>
-    <%# loader.classList.remove("hidden"); %>
-    <%# setTimeout(addClass, 20000); %>
-    <%# window.location.href = '<%= route_path(@route) %>'; %>
-  <%# } %>
+   function toggleDiv() {
+     // console.log("click")
+     loader.classList.remove("hidden");
+     setTimeout(addClass, 20000);
+     }
 
-  <%# search.addEventListener("click", toggleDiv) %>
-<%# </script> %>
+   search.addEventListener("click", toggleDiv)
+ </script>
