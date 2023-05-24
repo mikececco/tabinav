@@ -92,3 +92,6 @@ gem "tailwindcss-rails", "~> 2.0"
 
 gem "geocoder"
 # gem 'mapbox-gl-rails'
+
+gem 'sidekiq', '~> 6.5.7'
+gem "sidekiq-failures", "~> 1.0"

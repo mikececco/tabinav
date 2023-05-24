@@ -47,6 +47,7 @@ class RoutesController < ApplicationController
 
     @route = Route.new(route_params)
     @route.user = current_user
+    # CreateRouteJob.perform_now
     if @route.save
       case @route.destination.downcase
       when "new zealand"
