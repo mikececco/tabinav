@@ -4,7 +4,7 @@ class RoutesController < ApplicationController
   def index
     @route = Route.last
     if user_signed_in?
-      @routes = current_user.routes
+      @routes = current_user.routes.order(created_at: :desc)
     else
       @routes = Route.all
     end
@@ -47,22 +47,25 @@ class RoutesController < ApplicationController
 
     @route = Route.new(route_params)
     @route.user = current_user
-    # CreateRouteJob.perform_now
     if @route.save
-      case @route.destination.downcase
-      when "new zealand"
-        # city_hash = [
-        #   { 'city'=>'Auckland', 'country'=> 'New Zealand', 'days'=> 3 }
-        # ]
-        nz_hardcode_1(@route)
-        nz_hardcode_2(@route)
-        @route.destination = "New Zealand"
-        @route.save
-          # redirect_to route_path(@route)
+      serialized_route = @route.to_global_id.to_s
+      CreateRouteJob.perform_later(serialized_route)
+      flash[:notice] = "Job enqueued"
+      redirect_to bookmarks_path
+      # case @route.destination.downcase
+      # when "new zealand"
+      #   # city_hash = [
+      #   #   { 'city'=>'Auckland', 'country'=> 'New Zealand', 'days'=> 3 }
+      #   # ]
+      #   nz_hardcode_1(@route)
+      #   nz_hardcode_2(@route)
+      #   @route.destination = "New Zealand"
+      #   @route.save
+      #     # redirect_to route_path(@route)
 
-      else
-        pick_cities(@route)
-      end
+      # else
+      #   pick_cities(@route)
+      # end
     end
   end
 
